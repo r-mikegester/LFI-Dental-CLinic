@@ -4,8 +4,8 @@ import Footer from "../../components/admin/PageFooter.vue";
 
 <template>
   <div class="grid grid-rows-[1fr_auto] min-h-screen">
-    <main class="font-[Poppins] text-sky-600">
-      <div class="max-w-lg mx-auto">
+    <main class="font-[Poppins] px-4 text-sky-600">
+      <div class="max-w-md mx-auto">
         <!-- Logo -->
         <div>
           <div
@@ -16,7 +16,7 @@ import Footer from "../../components/admin/PageFooter.vue";
               alt="LFI Dental Clinic logo"
               class="max-w-[5rem] mb-4"
             />
-            <div>Welcome to LFI Dental Clinic</div>
+            <div class="text-center">Welcome to LFI Dental Clinic</div>
           </div>
         </div>
         <!-- Login box -->
