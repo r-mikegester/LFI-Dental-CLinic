@@ -12,7 +12,7 @@ import Footer from "../../components/admin/PageFooter.vue";
             class="text-2xl font-medium pb-12 pt-24 flex flex-col items-center"
           >
             <img
-              src="../../assets/lfi-logo.png"
+              src="../../assets/img/lfi-logo.png"
               alt="LFI Dental Clinic logo"
               class="max-w-[5rem] mb-4"
             />
