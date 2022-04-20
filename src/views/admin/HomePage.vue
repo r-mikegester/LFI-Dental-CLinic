@@ -12,9 +12,10 @@ import { RouterLink } from "vue-router";
           src="../../assets/img/lfi-logo.png"
           class="h-28 mr-4 pointer-events-none"
         />
-        <div class="text-4xl leading-10 font-light">
-          <div class="">Welcome back to L.F.I. Dental Clinic</div>
-          <div>Have a great day!</div>
+        <div
+          class="text-4xl leading-10 font-light max-w-[29ch] text-center md:text-left"
+        >
+          Welcome back to L.F.I. Dental Clinic. Have a great day!
         </div>
       </div>
       <div class="grid lg:grid-cols-[auto_auto]">
