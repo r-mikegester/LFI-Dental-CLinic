@@ -27,20 +27,22 @@ import Footer from "../../components/admin/PageFooter.vue";
               <label class="mr-4">Username:</label>
               <input
                 type="text"
-                class="border border-teal-500 py-2 px-3 rounded-2xl max-w-[18rem]"
+                class="border border-teal-500 py-2 px-3 rounded-2xl max-w-[18rem] min-w-0"
               />
             </div>
             <div class="mb-10">
               <label class="mr-4">Password:</label>
               <input
                 type="password"
-                class="border border-teal-500 py-2 px-3 rounded-2xl max-w-[18rem]"
+                class="border border-teal-500 py-2 px-3 rounded-2xl max-w-[18rem] min-w-0"
               />
             </div>
           </div>
           <!-- actions -->
           <div class="flex justify-between items-center">
-            <a href="#">Forgot Password?</a>
+            <a href="#" class="text-sm hover:border-b hover:border-sky-600"
+              >Forgot Password?</a
+            >
             <button
               class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
             >
