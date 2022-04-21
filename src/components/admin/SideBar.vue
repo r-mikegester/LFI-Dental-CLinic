@@ -65,3 +65,8 @@ import { RouterLink } from "vue-router";
     </div>
   </nav>
 </template>
+<style>
+.router-link-exact-active {
+  @apply bg-teal-500/40;
+}
+</style>
