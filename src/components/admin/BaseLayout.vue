@@ -9,7 +9,7 @@ import SideBar from "./SideBar.vue";
       <div>
         <SideBar />
       </div>
-      <main class="p-6 lg:p-12 text-sky-600 font-[Poppins]">
+      <main class="p-6 text-sky-600 font-[Poppins]">
         <slot></slot>
       </main>
     </div>

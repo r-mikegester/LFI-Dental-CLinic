@@ -5,7 +5,7 @@ import { RouterLink } from "vue-router";
 
 <template>
   <BaseLayout>
-    <div class="grid grid-rows-[auto_1fr] h-full">
+    <div class="grid grid-rows-[auto_1fr] h-full lg:p-6">
       <!-- Banner -->
       <div class="flex flex-col md:flex-row items-center pb-20">
         <img
