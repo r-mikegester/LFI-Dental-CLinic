@@ -1,6 +1,5 @@
 <script setup>
 import BaseLayout from "../../components/admin/BaseLayout.vue";
-import { RouterLink } from "vue-router";
 </script>
 <template>
   <BaseLayout>
