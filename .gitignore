@@ -30,3 +30,5 @@ coverage
 
 # Others
 package-lock.json
+.firebase
+.firebaserc
