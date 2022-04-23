@@ -1,5 +1,9 @@
+<script setup>
+import BaseLayout from "../../components/admin/BaseLayout.vue";
+</script>
+
 <template>
-  <div>
+  <BaseLayout>
     <h1 class="text-4xl text-center font-bold">Admin Schedules page</h1>
-  </div>
+  </BaseLayout>
 </template>
