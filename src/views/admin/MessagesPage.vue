@@ -74,7 +74,7 @@ const onItemDeleted = (uid) => {
       <h1 class="font-semibold text-2xl pb-3">Messages</h1>
       <div v-if="pageIsLoading">
         <!-- Loading message -->
-        <div>Loading messages ...</div>
+        <div class="text-2xl font-bold text-center">Loading messages ...</div>
       </div>
       <div v-else>
         <div v-if="messageItems.length > 0">
@@ -105,7 +105,7 @@ const onItemDeleted = (uid) => {
         </div>
         <div v-else>
           <!-- No messages -->
-          <div>No messages at this time</div>
+          <div class="text-2xl text-center mt-12">No messages at this time</div>
         </div>
       </div>
     </div>
