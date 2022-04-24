@@ -1,5 +1,12 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+import signOut from "../../composables/auth/signOut";
+
+const router = useRouter();
+const onLogout = async () => {
+  await signOut();
+  router.push({ name: "Admin Login Page" });
+};
 </script>
 
 <template>
@@ -55,13 +62,13 @@ import { RouterLink } from "vue-router";
         <img src="../../assets/img/nav-gear.png" class="mr-5" />
         <span>Account Settings</span>
       </RouterLink>
-      <RouterLink
+      <button
         class="hover:bg-teal-500/40 transition duration-200 py-3 px-8 flex items-center mt-auto"
-        :to="{ name: 'Admin Login Page' }"
+        @click="onLogout()"
       >
         <img src="../../assets/img/nav-exit.png" class="mr-5" />
         <span>Log out</span>
-      </RouterLink>
+      </button>
     </div>
   </nav>
 </template>
