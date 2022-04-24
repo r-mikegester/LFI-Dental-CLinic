@@ -1,5 +1,6 @@
 import HttpError from "../helpers/HttpError";
 import ParameterError from "../helpers/ParameterError";
+import backendBaseURL from "./backendBaseURL";
 
 export default async (message) => {
   const { senderName, subject, body } = message;
@@ -8,7 +9,7 @@ export default async (message) => {
   if (!subject) throw new ParameterError(subject);
   if (!body) throw new ParameterError(body);
 
-  const link = `http://localhost:5000/messages`;
+  const link = `${backendBaseURL}/messages`;
   const response = await fetch(link, {
     method: "PUT",
     headers: {
