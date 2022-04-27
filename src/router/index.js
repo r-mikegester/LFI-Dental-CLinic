@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     /* Static pages */
     {
-      path: "/",
+      path: "/home",
       name: "Home",
       component: HomePage,
     },
