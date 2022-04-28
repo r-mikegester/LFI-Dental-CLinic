@@ -9,7 +9,7 @@ const router = createRouter({
   routes: [
     /* Static pages */
     {
-      path: "/home",
+      path: "/",
       name: "Home",
       component: HomePage,
     },

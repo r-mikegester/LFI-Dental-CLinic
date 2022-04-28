@@ -33,9 +33,12 @@
         :class="showMenu ? 'flex' : 'hidden'"
         class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
       >
-        <router-link class="font-semibold hover:text-green-500" to="/home"
-          >Home</router-link
+        <router-link
+          class="font-semibold hover:text-green-500"
+          :to="{ name: 'Home' }"
         >
+          Home
+        </router-link>
         <li>
           <div class="relative">
             <!-- Dropdown toggle button -->
