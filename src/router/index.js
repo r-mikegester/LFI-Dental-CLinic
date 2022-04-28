@@ -9,7 +9,7 @@ const router = createRouter({
   routes: [
     /* Static pages */
     {
-      path: "/",
+      path: "/home",
       name: "Home",
       component: HomePage,
     },
@@ -18,6 +18,12 @@ const router = createRouter({
       name: "About Page",
       component: () => import("../views/AboutPage.vue"),
     },
+    {
+      path: "/appointments",
+      name: "Appointments Page",
+      component: () => import("../views/AppointmentsPage.vue"),
+    },
+
     {
       path: "/contact",
       name: "Contact Page",
