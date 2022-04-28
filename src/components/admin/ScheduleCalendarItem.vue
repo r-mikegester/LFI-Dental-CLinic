@@ -1,0 +1,54 @@
+<script setup>
+import { onMounted, ref } from "vue";
+import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
+const scheduleCalendar = useScheduleCalendarStore();
+
+const props = defineProps({
+  date: Number,
+  isSelected: Boolean,
+});
+
+const isColored = ref(false);
+
+// Color our item when it is displayed, if applicable.
+onMounted(() => {
+  // Check if our date is in the list of closed slots.
+  scheduleCalendar.getClosedSlots.forEach((timeSlot) => {
+    const date = new Date(parseInt(timeSlot) * 1000).getDate();
+    // If it is, add fill color to our item.
+    if (date === props.date) {
+      isColored.value = true;
+    }
+  });
+});
+
+// Listen for changes to the closed slots in the store.
+// If our item, is added to list of closed slots, this
+// will add color to our item.
+scheduleCalendar.$subscribe((mutation, state) => {
+  // Reset colored state value.
+  isColored.value = false;
+
+  // Check if our state is ni the list of closed slots.
+  state.closedSlots.forEach((timeSlot) => {
+    const date = new Date(parseInt(timeSlot) * 1000).getDate();
+    // If it is, add fill color to our item.
+    if (date === props.date) {
+      isColored.value = true;
+    }
+  });
+});
+</script>
+
+<template>
+  <div
+    class="border border-teal-500 text-right px-2"
+    :class="{
+      'bg-teal-500': isColored && !isSelected,
+      'text-white': isColored && !isSelected,
+      'bg-teal-500/50': isSelected,
+    }"
+  >
+    {{ date }}
+  </div>
+</template>
