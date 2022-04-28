@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav
-      class="px-6 bg-white text-sky-700 shadow-md md:flex md:justify-between md:items-center"
+      class="z-40 px-6 bg-white shadow-lg text-sky-700 md:flex md:justify-between md:items-center fixed w-full"
     >
       <div class="flex items-center justify-between">
         <router-link
@@ -17,7 +17,7 @@
         <div @click="toggleNav" class="flex md:hidden">
           <button
             type="button"
-            class="text-sky-700 border-sky-700 border-2 rounded p-1 hover:text-green-500 hover:border-green-500 focus:outline-none focus:text-green-500 focusLborder-green-500"
+            class="p-1 border-2 rounded text-sky-700 border-sky-700 hover:text-green-500 hover:border-green-500 focus:outline-none focus:text-green-500 focusLborder-green-500"
           >
             <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
               <path
@@ -28,19 +28,20 @@
           </button>
         </div>
       </div>
-
       <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
       <ul
         :class="showMenu ? 'flex' : 'hidden'"
         class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
       >
-        <li class="text-sky-700 font-semibold hover:text-green-500">Home</li>
+        <router-link class="font-semibold hover:text-green-500" to="/home"
+          >Home</router-link
+        >
         <li>
           <div class="relative">
             <!-- Dropdown toggle button -->
             <button
               @click="show = !show"
-              class="flex items-center text-sky-700 font-semibold bg-white rounded-md focus:outline-none hover:text-green-500"
+              class="flex items-center font-semibold bg-white rounded-md text-sky-700 focus:outline-none hover:text-green-500"
             >
               <span class="mr-4 hover:text-green-500">Services</span>
             </button>
@@ -48,41 +49,41 @@
             <!-- Dropdown menu -->
             <div
               v-show="show"
-              class="py-2 mt-2 bg-white border-l-2 sm:shadow-none lg:absolute lg:right-0 w-44"
+              class="py-2 mt-2 bg-white sm:border-l-2 sm:border-green-500 lg:border-none lg:shadow-md lg:absolute lg:right-0 w-44"
             >
               <router-link
                 to="/"
-                class="block px-4 py-2 text-sm text-sky-700 hover:bg-green-500 hover:text-white font-semibold"
+                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
               >
                 General Dentistry
               </router-link>
               <router-link
                 to="/"
-                class="block px-4 py-2 text-sm text-sky-700 font-semibold hover:bg-green-500 hover:text-sky-700"
+                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
               >
                 Cosmetic Surgery
               </router-link>
               <router-link
                 to="/"
-                class="block px-4 py-2 text-sm text-sky-700 font-semibold hover:bg-green-500 hover:text-indigo-100"
+                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
               >
                 Oral Surgery
               </router-link>
               <router-link
                 to="/"
-                class="block px-4 py-2 text-sm text-sky-700 hover:bg-green-500 hover:text-sky-700 font-semibold"
+                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
               >
                 Orthodontics
               </router-link>
               <router-link
                 to="/"
-                class="block px-4 py-2 text-sm text-sky-700 hover:bg-green-500 hover:text-sky-700 font-semibold"
+                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
               >
                 Pediatric Dentistry
               </router-link>
               <router-link
                 to="/"
-                class="block px-4 py-2 text-sm text-sky-700 hover:bg-green-500 hover:text-sky-700 font-semibold"
+                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
               >
                 Prosthodontics
               </router-link>
@@ -91,15 +92,13 @@
         </li>
         <router-link
           class="font-semibold hover:text-green-500"
-          to="{ name: 'Appointments Page' }"
+          to="/appointments"
           >Appointment</router-link
         >
-        <router-link
-          class="font-semibold hover:text-green-500"
-          to="{ name: 'About Page' }"
+        <router-link class="font-semibold hover:text-green-500" to="/about"
           >About Us</router-link
         >
-        <router-link class="font-semibold hover:text-green-500" to="/"
+        <router-link class="font-semibold hover:text-green-500" to="/contact"
           >Contact Us</router-link
         >
         <ul
@@ -107,16 +106,16 @@
           class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
         >
           <li>
-            <div class="relative">
+            <div class="relative pb-10 lg:pb-0">
               <!-- Dropdown toggle button -->
               <button
-                @click="skrr = !show"
-                class="flex items-center text-sky-700 font-semibold bg-white rounded-md focus:outline-none hover:text-green-500"
+                @click="skrr = !skrr"
+                class="flex items-center font-semibold bg-white rounded-md text-sky-700 focus:outline-none hover:text-green-500"
               >
                 <span class="mr-4 hover:text-green-500"
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
+                    class="w-6 h-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -133,29 +132,29 @@
               <!-- Dropdown menu -->
               <div
                 v-show="skrr"
-                class="py-2 mt-2 bg-white rounded-md shadow-xl lg:absolute lg:right-0 w-44"
+                class="py-2 mt-2 bg-white rounded-md lg:shadow-xl border-2px sm:shadow-none lg:absolute lg:right-0 w-44"
               >
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm text-sky-700 hover:bg-green-500 hover:text-white font-semibold"
+                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
                 >
                   Account Settings
                 </router-link>
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm text-sky-700 font-semibold hover:bg-green-500 hover:text-sky-700"
+                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
                 >
                   Medical Chart
                 </router-link>
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm text-sky-700 font-semibold hover:bg-green-500 hover:text-indigo-100"
+                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
                 >
                   My History
                 </router-link>
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm text-sky-700 hover:bg-green-500 hover:text-sky-700 font-semibold"
+                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
                 >
                   Log out
                 </router-link>
@@ -172,9 +171,9 @@ import { ref } from "vue";
 export default {
   setup() {
     let showMenu = ref(false);
-    let showSettings = ref(true);
+    let showSettings = ref(false);
     let show = ref(false);
-    let skrr = ref(true);
+    let skrr = ref(false);
     const toggleNav = () => (
       (showMenu.value = !showMenu.value),
       (showSettings.value = !showSettings.value)
