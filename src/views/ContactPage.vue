@@ -18,7 +18,11 @@ import FooterSection from "../components/patients-view/FooterSection.vue";
       <img
         src="../assets/img/bgs/ContactUs.jpg"
         class="w-full bg-fixed object-fit-cover object-center filter brightness-50"
-        style="height: 50vh; background-position: center background-size: 100% 100%;"
+        style="
+          height: 50vh;
+          background-position: center;
+          background-size: 100% 100%;
+        "
       />
     </div>
   </div>
