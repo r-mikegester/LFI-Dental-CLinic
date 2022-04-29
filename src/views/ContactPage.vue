@@ -2,6 +2,30 @@
 import { RouterView } from "vue-router";
 import NavBar from "../components/patients-view/NavBar.vue";
 import FooterSection from "../components/patients-view/FooterSection.vue";
+import { computed, reactive } from "vue";
+import newMessage from "../composables/api/newMessage";
+
+const message = reactive({
+  senderName: "",
+  subject: "",
+  body: "",
+});
+
+const isSendButtonDisabled = computed(() => {
+  if (message.senderName === "") return true;
+  if (message.subject === "") return true;
+  if (message.body === "") return true;
+  return false;
+});
+
+const onSendButton = async () => {
+  if (!isSendButtonDisabled.value) {
+    await newMessage(message);
+    message.senderName = "";
+    message.subject = "";
+    message.body = "";
+  }
+};
 </script>
 <template>
   <header>
@@ -69,25 +93,29 @@ import FooterSection from "../components/patients-view/FooterSection.vue";
         <input
           class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline"
           type="text"
-          placeholder="Name*"
+          placeholder="Name *"
+          v-model="message.senderName"
         />
       </div>
       <div class="mt-8">
         <input
           class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline"
           type="text"
-          placeholder="Subject*"
+          placeholder="Subject *"
+          v-model="message.subject"
         />
       </div>
       <div class="mt-8">
         <textarea
           class="w-full h-32 min-h-32 bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-          placeholder="Message*"
+          placeholder="Message *"
+          v-model="message.body"
         ></textarea>
       </div>
       <div class="mt-8">
         <button
           class="uppercase text-sm font-bold tracking-wide bg-sky-700 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline hover:bg-sky-500"
+          @click="onSendButton()"
         >
           Submit
         </button>
