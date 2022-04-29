@@ -48,7 +48,7 @@ onMounted(async () => {
   isFinishLoading.value = true;
 });
 
-const onChangeMonth = async () => {
+const onChangeMonthOrYear = async () => {
   // Hide the calendar temporarily.
   isFinishLoading.value = false;
 
@@ -97,15 +97,33 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
             <select
               class="w-full bg-transparent"
               v-model="selected.month"
-              @change="onChangeMonth()"
+              @change="onChangeMonthOrYear()"
             >
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
               <option>April</option>
               <option>May</option>
               <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
             </select>
           </div>
           <div class="border border-teal-500 px-2 py-1 rounded-full">
-            {{ selected.year }}
+            <select
+              class="w-full bg-transparent"
+              v-model="selected.year"
+              @change="onChangeMonthOrYear()"
+            >
+              <option>2022</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+            </select>
           </div>
         </div>
         <div class="pl-4">
