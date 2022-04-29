@@ -91,10 +91,7 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
   <BaseLayout>
     <div class="px-6">
       <h1 class="text-2xl font-semibold mb-3">Schedules</h1>
-      <div
-        class="grid grid-cols-[8rem_auto] max-w-fit mx-auto"
-        v-if="isFinishLoading"
-      >
+      <div class="grid grid-cols-[8rem_auto] mx-auto" v-if="isFinishLoading">
         <div>
           <div class="border border-teal-500 px-2 py-1 rounded-full mb-3">
             <select
@@ -111,7 +108,7 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
             {{ selected.year }}
           </div>
         </div>
-        <div class="pl-4 max-w-fit">
+        <div class="pl-4">
           <!-- Calendar -->
           <CalendarWidget>
             <div
