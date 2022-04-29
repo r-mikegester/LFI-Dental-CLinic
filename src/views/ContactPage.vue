@@ -2,7 +2,7 @@
 import { RouterView } from "vue-router";
 import NavBar from "../components/patients-view/NavBar.vue";
 import FooterSection from "../components/patients-view/FooterSection.vue";
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import newMessage from "../composables/api/newMessage";
 
 const message = reactive({
@@ -11,7 +11,9 @@ const message = reactive({
   body: "",
 });
 
+const messageIsSending = ref(false);
 const isSendButtonDisabled = computed(() => {
+  if (messageIsSending.value) return true;
   if (message.senderName === "") return true;
   if (message.subject === "") return true;
   if (message.body === "") return true;
@@ -20,7 +22,9 @@ const isSendButtonDisabled = computed(() => {
 
 const onSendButton = async () => {
   if (!isSendButtonDisabled.value) {
+    messageIsSending.value = true;
     await newMessage(message);
+    messageIsSending.value = false;
     message.senderName = "";
     message.subject = "";
     message.body = "";
@@ -91,33 +95,50 @@ const onSendButton = async () => {
         </h2>
 
         <input
-          class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline"
+          class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline transition duration-200"
           type="text"
           placeholder="Name *"
+          :class="{
+            'bg-gray-300': messageIsSending,
+            'pointer-events-none': messageIsSending,
+          }"
           v-model="message.senderName"
         />
       </div>
       <div class="mt-8">
         <input
-          class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline"
+          class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline transition duration-200"
           type="text"
           placeholder="Subject *"
+          :class="{
+            'bg-gray-300': messageIsSending,
+            'pointer-events-none': messageIsSending,
+          }"
           v-model="message.subject"
         />
       </div>
       <div class="mt-8">
         <textarea
-          class="w-full h-32 min-h-32 bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+          class="w-full h-32 min-h-32 bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-lg focus:outline-none focus:shadow-outline transition duration-200"
           placeholder="Message *"
+          :class="{
+            'bg-gray-300': messageIsSending,
+            'pointer-events-none': messageIsSending,
+          }"
           v-model="message.body"
         ></textarea>
       </div>
       <div class="mt-8">
         <button
-          class="uppercase text-sm font-bold tracking-wide bg-sky-700 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline hover:bg-sky-500"
+          class="uppercase text-sm font-bold tracking-wide bg-sky-700 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline hover:bg-sky-500 transition duration-100"
+          :class="{
+            'bg-sky-300': isSendButtonDisabled,
+            'pointer-events-none': isSendButtonDisabled,
+          }"
           @click="onSendButton()"
         >
-          Submit
+          <span v-if="messageIsSending">Sending</span>
+          <span v-else>Send</span>
         </button>
       </div>
     </div>
