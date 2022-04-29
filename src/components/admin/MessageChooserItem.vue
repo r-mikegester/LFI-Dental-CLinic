@@ -17,7 +17,7 @@ const onDelete = async () => {
   <div
     class="flex justify-between items-center px-3 py-2 hover:bg-gray-200 transition"
     :class="{ 'bg-gray-100': props.message.clicked }"
-    @click="emit('itemClicked', message.uid)"
+    @click="emit('itemClicked', message)"
   >
     <div>{{ message.senderName }}</div>
     <div>
