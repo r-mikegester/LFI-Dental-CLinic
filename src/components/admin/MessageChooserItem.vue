@@ -23,7 +23,7 @@ const onDelete = async () => {
     <div>
       <button
         class="px-3 py-1 border text-sm border-teal-500 hover:bg-teal-400 hover:text-white transition duration-200 rounded-3xl"
-        @click="onDelete()"
+        @click.stop="onDelete()"
       >
         Delete
       </button>
