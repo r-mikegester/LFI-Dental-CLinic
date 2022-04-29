@@ -33,28 +33,27 @@ onMounted(async () => {
   pageIsLoading.value = false;
 });
 
-const onItemClicked = (uid) => {
+const onItemClicked = (newItemClicked) => {
+  const lastItemClicked = messageItems.value.find((message) => message.clicked);
+  if (lastItemClicked === newItemClicked) {
+    selectedItem.subject = "";
+    selectedItem.body = "";
+
+    messageItems.value = messageItems.value.map((message) => ({
+      ...message,
+      clicked: false,
+    }));
+    return;
+  }
+
   messageItems.value = messageItems.value.map((message) => {
-    if (message.uid === uid) {
-      selectedItem.subject = message.subject;
-      selectedItem.body = message.body;
-      return {
-        uid: message.uid,
-        senderName: message.senderName,
-        subject: message.subject,
-        body: message.body,
-        createdAtUnixSecs: message.createdAtUnixSecs,
-        clicked: true,
-      };
-    } else
-      return {
-        uid: message.uid,
-        senderName: message.senderName,
-        subject: message.subject,
-        body: message.body,
-        createdAtUnixSecs: message.createdAtUnixSecs,
-        clicked: false,
-      };
+    selectedItem.subject = message.subject;
+    selectedItem.body = message.body;
+
+    return {
+      ...message,
+      clicked: message === newItemClicked ? true : false,
+    };
   });
 };
 
