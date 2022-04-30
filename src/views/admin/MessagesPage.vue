@@ -47,8 +47,12 @@ const onItemClicked = (newItemClicked) => {
   }
 
   messageItems.value = messageItems.value.map((message) => {
-    selectedItem.subject = message.subject;
-    selectedItem.body = message.body;
+    // Assign new message subject and body,
+    // if the current message is the clicked item.
+    if (message === newItemClicked) {
+      selectedItem.subject = message.subject;
+      selectedItem.body = message.body;
+    }
 
     return {
       ...message,
