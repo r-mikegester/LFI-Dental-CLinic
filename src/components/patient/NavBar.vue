@@ -37,11 +37,14 @@ const dentalServicesMenuIsVisible = ref(false);
         class="font-medium hidden lg:relative lg:flex lg:justify-between lg:items-center lg:gap-8 lg:w-auto"
       >
         <li class="my-2 ml-6 lg:m-0">
-          <RouterLink :to="{ name: 'Home' }">Home</RouterLink>
+          <RouterLink :to="{ name: 'Home' }" class="hover:text-teal-500">
+            Home
+          </RouterLink>
         </li>
         <li class="mb-2 ml-6 lg:m-0">
           <button
             type="button"
+            class="hover:text-teal-500"
             @click="dentalServicesMenuIsVisible = !dentalServicesMenuIsVisible"
           >
             Dental Services
@@ -83,15 +86,25 @@ const dentalServicesMenuIsVisible = ref(false);
           </ul>
         </li>
         <li class="mb-2 ml-6 lg:m-0">
-          <RouterLink :to="{ name: 'Appointments Page' }">
+          <RouterLink
+            :to="{ name: 'Appointments Page' }"
+            class="hover:text-teal-500"
+          >
             Set an Appointment
           </RouterLink>
         </li>
         <li class="mb-2 ml-6 lg:m-0">
-          <RouterLink :to="{ name: 'About Page' }">About Us</RouterLink>
+          <RouterLink :to="{ name: 'About Page' }" class="hover:text-teal-500">
+            About Us
+          </RouterLink>
         </li>
         <li class="mb-2 ml-6 lg:m-0">
-          <RouterLink :to="{ name: 'Contact Page' }">Contact Us</RouterLink>
+          <RouterLink
+            :to="{ name: 'Contact Page' }"
+            class="hover:text-teal-500"
+          >
+            Contact Us
+          </RouterLink>
         </li>
       </ul>
 
