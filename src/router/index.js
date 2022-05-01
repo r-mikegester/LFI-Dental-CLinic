@@ -29,6 +29,43 @@ const router = createRouter({
       name: "Contact Page",
       component: () => import("../views/ContactPage.vue"),
     },
+    /* Static pages: Dental Services */
+    {
+      path: "/services/cosmetic-surgery",
+      name: "Cosmetic Surgery Page",
+      component: () =>
+        import("../views/patient/Dental Services/CosmeticSurgeryPage.vue"),
+    },
+    {
+      path: "/services/general-dentistry",
+      name: "General Dentistry Page",
+      component: () =>
+        import("../views/patient/Dental Services/GeneralDentistryPage.vue"),
+    },
+    {
+      path: "/services/oral-surgery",
+      name: "Oral Surgery Page",
+      component: () =>
+        import("../views/patient/Dental Services/OralSurgeryPage.vue"),
+    },
+    {
+      path: "/services/orthodontics",
+      name: "Orthodontics Page",
+      component: () =>
+        import("../views/patient/Dental Services/OrthodonticsPage.vue"),
+    },
+    {
+      path: "/services/pediatric-dentistry",
+      name: "Pediatric Dentistry Page",
+      component: () =>
+        import("../views/patient/Dental Services/PediatricDentistryPage.vue"),
+    },
+    {
+      path: "/services/prosthodontics",
+      name: "Prosthodontics Page",
+      component: () =>
+        import("../views/patient/Dental Services/ProsthodonticsPage.vue"),
+    },
     /* Admin-only pages */
     {
       path: "/admin",
