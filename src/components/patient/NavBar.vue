@@ -8,7 +8,7 @@ const dentalServicesMenuIsVisible = ref(false);
 </script>
 
 <template>
-  <nav class="sticky top-0 bg-white shadow">
+  <nav class="sticky top-0 bg-white shadow z-10">
     <div class="max-w-7xl mx-auto px-6 py-3 lg:flex lg:justify-between">
       <!-- Website logo -->
       <div class="flex justify-between">
