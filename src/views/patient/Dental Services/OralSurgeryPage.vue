@@ -1,17 +1,11 @@
 <script setup>
 import BaseLayout from "../../../components/patient/BaseLayout.vue";
-import heroImage from "../../../assets/img/bgs/ContactUs.jpg";
+import HeroSection from "../../../components/patient/HeroSection.vue";
 </script>
 
 <template>
   <BaseLayout>
-    <!-- Hero section -->
-    <section
-      class="h-[40vh] bg-cover bg-center"
-      :style="{
-        backgroundImage: `url(${heroImage})`,
-      }"
-    ></section>
+    <HeroSection>Dental Services</HeroSection>
     <!-- Page title -->
     <section class="bg-teal-500 py-3">
       <h3 class="font-bold text-3xl text-white text-center">Oral Surgery</h3>
