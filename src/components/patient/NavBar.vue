@@ -44,7 +44,7 @@ const dentalServicesMenuIsVisible = ref(false);
         <li class="mb-2 ml-6 lg:m-0">
           <button
             type="button"
-            class="hover:text-teal-500"
+            class="font-medium hover:text-teal-500"
             @click="dentalServicesMenuIsVisible = !dentalServicesMenuIsVisible"
           >
             Dental Services
@@ -119,6 +119,7 @@ const dentalServicesMenuIsVisible = ref(false);
         <li class="mb-2 ml-6 lg:m-0">
           <button
             type="button"
+            class="font-medium"
             @click="dentalServicesMenuIsVisible = !dentalServicesMenuIsVisible"
           >
             Dental Services
