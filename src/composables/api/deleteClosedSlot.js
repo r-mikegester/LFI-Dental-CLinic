@@ -5,7 +5,7 @@ import backendBaseURL from "./backendBaseURL";
 export default async (slotSeconds) => {
   if (!slotSeconds) throw new ParameterError(slotSeconds);
 
-  const link = `${backendBaseURL}/schedules/closed/${slotSeconds}`;
+  const link = `${backendBaseURL}/timeslots/closed/${slotSeconds}`;
   const response = await fetch(link, {
     method: "DELETE",
   });
