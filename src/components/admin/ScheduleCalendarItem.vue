@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot";
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
 const scheduleCalendar = useScheduleCalendarStore();
 
@@ -13,12 +14,9 @@ const isColored = ref(false);
 // Color our item when it is displayed, if applicable.
 onMounted(() => {
   // Check if our date is in the list of closed slots.
-  scheduleCalendar.getClosedSlots.forEach((timeSlot) => {
-    const date = new Date(parseInt(timeSlot) * 1000).getDate();
+  scheduleCalendar.getClosedSlots.forEach((timeslot) => {
     // If it is, add fill color to our item.
-    if (date === props.date) {
-      isColored.value = true;
-    }
+    if (getDateOfTimeslot(timeslot) === props.date) isColored.value = true;
   });
 });
 
