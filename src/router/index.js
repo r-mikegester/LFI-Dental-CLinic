@@ -22,6 +22,23 @@ const router = createRouter({
       path: "/appointments",
       name: "Appointments Page",
       component: () => import("../views/AppointmentsPage.vue"),
+      children: [
+        {
+          path: "",
+          name: "Appointments Page Choose Timeslot",
+          component: () => import("../components/booking/ChooseTimeslot.vue"),
+        },
+        {
+          path: "login",
+          name: "Appointments Page Login",
+          component: () => import("../components/booking/LoginAccount.vue"),
+        },
+        {
+          path: "create-account",
+          name: "Appointments Page Create Account",
+          component: () => import("../components/booking/CreateAccount.vue"),
+        },
+      ],
     },
 
     {
