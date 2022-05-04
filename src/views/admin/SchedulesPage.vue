@@ -4,7 +4,8 @@ import BaseLayout from "../../components/admin/BaseLayout.vue";
 import CalendarWidget from "../../components/admin/CalendarWidget.vue";
 import ScheduleCalendarItem from "../../components/admin/ScheduleCalendarItem.vue";
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
-import TimeSlotsWidget from "../../components/admin/TimeSlotsWidget.vue";
+import TimeslotsWidget from "../../components/admin/TimeslotsWidget.vue";
+import SchedulesPageTimeslotsItem from "../../components/admin/SchedulesPageTimeslotsItem.vue";
 
 const selected = reactive({
   month: "",
@@ -143,12 +144,68 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
               @click="onCalendarItemSelected(calendarItem)"
             />
           </CalendarWidget>
-          <TimeSlotsWidget
-            v-if="selected.date !== ''"
-            :date="selected.date"
-            :month="selected.month"
-            :year="selected.year"
-          />
+          <TimeslotsWidget v-if="selected.date !== ''">
+            <template #morning-slots>
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="8"
+                minutes="0"
+              />
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="9"
+                minutes="0"
+              />
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="10"
+                minutes="0"
+              />
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="11"
+                minutes="0"
+              />
+            </template>
+            <template #afternoon-slots>
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="13"
+                minutes="30"
+              />
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="15"
+                minutes="0"
+              />
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="16"
+                minutes="30"
+              />
+              <SchedulesPageTimeslotsItem
+                :date="selected.date"
+                :month="selected.month"
+                :year="selected.year"
+                hours="18"
+                minutes="0"
+              />
+            </template>
+          </TimeslotsWidget>
         </div>
       </div>
       <div class="text-2xl font-bold text-center" v-else>
