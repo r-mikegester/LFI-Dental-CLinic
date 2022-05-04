@@ -1,3 +1,4 @@
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -12,3 +13,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
+
+const auth = getAuth();
+export const authStateInitialized = new Promise((resolve) => {
+  const unsubscribe = onAuthStateChanged(auth, () => {
+    unsubscribe();
+    resolve();
+  });
+});
