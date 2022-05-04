@@ -87,7 +87,7 @@ const dentalServicesMenuIsVisible = ref(false);
         </li>
         <li class="mb-2 ml-6 lg:m-0">
           <RouterLink
-            :to="{ name: 'Appointments Page' }"
+            :to="{ name: 'Appointments Page Choose Timeslot' }"
             class="hover:text-teal-500"
           >
             Set an Appointment
