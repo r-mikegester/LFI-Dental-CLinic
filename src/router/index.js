@@ -22,6 +22,9 @@ const router = createRouter({
       path: "/appointments",
       name: "Appointments Page",
       component: () => import("../views/AppointmentsPage.vue"),
+      redirect: {
+        name: "Appointments Page Choose Timeslot",
+      },
       children: [
         {
           path: "",
