@@ -5,37 +5,37 @@
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Sunday
+        Sun
       </div>
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Monday
+        Mon
       </div>
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Tuesday
+        Tue
       </div>
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Wednesday
+        Wed
       </div>
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Thursday
+        Thu
       </div>
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Friday
+        Fri
       </div>
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
-        Saturday
+        Sat
       </div>
     </div>
     <!-- Dates -->
