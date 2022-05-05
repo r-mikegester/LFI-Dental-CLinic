@@ -1,8 +1,6 @@
-import { Timestamp } from "@firebase/firestore";
 import { defineStore } from "pinia";
 import getUnavailableSlots from "../composables/api/getUnavailableSlots";
-import getFirstDateOfMonth from "../composables/calendar/getFirstDateOfMonth";
-import getFirstDateOfNextMonth from "../composables/calendar/getFirstDateOfNextMonth";
+import getMonthIndex from "../composables/calendar/getMonthIndex";
 import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth";
 import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth";
 
@@ -46,16 +44,9 @@ export const useSetAppointmentCalendarStore = defineStore({
       this.dayCount = getNumOfDaysInMonth(monthName, year);
       this.offset = getOffsetFromFirstDayOfMonth(monthName, year);
 
-      const startTime = Timestamp.fromDate(
-        getFirstDateOfMonth(monthName, year)
-      );
-      const endTime = Timestamp.fromDate(
-        getFirstDateOfNextMonth(monthName, year)
-      );
-
       this.unavailableSlots = await getUnavailableSlots(
-        startTime.seconds,
-        endTime.seconds
+        year,
+        getMonthIndex(monthName) + 1
       );
     },
   },
