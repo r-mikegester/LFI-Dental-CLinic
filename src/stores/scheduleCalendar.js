@@ -1,8 +1,6 @@
-import { Timestamp } from "@firebase/firestore";
 import { defineStore } from "pinia";
 import getClosedSlots from "../composables/api/getClosedSlots";
-import getFirstDateOfMonth from "../composables/calendar/getFirstDateOfMonth";
-import getFirstDateOfNextMonth from "../composables/calendar/getFirstDateOfNextMonth";
+import getMonthIndex from "../composables/calendar/getMonthIndex";
 import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth";
 import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth";
 
@@ -27,16 +25,9 @@ export const useScheduleCalendarStore = defineStore({
       this.dayCount = getNumOfDaysInMonth(monthName, year);
       this.offset = getOffsetFromFirstDayOfMonth(monthName, year);
 
-      const startTime = Timestamp.fromDate(
-        getFirstDateOfMonth(monthName, year)
-      );
-      const endTime = Timestamp.fromDate(
-        getFirstDateOfNextMonth(monthName, year)
-      );
-
       this.closedSlots = await getClosedSlots(
-        startTime.seconds,
-        endTime.seconds
+        year,
+        getMonthIndex(monthName) + 1
       );
     },
     pushClosedSlot(timeSlot) {
