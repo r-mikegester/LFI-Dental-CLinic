@@ -1,26 +1,10 @@
 <script setup>
 import BaseLayout from "../../components/patient/BaseLayout.vue";
+import HeroSection from "../../components/patient/HeroSection.vue";
 </script>
 <template>
   <BaseLayout>
-    <div>
-      <div id="hero" class="bg-fixed relative">
-        <h5
-          class="absolute z-30 justify-center text-5xl font-bold text-center text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        >
-          My Account
-        </h5>
-        <img
-          src="../../assets/img/bgs/ContactUs.jpg"
-          class="w-full bg-fixed object-fit-cover object-center filter brightness-50"
-          style="
-            height: 50vh;
-            background-position: center;
-            background-size: 100% 100%;
-          "
-        />
-      </div>
-    </div>
+    <HeroSection>My Account</HeroSection>
     <div class="py-5 px-24">
       <div class="relative overflow-x-auto py-10 sm:rounded-lg">
         <div class="p-4">
