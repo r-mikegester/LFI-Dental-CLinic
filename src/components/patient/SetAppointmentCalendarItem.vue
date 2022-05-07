@@ -1,9 +1,14 @@
 <script setup>
 import { computed, ref, watchEffect } from "vue";
+import { DateTime } from "luxon";
+import getMonthIndex from "../../composables/calendar/getMonthIndex";
 import getTimeslots from "../../composables/calendar/getTimeslots";
+import getDateTomorrow from "../../composables/calendar/getDateTomorrow";
 
 const props = defineProps({
   date: Number,
+  month: String,
+  year: String,
   isSelected: Boolean,
   closedSlotCount: Number,
   takenSlotCount: Number,
@@ -27,6 +32,24 @@ watchEffect(() => {
   isEntireDayClosed.value = false;
   isSlotFull.value = false;
 
+  const month = getMonthIndex(props.month) + 1;
+  const isoDateStrCurrent = DateTime.fromObject(
+    {
+      year: parseInt(props.year),
+      month,
+      day: props.date,
+    },
+    {
+      timezone: "Asia/Manila",
+    }
+  ).toISO();
+  const dateCurrent = new Date(isoDateStrCurrent);
+  const dateTomorrow = getDateTomorrow();
+  if (dateCurrent.getTime() < dateTomorrow.getTime()) {
+    isEntireDayClosed.value = true;
+    return;
+  }
+
   if (props.closedSlotCount === getTimeslots().length) {
     isEntireDayClosed.value = true;
     return;
@@ -44,6 +67,8 @@ watchEffect(() => {
       'bg-teal-500/50': isSelected,
       'bg-gray-300': isEntireDayClosed && !isSelected,
       'border-gray-600': isEntireDayClosed && !isSelected,
+      'bg-sky-600': isSlotFull,
+      'text-white': isSlotFull,
     }"
   >
     {{ date }}
