@@ -1,7 +1,5 @@
 <script setup>
 import { ref, watchEffect } from "vue";
-import addClosedSlot from "../../composables/api/addClosedSlot";
-import deleteClosedSlot from "../../composables/api/deleteClosedSlot";
 import getMonthIndex from "../../composables/calendar/getMonthIndex";
 import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject";
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
@@ -15,7 +13,7 @@ const props = defineProps({
 });
 
 const scheduleCalendar = useScheduleCalendarStore();
-const isColored = ref(false);
+const status = ref(null);
 const timeInUnixSecs = ref(0);
 
 watchEffect(() => {
@@ -30,46 +28,56 @@ watchEffect(() => {
   );
 
   // Assume that we are not in the list of closed slots.
-  isColored.value = false;
+  status.value = null;
 
   // Check each timestamp in the list of closed slots.
-  scheduleCalendar.getClosedSlots.forEach((slot) => {
+  scheduleCalendar.getUnavailableSlots.forEach((unavailableSlot) => {
     // If our timestamp is in the list, color our time slot.
-    if (slot === timeInUnixSecs.value.toString()) {
-      isColored.value = true;
+    if (
+      unavailableSlot.timeslot === timeInUnixSecs.value.toString() &&
+      unavailableSlot.status
+    ) {
+      status.value = unavailableSlot.status;
     }
   });
 });
 
 const onClick = async () => {
-  // Toggle closed date in the database, then synchronize
-  // the state with our store.
-  if (isColored.value) {
-    await deleteClosedSlot(timeInUnixSecs.value);
-    scheduleCalendar.removeClosedSlot(timeInUnixSecs.value.toString());
+  // Disable click event if slot is taken.
+  if (status.value === "taken") return;
 
-    isColored.value = false;
+  if (status.value === "closed") {
+    // Toggle closed date in the database, then synchronize
+    // the state with our store.
+    await scheduleCalendar.removeClosedSlot(timeInUnixSecs.value.toString());
+    status.value = null;
   } else {
-    await addClosedSlot(timeInUnixSecs.value);
-    scheduleCalendar.pushClosedSlot(timeInUnixSecs.value.toString());
-
-    isColored.value = true;
+    await scheduleCalendar.pushClosedSlot(timeInUnixSecs.value.toString());
+    status.value = "closed";
   }
 };
 </script>
 
 <template>
   <div
-    class="border border-teal-500 text-center py-1"
-    :class="{ 'bg-teal-500': isColored, 'text-white': isColored }"
+    class="border border-teal-500 text-center py-1 flex items-center justify-center"
+    :class="{
+      'bg-teal-500': status === 'closed',
+      'border-sky-600': status === 'taken',
+      'bg-sky-600': status === 'taken',
+      'text-white': status === 'closed' || status === 'taken',
+    }"
     @click="onClick()"
   >
-    <span v-if="hours > 12">{{ hours - 12 }}</span>
-    <span v-else>{{ hours }}</span
-    >:<span v-if="minutes < 10">0{{ minutes }}</span>
-    <span v-else>{{ minutes }}</span>
+    <div>
+      <span v-if="hours > 12">{{ hours - 12 }}</span>
+      <span v-else>{{ hours }}</span>
+      <span>:</span>
+      <span v-if="minutes < 10">0{{ minutes }}</span>
+      <span v-else>{{ minutes }}</span>
 
-    <span v-if="hours > 12"> pm</span>
-    <span v-else> am</span>
+      <span v-if="hours > 12"> pm</span>
+      <span v-else> am</span>
+    </div>
   </div>
 </template>
