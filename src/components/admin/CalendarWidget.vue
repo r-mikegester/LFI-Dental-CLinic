@@ -1,7 +1,7 @@
 <template>
   <div class="border border-teal-500 rounded-xl max-w-fit">
     <!-- Days -->
-    <div class="grid grid-cols-[repeat(7,_minmax(0,_7rem))] gap-4 pt-4 px-4">
+    <div class="grid grid-cols-[repeat(7,_minmax(0,_7rem))] md:gap-4 pt-4 px-4">
       <div
         class="text-center text-ellipsis overflow-hidden border border-teal-500"
       >
@@ -40,7 +40,7 @@
     </div>
     <!-- Dates -->
     <div
-      class="grid grid-cols-[repeat(7,_minmax(0,_7rem))] gap-4 p-4 auto-rows-[5rem]"
+      class="grid grid-cols-[repeat(7,_minmax(0,_7rem))] md:gap-4 p-4 md:auto-rows-[5rem]"
     >
       <slot></slot>
     </div>
