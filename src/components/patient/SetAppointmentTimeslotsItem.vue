@@ -15,9 +15,8 @@ defineProps({
       'bg-gray-300': isClosed,
       'border-gray-600': isClosed,
       'bg-sky-600': isTaken,
-      'text-white': isTaken,
       'bg-teal-500': isSelected,
-      'text-white': isSelected,
+      'text-white': isTaken || isSelected,
     }"
   >
     <span v-if="hours > 12">{{ hours - 12 }}</span>

@@ -10,6 +10,9 @@ import getTimeslots from "../../composables/calendar/getTimeslots";
 import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject";
 import getMonthIndex from "../../composables/calendar/getMonthIndex";
 import BoxDialog from "../../components/dialogs/BoxDialog.vue";
+import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
+import getDateTomorrow from "../../composables/calendar/getDateTomorrow";
+import getDate from "../../composables/calendar/getDate";
 
 /* Logic for reactive calendar items */
 const selected = reactive({
@@ -74,6 +77,15 @@ const onCalendarItemClicked = (newSelectedItem) => {
     getTimeslots().length
   )
     return;
+
+  // Don't allow clicking if the calendar item is today, or in the past.
+  const date = getDate(
+    parseInt(selected.year),
+    getMonthIndex(selected.month) + 1,
+    newSelectedItem.date
+  );
+  const dateTomorrow = getDateTomorrow();
+  if (date.getTime() < dateTomorrow.getTime()) return;
 
   const currSelectedItem = calendarItems.value.find(
     (calendarItem) => calendarItem.selected === true
@@ -214,12 +226,20 @@ const selectedTimeslot = computed(() => {
   else return "";
 });
 
-/* Logic for Have an Account Dialog */
+/* Logic for saving choices and Account Dialog */
+const appointmentDetailsStore = useAppointmentDetailsStore();
 const isAccountExistsDialogVisible = ref(false);
 
-const onNext = () => {
+const onGoNext = () => {
+  appointmentDetailsStore.setDetails(
+    selectedService.value,
+    selectedTimeslot.value
+  );
+
   isAccountExistsDialogVisible.value = true;
 };
+
+const selectedService = ref("");
 </script>
 
 <template>
@@ -298,6 +318,8 @@ const onNext = () => {
             v-for="calendarItem in calendarItems"
             :key="calendarItem.date"
             :date="calendarItem.date"
+            :month="selected.month"
+            :year="selected.year"
             :isSelected="calendarItem.selected"
             :closedSlotCount="calendarItem.closedSlotCount"
             :takenSlotCount="calendarItem.takenSlotCount"
@@ -331,11 +353,36 @@ const onNext = () => {
             />
           </template>
         </TimeslotsWidget>
-        <div v-if="selectedTimeslot" class="flex justify-end mt-6">
+        <div
+          class="flex justify-end mt-6 mb-3 border border-teal-600 px-4 py-2 rounded-full md:w-72"
+          v-if="selectedTimeslot"
+        >
+          <select class="w-full bg-transparent" v-model="selectedService">
+            <option value="" selected>Choose a service ...</option>
+            <option
+              title="A thorough examination of your oral health combined with a scale and clean and can be conducted by a dentist or a dental hygienist."
+            >
+              Fluoride Treatment
+            </option>
+            <option>Oral Prophylaxis</option>
+            <option>Orthodontic Braces</option>
+            <option>Tooth Extraction</option>
+            <option>Tooth Restoration</option>
+            <option>Tooth Whitening</option>
+            <option>Complete Denture</option>
+            <option>Partial Denture</option>
+            <option>Jacket Crown</option>
+            <option>Fixed Bridge</option>
+          </select>
+        </div>
+        <div
+          v-if="selectedTimeslot && selectedService"
+          class="flex justify-end mt-6"
+        >
           <button
             type="button"
             class="px-8 py-2 rounded-full text-white bg-teal-500 hover:bg-teal-400 transition duration-200"
-            @click="onNext()"
+            @click="onGoNext()"
           >
             Next
           </button>
@@ -360,13 +407,13 @@ const onNext = () => {
       <div class="grid gap-2 mb-3">
         <RouterLink
           class="border border-sky-600 hover:border-sky-500 text-center bg-sky-600 hover:bg-sky-500 transition duration-200 text-white font-semibold py-1"
-          :to="{ name: 'Appointments Page Login' }"
+          :to="{ name: 'Appointments Page Create Account' }"
         >
           Create an Account
         </RouterLink>
         <RouterLink
           class="border border-sky-600 hover:bg-sky-100 font-medium transition duration-300 text-center py-1"
-          :to="{ name: 'Appointments Page Create Account' }"
+          :to="{ name: 'Appointments Page Login' }"
         >
           I have an account
         </RouterLink>
