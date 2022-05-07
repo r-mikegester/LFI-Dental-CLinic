@@ -14,9 +14,13 @@ const isColored = ref(false);
 // Color our item when it is displayed, if applicable.
 onMounted(() => {
   // Check if our date is in the list of closed slots.
-  scheduleCalendar.getClosedSlots.forEach((timeslot) => {
+  scheduleCalendar.getUnavailableSlots.forEach((unavailableSlot) => {
     // If it is, add fill color to our item.
-    if (getDateOfTimeslot(timeslot) === props.date) isColored.value = true;
+    if (
+      getDateOfTimeslot(unavailableSlot.timeslot) === props.date &&
+      unavailableSlot.status === "closed"
+    )
+      isColored.value = true;
   });
 });
 
@@ -28,10 +32,10 @@ scheduleCalendar.$subscribe((mutation, state) => {
   isColored.value = false;
 
   // Check if our state is ni the list of closed slots.
-  state.closedSlots.forEach((timeSlot) => {
-    const date = new Date(parseInt(timeSlot) * 1000).getDate();
+  state.unavailableSlots.forEach((unavailableSlot) => {
+    const date = new Date(parseInt(unavailableSlot.timeslot) * 1000).getDate();
     // If it is, add fill color to our item.
-    if (date === props.date) {
+    if (date === props.date && unavailableSlot.status === "closed") {
       isColored.value = true;
     }
   });
