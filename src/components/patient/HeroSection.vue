@@ -6,7 +6,7 @@
       class="absolute top-0 left-0 w-full h-full object-cover blur-sm"
     />
     <div
-      class="absolute top-0 left-0 h-full w-full flex items-center justify-center uppercase text-4xl text-white font-bold"
+      class="text-center absolute top-0 left-0 h-full w-full flex items-center justify-center uppercase text-4xl text-white font-bold"
     >
       <slot></slot>
     </div>
