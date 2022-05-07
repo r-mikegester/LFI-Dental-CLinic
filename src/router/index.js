@@ -3,6 +3,7 @@ import HomePage from "../views/HomePage.vue";
 import redirectToAdminLoginIfNotLoggedInUser from "../composables/route-validation/redirectToAdminLoginIfNotLoggedInUser";
 import redirectToAdminLoginIfNotAdminUser from "../composables/route-validation/redirectToAdminLoginIfNotAdminUser";
 import redirectToAdminHomePageIfAdminUser from "../composables/route-validation/redirectToAdminHomePageIfAdminUser";
+import redirectToAppointmentsPageIfAppointmentDetailsIsNull from "../composables/route-validation/redirectToAppointmentsPageIfAppointmentDetailsIsNull";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,11 +36,19 @@ const router = createRouter({
           path: "login",
           name: "Appointments Page Login",
           component: () => import("../components/booking/LoginAccount.vue"),
+          beforeEnter: [redirectToAppointmentsPageIfAppointmentDetailsIsNull],
         },
         {
           path: "create-account",
           name: "Appointments Page Create Account",
           component: () => import("../components/booking/CreateAccount.vue"),
+          beforeEnter: [redirectToAppointmentsPageIfAppointmentDetailsIsNull],
+        },
+        {
+          path: "medical-chart",
+          name: "Appointments Page Medical Chart",
+          component: () =>
+            import("../components/booking/FIllInMedicalChart.vue"),
         },
       ],
     },
@@ -187,6 +196,12 @@ const router = createRouter({
         redirectToAdminLoginIfNotLoggedInUser,
         redirectToAdminLoginIfNotAdminUser,
       ],
+    },
+    /* Patient-only pages */
+    {
+      path: "/patient/history",
+      name: "Patient Appointment History Page",
+      component: () => import("../views/patient/MyHistoryPage.vue"),
     },
   ],
 });
