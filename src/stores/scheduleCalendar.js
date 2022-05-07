@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
-import getClosedSlots from "../composables/api/getClosedSlots";
+import addClosedSlot from "../composables/api/addClosedSlot";
+import deleteClosedSlot from "../composables/api/deleteClosedSlot";
+import getUnavailableSlots from "../composables/api/getUnavailableSlots";
 import getMonthIndex from "../composables/calendar/getMonthIndex";
 import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth";
 import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth";
@@ -11,12 +13,12 @@ export const useScheduleCalendarStore = defineStore({
     year: "",
     dayCount: 0,
     offset: 0,
-    closedSlots: [],
+    unavailableSlots: [],
   }),
   getters: {
     getDayCount: (state) => state.dayCount,
     getOffset: (state) => state.offset,
-    getClosedSlots: (state) => state.closedSlots,
+    getUnavailableSlots: (state) => state.unavailableSlots,
   },
   actions: {
     async setMonthAndYear(monthName, year) {
@@ -25,29 +27,33 @@ export const useScheduleCalendarStore = defineStore({
       this.dayCount = getNumOfDaysInMonth(monthName, year);
       this.offset = getOffsetFromFirstDayOfMonth(monthName, year);
 
-      this.closedSlots = await getClosedSlots(
+      this.unavailableSlots = await getUnavailableSlots(
         year,
         getMonthIndex(monthName) + 1
       );
     },
-    pushClosedSlot(timeSlot) {
+    async pushClosedSlot(timeslot) {
       if (this.month === "" && this.year === "") {
         return;
       }
 
-      this.closedSlots.push(timeSlot);
-      console.log("added:", timeSlot);
+      this.unavailableSlots.push({ timeslot, status: "closed" });
+      await addClosedSlot(timeslot);
+      console.log("added:", timeslot);
     },
-    removeClosedSlot(timeSlot) {
+    async removeClosedSlot(timeslot) {
       if (this.month === "" && this.year === "") {
         return;
       }
 
-      this.closedSlots = this.closedSlots.filter((slot) => {
-        if (slot !== timeSlot) return true;
-        return false;
-      });
-      console.log("removed:", timeSlot);
+      this.unavailableSlots = this.unavailableSlots.filter(
+        (unavailableSlot) => {
+          if (unavailableSlot.timeslot !== timeslot) return true;
+          return false;
+        }
+      );
+      await deleteClosedSlot(timeslot);
+      console.log("removed:", timeslot);
     },
   },
 });
