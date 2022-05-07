@@ -90,9 +90,12 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
 
 <template>
   <BaseLayout>
-    <div class="px-6">
+    <div class="lg:px-6">
       <h1 class="text-2xl font-semibold mb-3">Schedules</h1>
-      <div class="grid grid-cols-[8rem_auto] mx-auto" v-if="isFinishLoading">
+      <div
+        class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto"
+        v-if="isFinishLoading"
+      >
         <div>
           <div class="border border-teal-500 px-2 py-1 rounded-full mb-3">
             <select
@@ -127,7 +130,7 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
             </select>
           </div>
         </div>
-        <div class="pl-4">
+        <div>
           <!-- Calendar -->
           <CalendarWidget>
             <div
