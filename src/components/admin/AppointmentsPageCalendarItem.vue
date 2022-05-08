@@ -4,6 +4,7 @@ import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot";
 import getDate from "../../composables/calendar/getDate";
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
 import getMonthIndex from "../../composables/calendar/getMonthIndex";
+import getDateToday from "../../composables/calendar/getDateToday";
 const scheduleCalendar = useScheduleCalendarStore();
 
 const props = defineProps({
@@ -18,21 +19,8 @@ const isInThePast = ref(false);
 
 onMounted(() => {
   // Determine if item is in the past.
-  const date = new Date();
-  const month = parseInt(
-    date.toLocaleString("en-us", {
-      timeZone: "Asia/Manila",
-      month: "numeric",
-    })
-  );
-  const year = date.getFullYear();
-  const day = parseInt(
-    date.toLocaleString("en-us", {
-      timeZone: "Asia/Manila",
-      day: "numeric",
-    })
-  );
-  const dateToday = getDate(year, month, day);
+
+  const dateToday = getDateToday();
   const dateCurrent = getDate(
     parseInt(props.year),
     getMonthIndex(props.month) + 1,
