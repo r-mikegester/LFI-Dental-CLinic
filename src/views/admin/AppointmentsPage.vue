@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import BaseLayout from "../../components/admin/BaseLayout.vue";
 import CalendarWidget from "../../components/admin/CalendarWidget.vue";
 import AppointmentsPageCalendarItem from "../../components/admin/AppointmentsPageCalendarItem.vue";
@@ -7,11 +7,12 @@ import AppointmentsPageAppointmentItem from "../../components/admin/Appointments
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
 import getAllAppointments from "../../composables/api/getAllAppointments";
 import getMonthIndex from "../../composables/calendar/getMonthIndex";
+import getDate from "../../composables/calendar/getDate";
+import { DateTime } from "luxon";
 
 const selected = reactive({
   month: "",
   year: "",
-  date: "",
 });
 const appointmentsList = ref([]);
 
@@ -95,12 +96,58 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
   // Iterate through the list of calendar items, and mark
   // the selected item as selected = true. Everything else
   // is marked selected = false.
-  selected.date = selectedCalendarItem.date;
   calendarItems.value = calendarItems.value.map((calendarItem) => ({
     ...calendarItem,
     selected: calendarItem === selectedCalendarItem ? true : false,
   }));
 };
+
+const selectedDate = computed(() => {
+  const found = calendarItems.value.find(
+    (calendarItem) => calendarItem.selected === true
+  );
+  if (found) return found.date;
+  return "";
+});
+
+// Only show appointments from the selected date.
+const appointmentItemsOnSelectedDate = computed(() => {
+  const todayDate = getDate(
+    parseInt(selected.year),
+    getMonthIndex(selected.month) + 1,
+    parseInt(selectedDate.value)
+  );
+
+  const result = appointmentsList.value.filter((appointmentItem) => {
+    const tempDate = new Date(parseInt(appointmentItem.timeslot) * 1000);
+    const year = tempDate.toLocaleString("en-us", {
+      year: "numeric",
+      timeZone: "Asia/Manila",
+    });
+    const month = tempDate.toLocaleString("en-us", {
+      month: "numeric",
+      timeZone: "Asia/Manila",
+    });
+    const day = tempDate.toLocaleString("en-us", {
+      day: "numeric",
+      timeZone: "Asia/Manila",
+    });
+    console.log(year, month, day);
+
+    const isoDateStr = DateTime.fromObject({
+      year,
+      month,
+      day,
+    }).toISO();
+    const currDate = new Date(isoDateStr);
+
+    if (currDate.getTime() === todayDate.getTime()) return true;
+
+    return false;
+  });
+
+  return result;
+});
 </script>
 
 <template>
@@ -164,7 +211,7 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
             </CalendarWidget>
           </div>
         </div>
-        <div v-if="appointmentsList.length > 0">
+        <div v-if="selectedDate && appointmentItemsOnSelectedDate.length > 0">
           <div
             class="grid grid-cols-4 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700"
           >
@@ -174,7 +221,7 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
             <div>Time</div>
           </div>
           <AppointmentsPageAppointmentItem
-            v-for="appointment in appointmentsList"
+            v-for="appointment in appointmentItemsOnSelectedDate"
             :key="appointment.timeslot"
             :timeslot="appointment.timeslot"
             :service="appointment.service"
