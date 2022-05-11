@@ -1,6 +1,6 @@
 <script setup>
 import FooterSection from "../patients-view/FooterSection.vue";
-import NavBar from "./NavBar.vue";
+import NavBar from "../patients-view/NavBar.vue";
 </script>
 
 <template>
