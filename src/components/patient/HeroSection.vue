@@ -3,10 +3,10 @@
     <img
       src="../../assets/img/bgs/ContactUs.jpg"
       alt="Woman in a dentist chair smiling in front of a dentist"
-      class="absolute top-0 left-0 w-full h-full object-cover blur-sm"
+      class="absolute top-0 left-0 object-cover w-full h-full blur-sm"
     />
     <div
-      class="text-center absolute top-0 left-0 h-full w-full flex items-center justify-center uppercase text-4xl text-white font-bold"
+      class="absolute top-0 left-0 flex items-center justify-center w-full h-full text-4xl font-bold text-center text-white uppercase"
     >
       <slot></slot>
     </div>
