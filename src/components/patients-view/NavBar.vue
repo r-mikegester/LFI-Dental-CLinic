@@ -1,23 +1,24 @@
 <template>
   <div>
     <nav
-      class="z-40 px-6 bg-white shadow-lg text-sky-700 md:flex md:justify-between md:items-center fixed w-full"
+      class="fixed z-40 w-full px-6 bg-white shadow-lg text-sky-700 md:flex md:justify-between md:items-center"
     >
       <div class="flex items-center justify-between">
         <router-link
           to="/"
-          class="text-xl font-bold text-sky-700 md:text-2xl hover:text-indigo-400"
+          class="text-xl font-bold text-sky-700 md:text-2xl hover:text-teal-500"
           ><img
             src="../../assets/img/LFI-trans.png"
             class="inline-flex"
             width="80"
-          />DENTAL CLINIC
+          />
+          LFI DENTAL CLINIC
         </router-link>
         <!-- Mobile menu button -->
         <div @click="toggleNav" class="flex md:hidden">
           <button
             type="button"
-            class="p-1 border-2 rounded text-sky-700 border-sky-700 hover:text-green-500 hover:border-green-500 focus:outline-none focus:text-green-500 focusLborder-green-500"
+            class="p-1 transition-colors duration-200 border-2 rounded text-sky-700 border-sky-700 hover:text-teal-500 hover:border-teal-500 focus:outline-none focus:text-teal-500 focusLborder-teal-500"
           >
             <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
               <path
@@ -34,7 +35,7 @@
         class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
       >
         <router-link
-          class="font-semibold hover:text-green-500"
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
           :to="{ name: 'Home' }"
         >
           Home
@@ -44,49 +45,52 @@
             <!-- Dropdown toggle button -->
             <button
               @click="show = !show"
-              class="flex items-center font-semibold bg-white rounded-md text-sky-700 focus:outline-none hover:text-green-500"
+              class="flex items-center font-semibold transition-colors duration-200 bg-white rounded-md text-sky-700 focus:outline-none hover:text-teal-500"
             >
-              <span class="mr-4 hover:text-green-500">Services</span>
+              <span
+                class="mr-4 transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+                >Dental Services</span
+              >
             </button>
 
             <!-- Dropdown menu -->
             <div
               v-show="show"
-              class="py-2 mt-2 bg-white sm:border-l-2 sm:border-green-500 lg:border-none lg:shadow-md lg:absolute lg:right-0 w-44"
+              class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 md:border-none md:rounded-md lg:border-none lg:shadow-md lg:absolute lg:right-0 w-44"
             >
               <router-link
-                to="/"
-                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                :to="{ name: 'General Dentistry Page' }"
+                class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
               >
                 General Dentistry
               </router-link>
               <router-link
-                to="/"
-                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                :to="{ name: 'Cosmetic Surgery Page' }"
+                class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
               >
                 Cosmetic Surgery
               </router-link>
               <router-link
-                to="/"
-                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                :to="{ name: 'Oral Surgery Page' }"
+                class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
               >
                 Oral Surgery
               </router-link>
               <router-link
-                to="/"
-                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                :to="{ name: 'Orthodontics Page' }"
+                class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
               >
                 Orthodontics
               </router-link>
               <router-link
-                to="/"
-                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                :to="{ name: 'Pediatric Dentistry Page' }"
+                class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
               >
                 Pediatric Dentistry
               </router-link>
               <router-link
-                to="/"
-                class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                :to="{ name: 'Prosthodontics Page' }"
+                class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
               >
                 Prosthodontics
               </router-link>
@@ -94,14 +98,18 @@
           </div>
         </li>
         <router-link
-          class="font-semibold hover:text-green-500"
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
           to="/appointments"
-          >Appointment</router-link
+          >Set an Appointment</router-link
         >
-        <router-link class="font-semibold hover:text-green-500" to="/about"
+        <router-link
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+          to="/about"
           >About Us</router-link
         >
-        <router-link class="font-semibold hover:text-green-500" to="/contact"
+        <router-link
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+          to="/contact"
           >Contact Us</router-link
         >
         <ul
@@ -113,9 +121,10 @@
               <!-- Dropdown toggle button -->
               <button
                 @click="skrr = !skrr"
-                class="flex items-center font-semibold bg-white rounded-md text-sky-700 focus:outline-none hover:text-green-500"
+                class="flex items-center font-semibold transition-colors duration-200 bg-white rounded-md text-sky-700 focus:outline-none hover:text-teal-500 hover:scale-110"
               >
-                <span class="mr-4 hover:text-green-500"
+                <span
+                  class="mr-4 transition-colors duration-200 hover:text-teal-500"
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="w-6 h-6"
@@ -135,29 +144,29 @@
               <!-- Dropdown menu -->
               <div
                 v-show="skrr"
-                class="py-2 mt-2 bg-white rounded-md lg:shadow-xl border-2px sm:shadow-none lg:absolute lg:right-0 w-44"
+                class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 rounded-none md:rounded-md lg:shadow-xl md:border-none sm:shadow-none lg:absolute lg:right-0 w-44"
               >
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   Account Settings
                 </router-link>
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   Medical Chart
                 </router-link>
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   My History
                 </router-link>
                 <router-link
                   to="/"
-                  class="block px-4 py-2 text-sm font-semibold text-sky-700 hover:bg-green-500 hover:text-white"
+                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   Log out
                 </router-link>
