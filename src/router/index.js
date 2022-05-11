@@ -99,6 +99,12 @@ const router = createRouter({
       component: () =>
         import("../views/patient/Dental Services/ProsthodonticsPage.vue"),
     },
+    {
+      path: "/faqs",
+      name: "Frequently Asked Questions",
+      component: () =>
+        import("../views/patient/FrequentlyAskedQuestionsPage.vue"),
+    },
     /* Admin-only pages */
     {
       path: "/admin",
