@@ -5,7 +5,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
   <BaseLayout>
     <!-- Frequently Asked Questions -->
     <section>
-      <div class="z-20 w-full bg-teal-500">
+      <div class="z-20 w-full bg-gradient-to-br from-teal-500 to-sky-700">
         <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8 faqs">
           <h5 class="mb-10 text-5xl font-bold text-center text-white">
             FREQUENTLY ASKED QUESTIONS
@@ -258,7 +258,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
           <div class="flex justify-center">
             <router-link
               :to="{ name: 'Contact Page' }"
-              class="w-56 px-4 py-4 mt-2 text-center transition-colors duration-200 bg-white rounded shadow-lg hover:bg-gray-200"
+              class="w-56 px-4 py-4 mt-10 text-center transition ease-in-out delay-150 bg-white hover:-translate-y-1 hover:scale-110 hover:bg-sky-500 hover:text-white text-sky-700 rounded-md duration-300 ..."
             >
               <button>Ask a Question</button>
             </router-link>
