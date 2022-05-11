@@ -8,6 +8,7 @@ import NavBar from "../patients-view/NavBar.vue";
     class="grid grid-rows-[auto_1fr_auto] min-h-screen text-sky-600 font-[Poppins]"
   >
     <NavBar />
+    <div class="h-20"></div>
     <main>
       <slot></slot>
     </main>
