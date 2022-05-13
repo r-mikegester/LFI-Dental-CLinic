@@ -44,6 +44,13 @@ import { RouterLink } from "vue-router";
             <img src="../../assets/img/nav-calendar.png" class="mr-5" />
             Schedules
           </RouterLink>
+          <RouterLink
+            class="bg-teal-500/40 max-w-xs hover:bg-teal-500/60 transition duration-200 h-40 flex p-4 items-center justify-center text-xl rounded-2xl"
+            :to="{ name: 'Admin Notifications Page' }"
+          >
+            <img src="../../assets/img/nav-calendar.png" class="mr-5" />
+            Notifications
+          </RouterLink>
         </div>
         <!-- Schedules-->
         <div class="pt-8 lg:pt-0 lg:pl-8 flex lg:block xl:flex justify-center">
