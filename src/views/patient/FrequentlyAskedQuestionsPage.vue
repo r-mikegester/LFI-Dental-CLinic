@@ -24,8 +24,8 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
 
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -Yes, at least15 minutes early to fill out essential paperwork and
-              give the staff time to get you all set up
+              Yes, at least 15 minutes early to fill out essential paperwork and
+              give the staff time to get you all set up.
               <span class="text-xl">&rdquo;</span>
             </p>
           </blockquote>
@@ -42,7 +42,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -The possible early signs of dental trouble are: Toothache;
+              The possible early signs of dental trouble are: Toothache;
               Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
               Pain; Mouth Sores; Dry Mouth; Broken, Cracked, Chipped, Lost.
               <span class="text-xl">&rdquo;</span>
@@ -61,7 +61,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -The possible early signs of dental trouble are: Toothache;
+              The possible early signs of dental trouble are: Toothache;
               Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
               Pain; Mouth Sores; Dry Mouth; Broken, Cracked, Chipped, Lost.
               <span class="text-xl">&rdquo;</span>
@@ -80,9 +80,9 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -The best way to keep your teeth white are: carefully brushing
-              your teeth twice a day; Limiting foods that stain your teeth;
-              Avoid Smoking; Regular checkups and cleanings from your dentist.
+              The best way to keep your teeth white are: carefully brushing your
+              teeth twice a day; Limiting foods that stain your teeth; Avoid
+              Smoking; Regular checkups and cleanings from your dentist.
               <span class="text-xl">&rdquo;</span>
             </p>
           </blockquote>
@@ -97,7 +97,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -If you wish to reschedule your appointment, then you first must
+              If you wish to reschedule your appointment, then you first must
               cancel your first schedule 2 days’ prior the scheduled appointment
               and repeat the step you did when you scheduled your first
               appointment.
@@ -115,7 +115,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -We opt to secure our patient’s safety by ensuring that our
+              We opt to secure our patient’s safety by ensuring that our
               procedure is safe; our dentist/stuff is well trained, experienced,
               licensed, fully vaccinated, wearing personal protection gear; and
               we practice proper disposal of hazardous waste materials.
@@ -134,11 +134,11 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -The importance of flossing every day is to ensure that no plaque
+              The importance of flossing every day is to ensure that no plaque
               is building up in the places where your toothbrush can’t reach.
               Plaque contains bacteria that releases an acid that can eat away
               at the outer shell and cause cavities. These are the bacteria that
-              feeds on leftover food in your mouth
+              feeds on leftover food in your mouth.
 
               <span class="text-xl">&rdquo;</span>
             </p>
@@ -155,7 +155,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -L.F.I Dental Clinic does not only gives dental treatment but also
+              L.F.I Dental Clinic does not only gives dental treatment but also
               leading and helping others to know Christ more.
 
               <span class="text-xl">&rdquo;</span>
@@ -173,7 +173,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -No, we don’t accept dental insurance plan.
+              No, we don’t accept dental insurance plan.
 
               <span class="text-xl">&rdquo;</span>
             </p>
@@ -190,7 +190,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -You should have a regular dental visit at least every 6 months or
+              You should have a regular dental visit at least every 6 months or
               as recommended by your dental professional. Regular dental
               check-up is important because they help keep your teeth and gums
               healthy.
@@ -212,7 +212,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -The first dental visit is recommended by 12 months of age, or
+              The first dental visit is recommended by 12 months of age, or
               within 6 months of the first tooth coming in. The first visit
               often lasts 30 to 45 minutes. The visit may include a full exam of
               the teeth, jaws, bite, gums, and oral tissues to check growth and
@@ -233,7 +233,8 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -Cash -E-wallet (G-cash) -Online Banking (BDO bank transfer)
+              We accept cash, E-wallet (with G-cash), and online banking (BDO
+              bank transfer) mode of payment.
 
               <span class="text-xl">&rdquo;</span>
             </p>
@@ -250,7 +251,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
 
-              -Two visits to the dentist to prepare for a dental crown.
+              Two visits to the dentist to prepare for a dental crown.
 
               <span class="text-xl">&rdquo;</span>
             </p>
