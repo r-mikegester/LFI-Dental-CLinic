@@ -1,3 +1,15 @@
+<script setup>
+import { ref } from "vue";
+const showMenu = ref(false);
+const showSettings = ref(false);
+const show = ref(false);
+const skrr = ref(false);
+const toggleNav = () => {
+  showMenu.value = !showMenu.value;
+  showSettings.value = !showSettings.value;
+};
+</script>
+
 <template>
   <div>
     <nav
@@ -178,19 +190,3 @@
     </nav>
   </div>
 </template>
-<script>
-import { ref } from "vue";
-export default {
-  setup() {
-    let showMenu = ref(false);
-    let showSettings = ref(false);
-    let show = ref(false);
-    let skrr = ref(false);
-    const toggleNav = () => (
-      (showMenu.value = !showMenu.value),
-      (showSettings.value = !showSettings.value)
-    );
-    return { showMenu, showSettings, show, skrr, toggleNav };
-  },
-};
-</script>
