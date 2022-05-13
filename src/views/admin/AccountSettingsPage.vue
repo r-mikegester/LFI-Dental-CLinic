@@ -23,7 +23,7 @@ import BaseLayout from "../../components/admin/BaseLayout.vue";
         class="border-b-[1px] border-teal-500 p-4 grid grid-cols-[2fr_4fr_3fr]"
       >
         <div>Name</div>
-        <div>Arni Isidro</div>
+        <div>Jane Doe</div>
         <div class="text-teal-500 hover:text-teal-400 text-right">
           <button>Edit</button>
         </div>
