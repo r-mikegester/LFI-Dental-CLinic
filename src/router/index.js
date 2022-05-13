@@ -101,22 +101,12 @@ const router = createRouter({
     },
     {
       path: "/faqs",
-      name: "Frequently Asked Questions",
+      name: "Frequently Asked Questions Page",
       component: () =>
         import("../views/patient/FrequentlyAskedQuestionsPage.vue"),
     },
     {
-      path: "/myhistory",
-      name: "My History Page",
-      component: () => import("../views/patient/MyHistoryPage.vue"),
-    },
-    {
-      path: "/accountsettings",
-      name: "Account Settings Page",
-      component: () => import("../views/patient/AccountSettings.vue"),
-    },
-    {
-      path: "/404NotFound",
+      path: "/not-found",
       name: "404 Not Found Page",
       component: () => import("../views/patient/404NotFound.vue"),
     },
@@ -265,6 +255,15 @@ const router = createRouter({
       path: "/patient/medical-chart",
       name: "Patient Medical Chart Page",
       component: () => import("../views/patient/MedicalChartPage.vue"),
+      beforeEnter: [
+        redirectToPatientLoginIfNotLoggedInUser,
+        redirectToPatientLoginIfNotPatientUser,
+      ],
+    },
+    {
+      path: "/patient/account-settings",
+      name: "Patient Account Settings Page",
+      component: () => import("../views/patient/AccountSettings.vue"),
       beforeEnter: [
         redirectToPatientLoginIfNotLoggedInUser,
         redirectToPatientLoginIfNotPatientUser,
