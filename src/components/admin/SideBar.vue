@@ -1,12 +1,23 @@
 <script setup>
+import { onMounted } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 import signOut from "../../composables/auth/signOut";
+import { useProfilePictureStore } from "../../stores/profilePicture";
+import { useUserFullnameStore } from "../../stores/userFullname";
 
 const router = useRouter();
 const onLogout = async () => {
   await signOut();
   router.push({ name: "Admin Login Page" });
 };
+
+const profilePictureStore = useProfilePictureStore();
+const userFullnameStore = useUserFullnameStore();
+onMounted(async () => {
+  if (!profilePictureStore.isInitialized)
+    await profilePictureStore.initialize();
+  if (!userFullnameStore.isInitialized) await userFullnameStore.initialize();
+});
 </script>
 
 <template>
@@ -15,8 +26,14 @@ const onLogout = async () => {
   >
     <!-- image -->
     <div class="flex flex-col items-center py-6">
-      <img src="../../assets/img/nav-person.png" class="h-16" />
-      <span>Jane Doe</span>
+      <img
+        :src="profilePictureStore.getDownloadURL"
+        alt="Profile Picture"
+        v-if="profilePictureStore.getDownloadURL"
+        class="h-24 w-24 object-cover rounded-full mb-1"
+      />
+      <img src="../../assets/img/nav-person.png" class="h-16" v-else />
+      <span>{{ userFullnameStore.getFullname }}</span>
     </div>
     <!-- Nav items -->
     <div class="flex flex-col">
