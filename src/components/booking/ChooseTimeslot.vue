@@ -13,6 +13,10 @@ import BoxDialog from "../../components/dialogs/BoxDialog.vue";
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
 import getDateTomorrow from "../../composables/calendar/getDateTomorrow";
 import getDate from "../../composables/calendar/getDate";
+import isSignedIn from "../../composables/auth/isSignedIn";
+import userIsPatient from "../../composables/auth/userIsPatient";
+import newAppointment from "../../composables/api/newAppointment";
+import { useRouter } from "vue-router";
 
 /* Logic for reactive calendar items */
 const selected = reactive({
@@ -230,16 +234,29 @@ const selectedTimeslot = computed(() => {
 const appointmentDetailsStore = useAppointmentDetailsStore();
 const isAccountExistsDialogVisible = ref(false);
 
-const onGoNext = () => {
+const router = useRouter();
+const onGoNext = async () => {
   appointmentDetailsStore.setDetails(
     selectedService.value,
     selectedTimeslot.value
   );
 
-  isAccountExistsDialogVisible.value = true;
+  if (isSignedIn() && (await userIsPatient())) {
+    await newAppointment(
+      appointmentDetailsStore.getSlotSeconds,
+      appointmentDetailsStore.getService
+    );
+    appointmentDetailsStore.$reset;
+    router.push({
+      name: "Patient Appointment History Page",
+    });
+  } else isAccountExistsDialogVisible.value = true;
 };
 
 const selectedService = ref("");
+
+const isErrorDialogVisible = ref(false);
+const errorDialogBody = ref("");
 </script>
 
 <template>
@@ -426,6 +443,28 @@ const selectedService = ref("");
         </button>
       </div>
       <div></div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isErrorDialogVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-1">Login Failed</div>
+    </template>
+    <template #body>
+      <div class="max-w-[32rem] text-justify mb-3">
+        {{ errorDialogBody }}
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="border border-sky-600 px-6 py-1"
+          @click="isErrorDialogVisible = false"
+        >
+          OK
+        </button>
+      </div>
     </template>
   </BoxDialog>
 </template>
