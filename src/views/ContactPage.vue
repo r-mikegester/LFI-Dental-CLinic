@@ -87,7 +87,7 @@ const onSendButton = async () => {
           <input
             class="w-full bg-gray-100 text-sky-700 mt-2 border-2 border-sky-700 p-3 rounded-full focus:outline-none focus:shadow-outline transition duration-200"
             type="text"
-            placeholder="Subject *"
+            placeholder="Email *"
             :class="{
               'bg-gray-300': messageIsSending,
               'pointer-events-none': messageIsSending,
