@@ -4,6 +4,9 @@ import redirectToAdminLoginIfNotLoggedInUser from "../composables/route-validati
 import redirectToAdminLoginIfNotAdminUser from "../composables/route-validation/redirectToAdminLoginIfNotAdminUser";
 import redirectToAdminHomePageIfAdminUser from "../composables/route-validation/redirectToAdminHomePageIfAdminUser";
 import redirectToAppointmentsPageIfAppointmentDetailsIsNull from "../composables/route-validation/redirectToAppointmentsPageIfAppointmentDetailsIsNull";
+import redirectToPatientLoginIfNotPatientUser from "../composables/route-validation/redirectToPatientLoginIfNotPatientUser";
+import redirectToPatientLoginIfNotLoggedInUser from "../composables/route-validation/redirectToPatientLoginIfNotLoggedInUser";
+import redirectToPatientAppointmentHistoryPageIfPatientUser from "../composables/route-validation/redirectToPatientAppointmentHistoryPageIfPatientUser";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +52,7 @@ const router = createRouter({
           name: "Appointments Page Medical Chart",
           component: () =>
             import("../components/booking/FIllInMedicalChart.vue"),
+          beforeEnter: [redirectToAppointmentsPageIfAppointmentDetailsIsNull],
         },
       ],
     },
@@ -140,6 +144,15 @@ const router = createRouter({
       ],
     },
     {
+      path: "/admin/notifications",
+      name: "Admin Notifications Page",
+      component: () => import("../views/admin/NotificationsPage.vue"),
+      beforeEnter: [
+        redirectToAdminLoginIfNotLoggedInUser,
+        redirectToAdminLoginIfNotAdminUser,
+      ],
+    },
+    {
       path: "/admin/patient-records/:uid/medical-chart",
       name: "Admin Medical Chart Page",
       component: () =>
@@ -170,7 +183,7 @@ const router = createRouter({
       ],
     },
     {
-      path: "/admin/patient-records/:uid/procedures",
+      path: "/admin/patient-records/:uid/procedures/:slotSeconds",
       name: "Admin Procedures Page",
       component: () =>
         import("../views/admin/patient-records/ProceduresPage.vue"),
@@ -199,9 +212,43 @@ const router = createRouter({
     },
     /* Patient-only pages */
     {
+      path: "/patient",
+      redirect: {
+        name: "Patient Appointment History Page",
+      },
+    },
+    {
       path: "/patient/history",
       name: "Patient Appointment History Page",
       component: () => import("../views/patient/MyHistoryPage.vue"),
+      beforeEnter: [
+        redirectToPatientLoginIfNotLoggedInUser,
+        redirectToPatientLoginIfNotPatientUser,
+      ],
+    },
+    {
+      path: "/patient/procedure/:timeslot",
+      name: "Patient Procedure Page",
+      component: () => import("../views/patient/ProcedurePage.vue"),
+      beforeEnter: [
+        redirectToPatientLoginIfNotLoggedInUser,
+        redirectToPatientLoginIfNotPatientUser,
+      ],
+    },
+    {
+      path: "/patient/medical-chart",
+      name: "Patient Medical Chart Page",
+      component: () => import("../views/patient/MedicalChartPage.vue"),
+      beforeEnter: [
+        redirectToPatientLoginIfNotLoggedInUser,
+        redirectToPatientLoginIfNotPatientUser,
+      ],
+    },
+    {
+      path: "/patient/login",
+      name: "Patient Login Page",
+      component: () => import("../views/patient/LoginPage.vue"),
+      beforeEnter: [redirectToPatientAppointmentHistoryPageIfPatientUser],
     },
   ],
 });
