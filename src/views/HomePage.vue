@@ -11,7 +11,8 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
         >
           <img
             src="../assets/img/bgs/bg2.jpg"
-            class="w-full shrink bg-contain h-screen md:h-screen"
+            class="w-full shrink object-cover h-[90vh]"
+            style="object-position: top left"
           />
           <div
             class="flex flex-col justify-center items-center md:items-end absolute inset-0 text-center text-white p-10 bg-black opacity-75"
