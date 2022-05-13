@@ -98,7 +98,7 @@ const onItemDeleted = (uid) => {
               <div
                 v-if="selectedItem.subject !== '' && selectedItem.body !== ''"
               >
-                <div class="font-bold">Subject</div>
+                <div class="font-bold">Email</div>
                 <div class="pl-4 mb-3">{{ selectedItem.subject }}</div>
                 <div class="font-bold">Message</div>
                 <div class="pl-4">{{ selectedItem.body }}</div>
