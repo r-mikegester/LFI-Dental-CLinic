@@ -168,8 +168,8 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
 
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              Yes, at least15 minutes early to fill out essential paperwork and
-              give the staff time to get you all set up
+              Yes, at least 15 minutes early to fill out essential paperwork and
+              give the staff time to get you all set up.
               <span class="text-xl">&rdquo;</span>
             </p>
           </blockquote>
