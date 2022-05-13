@@ -17,8 +17,9 @@ const accountCredentials = reactive({
 const isAccountCredentialsValid = computed(() => {
   if (accountCredentials.email === "") return false;
   if (accountCredentials.password === "") return false;
-  if (accountCredentials.password && accountCredentials.password.length < 8)
+  if (accountCredentials.password && accountCredentials.password.length < 8) {
     return false;
+  }
 
   return true;
 });
@@ -30,10 +31,14 @@ const onSignIn = async () => {
   try {
     if (isAccountCredentialsValid.value) {
       await signIn(accountCredentials.email, accountCredentials.password);
-      await newAppointment(
-        appointmentDetailsStore.getSlotSeconds,
-        appointmentDetailsStore.getService
-      );
+      /* Set appointment if there is a queued appointment. */
+      if (appointmentDetailsStore.isInitialized) {
+        await newAppointment(
+          appointmentDetailsStore.getSlotSeconds,
+          appointmentDetailsStore.getService
+        );
+        appointmentDetailsStore.$reset;
+      }
 
       router.push({
         name: "Patient Appointment History Page",
@@ -90,6 +95,10 @@ const errorDialogBody = ref("");
         <button
           type="button"
           class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
+          :class="{
+            'pointer-events-none': !isAccountCredentialsValid,
+            'bg-emerald-200': !isAccountCredentialsValid,
+          }"
           @click="onSignIn()"
         >
           Login
