@@ -1,86 +1,57 @@
 <script setup>
 import BaseLayout from "../../../components/admin//BaseLayout.vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
+import { computed, onMounted, ref } from "vue";
+import getUserAppointments from "../../../composables/api/getUserAppointments";
+import DentalTreatmentsPageAppointmentItem from "../../../components/admin/DentalTreatmentsPageAppointmentItem.vue";
+
+const route = useRoute();
+const patientUid = route.params.uid;
+
+const appointments = ref([]);
+onMounted(async () => {
+  appointments.value = await getUserAppointments(patientUid);
+});
+
+const attendedAppointments = computed(() => {
+  return appointments.value.filter(
+    (appointment) => appointment.attended === true
+  );
+});
 </script>
 <template>
   <BaseLayout>
-    <div class="p-5">
-      <div>
-        <h1 class="text-2xl text-left font-bold pb-20">
-          <RouterLink
-            :to="{ name: 'Admin Patient Records Page', params: { uid: 123 } }"
-            >Patient Records
-          </RouterLink>
-          >
-          <RouterLink
-            :to="{ name: 'Admin Dental Treatments Page', params: { uid: 123 } }"
-            >Dental Treatment
-          </RouterLink>
-        </h1>
-      </div>
-      <div class="justify-center grid-cols-2 gap-2">
-        <button
-          class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm mr-3 hover:bg-teal-500 hover:text-white"
-        >
-          Add Record
-        </button>
-        <button
-          class="border-teal-500 border 1px rounded-full py-1 px-3 text-sm hover:bg-teal-500 hover:text-white"
-        >
-          Save
-        </button>
-      </div>
-      <div
-        class="bg-teal-500/40 p-4 mt-4 grid grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr] font-semibold"
-      >
-        <div>DATE</div>
-        <div>SERVICE</div>
-        <div>PROCEDURE</div>
-        <div>PRICE</div>
-        <div>BALANCE</div>
-        <div>STATUS</div>
-      </div>
-      <div
-        class="grid grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr] mt-20 py-4 border-t-[1px] border-b-[1px] border-teal-500"
-      >
-        <div>February 9,2022</div>
-        <div>Orthodontic Braces</div>
-        <div class="hover:text-sky-500">
-          <RouterLink
-            :to="{ name: 'Admin Procedures Page', params: { uid: 123 } }"
-            >View
-          </RouterLink>
-        </div>
-        <div>1000</div>
-        <div>1000</div>
-        <div>Unpaid</div>
-      </div>
-      <div
-        class="grid grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr] py-4 border-b-[1px] border-teal-500"
-      >
-        <div>January 8,2022</div>
-        <div>Orthodontic Braces</div>
-        <RouterLink
-          :to="{ name: 'Admin Procedures Page', params: { uid: 123 } }"
-          >View
+    <div>
+      <h1 class="text-2xl font-semibold mb-3">
+        <RouterLink :to="{ name: 'Admin Patient Records Page' }">
+          Patient Records
         </RouterLink>
-        <div>1000</div>
-        <div>0</div>
-        <div>Paid</div>
-      </div>
-      <div
-        class="grid grid-cols-[1fr_2fr_2fr_1fr_1fr_1fr] py-4 border-b-[1px] border-teal-500"
-      >
-        <div>December 6,2021</div>
-        <div>Tooth Whitening</div>
+        >
         <RouterLink
-          :to="{ name: 'Admin Procedures Page', params: { uid: 123 } }"
-          >View
+          :to="{
+            name: 'Admin Dental Treatments Page',
+            params: { uid: patientUid },
+          }"
+        >
+          Dental Treatment
         </RouterLink>
-        <div>500</div>
-        <div>0</div>
-        <div>Paid</div>
-      </div>
+      </h1>
     </div>
+    <div
+      class="bg-teal-500/40 p-4 mt-4 gap-4 grid grid-cols-[repeat(2,_minmax(0,_2fr))_repeat(5,_minmax(0,_1fr))] font-semibold"
+    >
+      <div class="overflow-hidden text-ellipsis">DATE</div>
+      <div class="overflow-hidden text-ellipsis">SERVICE</div>
+      <div class="overflow-hidden text-ellipsis">PROCEDURE</div>
+      <div class="overflow-hidden text-ellipsis">PRICE</div>
+      <div class="overflow-hidden text-ellipsis">BALANCE</div>
+      <div class="overflow-hidden text-ellipsis">STATUS</div>
+      <div class="overflow-hidden text-ellipsis">ACTIONS</div>
+    </div>
+    <DentalTreatmentsPageAppointmentItem
+      v-for="appointment in attendedAppointments"
+      :key="appointment.uid"
+      :appointment="appointment"
+    />
   </BaseLayout>
 </template>
