@@ -1,56 +1,132 @@
 <script setup>
 import BaseLayout from "../../../components/admin/BaseLayout.vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
+import { nextTick, onMounted, reactive, ref } from "vue";
+import getUserAppointmentProcedure from "../../../composables/api/procedures/getUserAppointmentProcedure";
+import setUserAppointmentProcedure from "../../../composables/api/procedures/setUserAppointmentProcedure";
+import setProcedureAccessAllowed from "../../../composables/firestore/setProcedureAccessAllowed";
+import setProcedureAccessDisallowed from "../../../composables/firestore/setProcedureAccessDisallowed";
+
+const route = useRoute();
+const patientUid = route.params.uid;
+const slotSeconds = route.params.slotSeconds;
+const procedure = reactive({
+  body: "",
+  visible: null,
+});
+
+const isFinishedLoading = ref(false);
+onMounted(async () => {
+  const appointmentProcedure = await getUserAppointmentProcedure(
+    patientUid,
+    slotSeconds
+  );
+  procedure.visible = appointmentProcedure.procedureVisible;
+  procedure.body = appointmentProcedure.procedure;
+  await nextTick();
+
+  isFinishedLoading.value = true;
+});
+
+const isEditingMode = ref(false);
+const textarea = ref();
+
+const onEdit = async () => {
+  isEditingMode.value = true;
+  await nextTick();
+  textarea.value.focus();
+};
+
+const onSave = async () => {
+  isEditingMode.value = false;
+  await setUserAppointmentProcedure(patientUid, slotSeconds, procedure.body);
+};
+
+const onAllowAccess = async () => {
+  await setProcedureAccessAllowed(patientUid, slotSeconds);
+  procedure.visible = true;
+};
+
+const onDisallowAccess = async () => {
+  await setProcedureAccessDisallowed(patientUid, slotSeconds);
+  procedure.visible = false;
+};
 </script>
 
 <template>
   <BaseLayout>
-    <div class="p-4">
-      <h1 class="text-2xl text-left font-bold pb-20">
-        <RouterLink
-          :to="{ name: 'Admin Patient Records Page', params: { uid: 123 } }"
+    <div>
+      <h1 class="text-2xl font-semibold mb-3">
+        <RouterLink :to="{ name: 'Admin Patient Records Page' }"
           >Patient Records
         </RouterLink>
         >
         <RouterLink
-          :to="{ name: 'Admin Dental Treatments Page', params: { uid: 123 } }"
+          :to="{
+            name: 'Admin Dental Treatments Page',
+            params: { uid: patientUid },
+          }"
           >Dental Treatment
         </RouterLink>
         >
         <RouterLink
-          :to="{ name: 'Admin Procedures Page', params: { uid: 123 } }"
+          :to="{
+            name: 'Admin Procedures Page',
+            params: { uid: patientUid, slotSeconds },
+          }"
           >Procedure
         </RouterLink>
       </h1>
     </div>
-    <div class="ml-20 mr-40">
-      <p class="border-2 border-teal-500/60 p-5 pb-20">
-        Lorem ipsum dolor sit amet. Ut repellat voluptatem quo omnis pariatur et
-        maxime fugiat et nemo earum eum consequatur atque! A velit voluptate et
-        illo rerum et dolorem esse id quia odit sed molestias possimus. Et
-        consectetur dolorem eos molestiae similique ut ducimus consequatur aut
-        sunt neque et illum aspernatur. Sit quia autem ut quis illo vel quaerat
-        eaque qui quasi corporis aut odio quia vel rerum sint aut adipisci
-        officiis.
-      </p>
+    <div v-if="isFinishedLoading" class="max-w-prose mx-auto mt-6">
+      <div v-if="isEditingMode" class="h-72">
+        <textarea
+          class="border-2 border-teal-500/60 p-5 w-full resize-none m-0 h-full"
+          v-model="procedure.body"
+          ref="textarea"
+        ></textarea>
+      </div>
+      <div
+        v-else
+        class="border-2 border-teal-500/60 p-5 w-full resize-none h-72"
+      >
+        {{ procedure.body }}
+      </div>
 
-      <div class="justify-center grid-cols-3 float-right mt-4">
+      <div class="flex justify-end mt-4">
         <button
+          v-if="isEditingMode"
           class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
-        >
-          Edit
-        </button>
-        <button
-          class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
+          @click="onSave()"
         >
           Save
         </button>
         <button
+          class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
+          @click="onEdit()"
+          v-else
+        >
+          Edit
+        </button>
+
+        <button
           class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
+          @click="onDisallowAccess()"
+          v-if="procedure.visible"
+        >
+          Remove Access
+        </button>
+        <button
+          class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
+          @click="onAllowAccess()"
+          v-else
         >
           Allow Access
         </button>
       </div>
+    </div>
+    <div class="text-2xl font-bold text-center mt-12" v-else>
+      Loading procedure ...
     </div>
   </BaseLayout>
 </template>
