@@ -1,5 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import isSignedIn from "../../composables/auth/isSignedIn";
+import signOut from "../../composables/auth/signOut";
+import { useProfilePictureStore } from "../../stores/profilePicture";
 const showMenu = ref(false);
 const showSettings = ref(false);
 const show = ref(false);
@@ -8,12 +12,33 @@ const toggleNav = () => {
   showMenu.value = !showMenu.value;
   showSettings.value = !showSettings.value;
 };
+
+const userIsLoggedIn = ref(false);
+onMounted(() => {
+  if (isSignedIn()) userIsLoggedIn.value = true;
+});
+
+const router = useRouter();
+const onToggleAccountButton = () => {
+  if (isSignedIn()) skrr.value = !skrr.value;
+  else router.push({ name: "Patient Login Page" });
+};
+
+const onLogout = async () => {
+  await signOut();
+  router.push({ name: "Home" });
+};
+
+const profilePictureStore = useProfilePictureStore();
+onMounted(async () => {
+  await profilePictureStore.initialize();
+});
 </script>
 
 <template>
   <div>
     <nav
-      class="fixed z-40 w-full px-6 bg-white shadow-lg text-sky-700 md:flex md:justify-between md:items-center"
+      class="patient-view-navbar fixed z-40 w-full px-6 bg-white shadow-lg text-sky-700 md:flex md:justify-between md:items-center"
     >
       <div class="flex items-center justify-between">
         <router-link
@@ -132,56 +157,68 @@ const toggleNav = () => {
             <div class="relative pb-10 lg:pb-0">
               <!-- Dropdown toggle button -->
               <button
-                @click="skrr = !skrr"
+                @click="onToggleAccountButton"
                 class="flex items-center font-semibold transition-colors duration-200 bg-white rounded-md text-sky-700 focus:outline-none hover:text-teal-500 hover:scale-110"
               >
                 <span
                   class="mr-4 transition-colors duration-200 hover:text-teal-500"
-                  ><svg
+                >
+                  <img
+                    v-if="profilePictureStore.getDownloadURL"
+                    :src="profilePictureStore.getDownloadURL"
+                    alt="Profile Picture"
+                    class="h-10 w-10 object-cover rounded-full"
+                  />
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="w-6 h-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     stroke-width="2"
+                    v-else
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    /></svg
-                ></span>
+                    />
+                  </svg>
+                </span>
               </button>
 
               <!-- Dropdown menu -->
-              <div
-                v-show="skrr"
-                class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 rounded-none md:rounded-md lg:shadow-xl md:border-none sm:shadow-none lg:absolute lg:right-0 w-44"
-              >
-                <router-link
-                  :to="{ name: 'Account Settings Page' }"
-                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
+              <div v-if="userIsLoggedIn">
+                <div
+                  v-show="skrr"
+                  class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 rounded-none md:rounded-md lg:shadow-xl md:border-none sm:shadow-none lg:absolute lg:right-0 w-44"
                 >
-                  Account Settings
-                </router-link>
-                <router-link
-                  to="/"
-                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
-                >
-                  Medical Chart
-                </router-link>
-                <router-link
-                  :to="{ name: 'My History Page' }"
-                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
-                >
-                  My History
-                </router-link>
-                <router-link
-                  :to="{ name: '404 Not Found Page' }"
-                  class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
-                >
-                  Log out
-                </router-link>
+                  <router-link
+                    :to="{ name: 'Patient Account Settings Page' }"
+                    class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
+                  >
+                    Account Settings
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'Patient Medical Chart Page' }"
+                    class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
+                  >
+                    Medical Chart
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'Patient Appointment History Page' }"
+                    class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
+                  >
+                    My History
+                  </router-link>
+                  <button
+                    type="button"
+                    class="w-full text-left px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
+                    @click="onLogout()"
+                  >
+                    Log out
+                  </button>
+                </div>
               </div>
             </div>
           </li>
@@ -190,3 +227,8 @@ const toggleNav = () => {
     </nav>
   </div>
 </template>
+<style>
+.patient-view-navbar .router-link-exact-active {
+  color: rgb(40, 187, 187);
+}
+</style>
