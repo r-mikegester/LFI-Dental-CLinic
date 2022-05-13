@@ -105,6 +105,26 @@ const router = createRouter({
       component: () =>
         import("../views/patient/FrequentlyAskedQuestionsPage.vue"),
     },
+    {
+      path: "/myhistory",
+      name: "My History Page",
+      component: () => import("../views/patient/MyHistoryPage.vue"),
+    },
+    {
+      path: "/accountsettings",
+      name: "Account Settings Page",
+      component: () => import("../views/patient/AccountSettings.vue"),
+    },
+    {
+      path: "/404NotFound",
+      name: "404 Not Found Page",
+      component: () => import("../views/patient/404NotFound.vue"),
+    },
+    {
+      path: "/DentalServices",
+      name: "Dental Services Page",
+      component: () => import("../views/patient/DentalServicesPage.vue"),
+    },
     /* Admin-only pages */
     {
       path: "/admin",
