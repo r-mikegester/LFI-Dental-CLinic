@@ -132,7 +132,6 @@ const appointmentItemsOnSelectedDate = computed(() => {
       day: "numeric",
       timeZone: "Asia/Manila",
     });
-    console.log(year, month, day);
 
     const isoDateStr = DateTime.fromObject({
       year,
@@ -148,6 +147,18 @@ const appointmentItemsOnSelectedDate = computed(() => {
 
   return result;
 });
+
+const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
+  appointmentsList.value = appointmentsList.value.map((appointment) => {
+    return {
+      ...appointment,
+      attended:
+        appointment.timeslot === timeslot
+          ? attendedStatus
+          : appointment.attended,
+    };
+  });
+};
 </script>
 
 <template>
@@ -213,26 +224,28 @@ const appointmentItemsOnSelectedDate = computed(() => {
         </div>
         <div v-if="selectedDate && appointmentItemsOnSelectedDate.length > 0">
           <div
-            class="grid grid-cols-4 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700"
+            class="grid grid-cols-5 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700"
           >
             <div>Date</div>
             <div>Full name</div>
             <div>Service</div>
             <div>Time</div>
+            <div>Attended</div>
           </div>
           <AppointmentsPageAppointmentItem
             v-for="appointment in appointmentItemsOnSelectedDate"
             :key="appointment.timeslot"
+            :attended="appointment.attended"
             :timeslot="appointment.timeslot"
             :service="appointment.service"
             :patientUid="appointment.patientUid"
+            @attended-changed="onAppointmentItemAttendedChanged"
           />
         </div>
       </div>
       <div class="text-2xl font-bold text-center" v-else>
         Loading calendar...
       </div>
-      <!-- Queued Appointments Widget -->
     </div>
   </BaseLayout>
 </template>
