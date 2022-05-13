@@ -168,7 +168,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
 
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -Yes, at least15 minutes early to fill out essential paperwork and
+              Yes, at least15 minutes early to fill out essential paperwork and
               give the staff time to get you all set up
               <span class="text-xl">&rdquo;</span>
             </p>
@@ -186,7 +186,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -The possible early signs of dental trouble are: Toothache;
+              The possible early signs of dental trouble are: Toothache;
               Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
               Pain; Mouth Sores; Dry Mouth; Broken, Cracked, Chipped, Lost.
               <span class="text-xl">&rdquo;</span>
@@ -205,7 +205,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
             </div>
             <p class="relative mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
-              -The possible early signs of dental trouble are: Toothache;
+              The possible early signs of dental trouble are: Toothache;
               Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
               Pain; Mouth Sores; Dry Mouth; Broken, Cracked, Chipped, Lost.
               <span class="text-xl">&rdquo;</span>
@@ -233,7 +233,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
       >
         <div class="text-center">
           <p
-            class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full text-sky-700 bg-teal-accent-400"
+            class="inline-block px-3 py-px mb-4 text-sm font-semibold tracking-wider uppercase rounded-full text-sky-700 bg-teal-accent-400"
           >
             LFI DENTAL CLINIC
           </p>
@@ -269,8 +269,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           TO SET AN APPOINTMENT
         </h2>
         <p class="text-base text-center teal-5 md:text-lg">
-          3 easy steps on how to set an appointment directly thru our page and
-          take no hustle and have less stress.
+          Set your appointment now through these three (3) easy steps.
         </p>
       </div>
       <div class="grid gap-8 row-gap-0 lg:grid-cols-3">
@@ -284,15 +283,21 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
               ><h1 class="text-6xl">1</h1>
             </router-link>
           </div>
-          <h6 class="mb-2 text-2xl font-extrabold">Set an Appointment</h6>
+          <h6 class="mb-2 text-2xl font-extrabold">Choose a date.</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
-            -Go to Set an Appointment page. View and select your preferred date,
-            time, and dental service.
+            Go the
+            <RouterLink
+              :to="{ name: 'Appointments Page' }"
+              class="border-b border-sky-700"
+              >Set an Appointment</RouterLink
+            >
+            page. Choose and select your preferred date and time. Then, specify
+            the needed service.
           </p>
           <router-link
             :to="{ name: 'Appointments Page' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
-            >View Calendar
+            >View our Schedules
           </router-link>
           <div
             class="top-0 right-0 flex items-center justify-center h-24 lg:-mr-8 lg:absolute"
@@ -331,15 +336,21 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
               ><h1 class="text-6xl">2</h1>
             </router-link>
           </div>
-          <h6 class="mb-2 text-2xl font-extrabold">Create your Account</h6>
+          <h6 class="mb-2 text-2xl font-extrabold">Create your Account.</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
-            -After setting an appointment, create an account. If you already
-            have an account, please log in.
+            Create an account or
+            <RouterLink
+              :to="{ name: 'Patient Login Page' }"
+              class="border-b border-sky-700"
+            >
+              Sign in
+            </RouterLink>
+            with an existing account.
           </p>
           <router-link
-            :to="{ name: '' }"
+            :to="{ name: 'Patient Login Page' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
-            >Login / Sign up
+            >Login or Sign up
           </router-link>
           <div
             class="top-0 right-0 flex items-center justify-center h-24 lg:-mr-8 lg:absolute"
@@ -380,14 +391,19 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           </div>
           <h6 class="mb-2 text-2xl font-extrabold">Done.</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
-            -You have successfully set your appointment. You can now view your
-            appointments in My History. For payment, you can pay after the
-            dental service.
+            View your schedule appointments in the
+            <RouterLink
+              :to="{ name: 'Patient Appointment History Page' }"
+              class="border-b border-sky-700"
+            >
+              My Appointments</RouterLink
+            >
+            page.
           </p>
           <router-link
             :to="{ name: 'Patient Appointment History Page' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
-            >View Your History
+            >See your Appointments
           </router-link>
         </div>
       </div>
