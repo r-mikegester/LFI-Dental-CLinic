@@ -16,7 +16,7 @@ const onLogout = async () => {
     <!-- image -->
     <div class="flex flex-col items-center py-6">
       <img src="../../assets/img/nav-person.png" class="h-16" />
-      <span>Admin User</span>
+      <span>Jane Doe</span>
     </div>
     <!-- Nav items -->
     <div class="flex flex-col">
@@ -38,7 +38,7 @@ const onLogout = async () => {
         class="hover:bg-teal-500/40 transition duration-200 py-3 px-8 flex items-center"
         :to="{ name: 'Admin Appointments Page' }"
       >
-        <img src="../../assets/img/nav-bell.png" class="mr-5" />
+        <img src="../../assets/img/nav-notebook.png" class="mr-5" />
         <span>Appointments</span>
       </RouterLink>
       <RouterLink
@@ -47,6 +47,13 @@ const onLogout = async () => {
       >
         <img src="../../assets/img/nav-clipboard.png" class="mr-5" />
         <span>Patient Records</span>
+      </RouterLink>
+      <RouterLink
+        class="hover:bg-teal-500/40 transition duration-200 py-3 px-8 flex items-center"
+        :to="{ name: 'Admin Notifications Page' }"
+      >
+        <img src="../../assets/img/nav-bell.png" class="mr-5" />
+        <span>Notifications</span>
       </RouterLink>
       <RouterLink
         class="hover:bg-teal-500/40 transition duration-200 py-3 px-8 flex items-center"
