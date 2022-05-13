@@ -6,7 +6,7 @@
       <div class="flex items-center justify-between">
         <router-link
           to="/"
-          class="text-xl font-bold text-sky-700 md:text-2xl hover:text-teal-500"
+          class="flex-none mr-10 text-xl font-bold text-sky-700 md:text-2xl hover:text-teal-500"
           ><img
             src="../../assets/img/LFI-trans.png"
             class="inline-flex"
@@ -15,10 +15,10 @@
           LFI DENTAL CLINIC
         </router-link>
         <!-- Mobile menu button -->
-        <div @click="toggleNav" class="flex md:hidden">
+        <div @click="toggleNav" class="flex flex-none md:hidden shrink-0">
           <button
             type="button"
-            class="p-1 transition-colors duration-200 border-2 rounded text-sky-700 border-sky-700 hover:text-teal-500 hover:border-teal-500 focus:outline-none focus:text-teal-500 focusLborder-teal-500"
+            class="flex-none p-1 transition-colors duration-200 border-2 rounded text-sky-700 border-sky-700 hover:text-teal-500 hover:border-teal-500 focus:outline-none focus:text-teal-500 focus:border-teal-500 shrink-0"
           >
             <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
               <path
@@ -32,10 +32,10 @@
       <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
       <ul
         :class="showMenu ? 'flex' : 'hidden'"
-        class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
+        class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0 shrink"
       >
         <router-link
-          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110 shrink"
           :to="{ name: 'Home' }"
         >
           Home
@@ -48,7 +48,7 @@
               class="flex items-center font-semibold transition-colors duration-200 bg-white rounded-md text-sky-700 focus:outline-none hover:text-teal-500"
             >
               <span
-                class="mr-4 transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+                class="mr-4 transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
                 >Dental Services</span
               >
             </button>
@@ -98,17 +98,17 @@
           </div>
         </li>
         <router-link
-          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
           to="/appointments"
           >Set an Appointment</router-link
         >
         <router-link
-          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
           to="/about"
           >About Us</router-link
         >
         <router-link
-          class="font-semibold transition-colors duration-200 hover:text-teal-500 hover:scale-110"
+          class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
           to="/contact"
           >Contact Us</router-link
         >
@@ -147,7 +147,7 @@
                 class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 rounded-none md:rounded-md lg:shadow-xl md:border-none sm:shadow-none lg:absolute lg:right-0 w-44"
               >
                 <router-link
-                  to="/"
+                  :to="{ name: 'Account Settings Page' }"
                   class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   Account Settings
@@ -159,13 +159,13 @@
                   Medical Chart
                 </router-link>
                 <router-link
-                  to="/"
+                  :to="{ name: 'My History Page' }"
                   class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   My History
                 </router-link>
                 <router-link
-                  to="/"
+                  :to="{ name: '404 Not Found Page' }"
                   class="block px-4 py-2 text-sm font-semibold transition-colors duration-200 text-sky-700 hover:bg-teal-500 hover:text-white hover:scale-110 hover:rounded-md"
                 >
                   Log out
