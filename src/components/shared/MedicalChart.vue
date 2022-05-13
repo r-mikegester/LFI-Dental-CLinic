@@ -1,7 +1,50 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { DateTime } from "luxon";
-import updateMedicalChart from "../../composables/api/updateMedicalChart";
+
+const props = defineProps({
+  patientUid: {
+    type: String,
+    required: true,
+  },
+  personalInformation: Object,
+  medicalHistory: Object,
+  dentalHistory: Object,
+});
+
+onMounted(() => {
+  if (props.personalInformation) {
+    Object.keys(personalInformation).forEach((property) => {
+      personalInformation[property] = props.personalInformation[property];
+    });
+  }
+
+  if (props.medicalHistory) {
+    Object.keys(medicalHistory).forEach((property) => {
+      medicalHistory[property] = props.medicalHistory[property];
+    });
+
+    if (medicalHistory.heartAilmentDisease !== "")
+      heartAilmentDiseaseIsEnabled.value = true;
+    if (medicalHistory.hospitalAdmission !== "")
+      hospitalAdmissionIsEnabled.value = true;
+    if (medicalHistory.selfMedication !== "")
+      selfMedicationIsEnabled.value = true;
+    if (medicalHistory.allergies !== "") allergiesIsEnabled.value = true;
+    if (medicalHistory.operation !== "") operationIsEnabled.value = true;
+    if (medicalHistory.tumors !== "") tumorsGrowthIsEnabled.value = true;
+    if (medicalHistory.pregnant !== "") pregnantIsEnabled.value = true;
+  }
+
+  if (props.dentalHistory) {
+    Object.keys(dentalHistory).forEach((property) => {
+      dentalHistory[property] = props.dentalHistory[property];
+    });
+
+    if (dentalHistory.pastDentalCare !== "")
+      pastDentalCareIsEnabled.value = true;
+  }
+});
 
 const personalInformation = reactive({
   fullName: "",
@@ -152,24 +195,6 @@ const onClearDentalHistory = () => {
 const pastDentalCareIsEnabled = ref(false);
 const onChangePastDentalCare = () => {
   if (!pastDentalCareIsEnabled.value) dentalHistory.pastDentalCare = "";
-};
-
-/* Validation and submission */
-const isRequiredFieldsValid = computed(() => {
-  if (personalInformation.fullName === "") return false;
-  if (personalInformation.gender === "") return false;
-  if (personalInformation.birthDate === "") return false;
-  if (personalInformation.maritalStatus === "") return false;
-  return true;
-});
-
-const emit = defineEmits(["formSubmitted"]);
-
-const onSubmit = () => {
-  if (isRequiredFieldsValid.value) {
-    updateMedicalChart(personalInformation, medicalHistory, dentalHistory);
-    emit("formSubmitted");
-  }
 };
 </script>
 
@@ -661,18 +686,12 @@ const onSubmit = () => {
     </div>
   </div>
 
+  <!-- Actions -->
   <div class="flex justify-center">
-    <button
-      type="button"
-      class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
-      :class="{
-        'pointer-events-none': !isRequiredFieldsValid,
-        'bg-emerald-200': !isRequiredFieldsValid,
-      }"
-      @click="onSubmit()"
-    >
-      Done
-    </button>
+    <slot
+      :personalInformation="personalInformation"
+      :medicalHistory="medicalHistory"
+      :dentalHistory="dentalHistory"
+    ></slot>
   </div>
 </template>
-
