@@ -3,14 +3,20 @@ import backendBaseURL from "../api/backendBaseURL";
 import HttpError from "../helpers/HttpError";
 import ParameterError from "../helpers/ParameterError";
 
-export default async (personalInformation, medicalHistory, dentalHistory) => {
+export default async (
+  patientUid,
+  personalInformation,
+  medicalHistory,
+  dentalHistory
+) => {
   const idToken = await getUserToken();
 
+  if (!patientUid) throw new ParameterError("patientUid");
   if (!personalInformation) throw new ParameterError("personalInformation");
   if (!medicalHistory) throw new ParameterError("medicalHistory");
   if (!dentalHistory) throw new ParameterError("dentalHistory");
 
-  const link = `${backendBaseURL}/users/medicalchart`;
+  const link = `${backendBaseURL}/users/${patientUid}/medicalchart`;
   const response = await fetch(link, {
     method: "PATCH",
     headers: {
