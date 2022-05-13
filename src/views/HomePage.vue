@@ -11,7 +11,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
         >
           <img
             src="../assets/img/bgs/bg2.jpg"
-            class="w-full shrink object-cover h-[90vh]"
+            class="w-full object-cover h-[90vh]"
             style="object-position: top left"
           />
           <div
@@ -213,7 +213,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           </blockquote>
           <div class="flex justify-center">
             <router-link
-              :to="{ name: 'Frequently Asked Questions' }"
+              :to="{ name: 'Frequently Asked Questions Page' }"
               class="w-56 px-4 py-4 mt-10 text-center transition ease-in-out delay-150 bg-white hover:-translate-y-1 hover:scale-110 hover:bg-sky-500 hover:text-white text-sky-700 rounded-md duration-300 ..."
             >
               <button>View More</button>
@@ -373,7 +373,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
             class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-20 sm:h-20 hover:scale-110 hover:rounded-full"
           >
             <router-link
-              :to="{ name: 'My History Page' }"
+              :to="{ name: 'Patient Appointment History Page' }"
               class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
               ><h1 class="text-6xl">3</h1>
             </router-link>
@@ -385,7 +385,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
             dental service.
           </p>
           <router-link
-            :to="{ name: 'My History Page' }"
+            :to="{ name: 'Patient Appointment History Page' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
             >View Your History
           </router-link>
@@ -395,8 +395,3 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
     <!--- End of Instructions -->
   </BaseLayout>
 </template>
-<style>
-.router-link-exact-active {
-  color: rgb(40, 187, 187);
-}
-</style>
