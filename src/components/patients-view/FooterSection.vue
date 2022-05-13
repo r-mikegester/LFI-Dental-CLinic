@@ -5,15 +5,15 @@
     class="h-full p-4 bg-white mt-50 pb-100 sm:p-6"
     style="background-color: rgba(20, 184, 166, 0.4)"
   >
-    <div class="md:flex md:justify-between sm:justify-items-center">
-      <div class="md:mb-0 lg:ml-36">
-        <a href="#" class="items-center sm:justify-items-center">
-          <img
-            src="../../assets/img/LFI-trans.png"
-            width="250px"
-            height="150px"
-            class="px-1 mx-auto -mb-10"
-          />
+    <div class="md:flex md:justify-center md:items-center">
+      <div class="">
+        <a href="#">
+          <div>
+            <img
+              src="../../assets/img/lfi-logo-transparent.png"
+              class="px-1 mx-auto w-24 h-24"
+            />
+          </div>
           <div
             class="px-5 text-2xl font-bold text-center mb-10 md:mb-0 text-sky-700"
           >
@@ -103,9 +103,20 @@
           </h2>
           <ul class="text-center md:text-left text-gray-600 dark:text-gray-400">
             <li>
-              <a href="/faqs" class="font-semibold hover:underline text-sky-700"
-                >FAQs</a
+              <RouterLink
+                :to="{ name: 'Frequently Asked Questions Page' }"
+                class="font-semibold hover:underline text-sky-700"
               >
+                FAQs
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink
+                :to="{ name: 'Admin Login Page' }"
+                class="font-semibold hover:underline text-sky-700"
+              >
+                Admin Portal
+              </RouterLink>
             </li>
           </ul>
         </div>
