@@ -5,11 +5,48 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
   <BaseLayout>
     <div>
       <div>
-        <img
-          src="../assets/img/bgs/bg2.jpg"
-          class="object-center w-full h-screen bg-fixed object-fit-contain filter brightness-50"
-          style="background-position: center"
-        />
+        <div
+          class="relative bg-cover bg-no-repeat bg-center"
+          style="min-height: 90vh"
+        >
+          <img
+            src="../assets/img/bgs/bg2.jpg"
+            class="w-full shrink bg-contain h-screen md:h-screen"
+          />
+          <div
+            class="flex flex-col justify-center items-center md:items-end absolute inset-0 text-center text-white p-10 bg-black opacity-75"
+          >
+            <div
+              class="justify-center absolute inset-x bottom-20 md:inset-y-0 md:right-10 md:top-56"
+            >
+              <h2 class="text-2xl md:text-4xl text-right font-bold">
+                Get an <span class="text-teal-500">Appointment</span> Now!
+              </h2>
+              <p class="md:text-right">Don't let your Agony set it for you.</p>
+              <router-link :to="{ name: 'Appointments Page' }"
+                ><button
+                  class="bg-transparent text-teal-500 font-bold hover:text-white py-2 px-4 my-4 border-2 border-teal-500 rounded inline-flex items-center md:float-right hover:bg-teal-500 hover:border-teal-500 transition-all ease-in duration-75"
+                >
+                  <span>Get Started!</span>
+                  <svg
+                    class="ml-2 w-4 h-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </button>
+              </router-link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -21,78 +58,95 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
         OUR SERVICES
       </h5>
       <div class="grid row-gap-8 sm:row-gap-0 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="p-8">
-          <div class="max-w-md text-center">
-            <div
-              class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
-            >
-              <img src="../assets/img/services/general_dentistry.ico" />
+        <router-link :to="{ name: 'General Dentistry Page' }">
+          <div class="p-8">
+            <div class="max-w-md text-center">
+              <div
+                class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
+              >
+                <img src="../assets/img/services/general_dentistry.ico" />
+              </div>
+              <h1 class="mb-2 text-2xl font-semibold leading-5">
+                GENERAL DENTISTRY
+              </h1>
             </div>
-            <h1 class="mb-2 text-2xl font-semibold leading-5">
-              GENERAL DENTISTRY
-            </h1>
           </div>
-        </div>
-        <div class="p-8">
-          <div class="max-w-md text-center">
-            <div
-              class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
-            >
-              <img src="../assets/img/services/cosmetic_dentistry.ico" />
+        </router-link>
+        <router-link :to="{ name: 'Cosmetic Surgery Page' }">
+          <div class="p-8">
+            <div class="max-w-md text-center">
+              <div
+                class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
+              >
+                <img src="../assets/img/services/cosmetic_dentistry.ico" />
+              </div>
+              <h1 class="mb-2 text-2xl font-semibold leading-5">
+                COSMETICS SURGERY
+              </h1>
             </div>
-            <h1 class="mb-2 text-2xl font-semibold leading-5">
-              COSMETICS SURGERY
-            </h1>
           </div>
-        </div>
-        <div class="p-8">
-          <div class="max-w-md text-center">
-            <div
-              class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
-            >
-              <img src="../assets/img/services/oral_surgery.ico" />
+        </router-link>
+        <router-link :to="{ name: 'Oral Surgery Page' }">
+          <div class="p-8">
+            <div class="max-w-md text-center">
+              <div
+                class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
+              >
+                <img src="../assets/img/services/oral_surgery.ico" />
+              </div>
+              <h1 class="mb-2 text-2xl font-semibold leading-5">
+                ORAL SURGERY
+              </h1>
             </div>
-            <h1 class="mb-2 text-2xl font-semibold leading-5">ORAL SURGERY</h1>
           </div>
-        </div>
-        <div class="p-8">
-          <div class="max-w-md text-center">
-            <div
-              class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
-            >
-              <img src="../assets/img/services/orthodontics.ico" />
+        </router-link>
+        <router-link :to="{ name: 'Orthodontics Page' }">
+          <div class="p-8">
+            <div class="max-w-md text-center">
+              <div
+                class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
+              >
+                <img src="../assets/img/services/orthodontics.ico" />
+              </div>
+              <h1 class="mb-2 text-2xl font-semibold leading-5">
+                ORTHODONTICS
+              </h1>
             </div>
-            <h1 class="mb-2 text-2xl font-semibold leading-5">ORTHODONTICS</h1>
           </div>
-        </div>
-        <div class="p-8">
-          <div class="max-w-md text-center">
-            <div
-              class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
-            >
-              <img src="../assets/img/services/pediatric_dentistry.ico" />
+        </router-link>
+        <router-link :to="{ name: 'Pediatric Dentistry Page' }">
+          <div class="p-8">
+            <div class="max-w-md text-center">
+              <div
+                class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
+              >
+                <img src="../assets/img/services/pediatric_dentistry.ico" />
+              </div>
+              <h1 class="mb-2 text-2xl font-semibold leading-5">
+                PEDIATRIC DENTISTRY
+              </h1>
             </div>
-            <h1 class="mb-2 text-2xl font-semibold leading-5">
-              PEDIATRIC DENTISTRY
-            </h1>
           </div>
-        </div>
-        <div class="p-8">
-          <div class="max-w-md text-center">
-            <div
-              class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
-            >
-              <img src="../assets/img/services/prosthodontics.ico" />
+        </router-link>
+        <router-link :to="{ name: 'Prosthodontics Page' }">
+          <div class="p-8">
+            <div class="max-w-md text-center">
+              <div
+                class="flex items-center justify-center w-40 h-40 mx-auto mb-10 transition-colors duration-200 ease-in-out bg-teal-100 rounded-full hover:bg-teal-300 sm:w-40 sm:h-40 hover:scale-110"
+              >
+                <img src="../assets/img/services/prosthodontics.ico" />
+              </div>
+              <h1 class="mb-2 text-2xl font-semibold leading-5">
+                PROSTHODONTICS
+              </h1>
             </div>
-            <h1 class="mb-2 text-2xl font-semibold leading-5">
-              PROSTHODONTICS
-            </h1>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
     <!-- ====== Services Section End -->
 
+    <!--- Start of Frequently Asked Questions -->
     <section>
       <div class="z-20 w-full bg-gradient-to-br from-teal-500 to-sky-700">
         <div class="max-w-screen-xl px-4 py-10 mx-auto sm:px-6 lg:px-8 faqs">
@@ -169,6 +223,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
     </section>
     <!-- End of Frequently Asked Questions -->
 
+    <!-- Start of Instructions -->
     <div
       class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
     >
@@ -222,19 +277,22 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           <div
             class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-20 sm:h-20 hover:scale-110 hover:rounded-full"
           >
-            <h1 class="text-6xl">1</h1>
+            <router-link
+              :to="{ name: 'Appointments Page' }"
+              class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
+              ><h1 class="text-6xl">1</h1>
+            </router-link>
           </div>
           <h6 class="mb-2 text-2xl font-extrabold">Set an Appointment</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
             -Go to Set an Appointment page. View and select your preferred date,
             time, and dental service.
           </p>
-          <a
-            href="/"
-            aria-label=""
+          <router-link
+            :to="{ name: 'Appointments Page' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
-            >View Calendar</a
-          >
+            >View Calendar
+          </router-link>
           <div
             class="top-0 right-0 flex items-center justify-center h-24 lg:-mr-8 lg:absolute"
           >
@@ -266,19 +324,22 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           <div
             class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-20 sm:h-20 hover:scale-110 hover:rounded-full"
           >
-            <h1 class="text-6xl">2</h1>
+            <router-link
+              :to="{ name: '' }"
+              class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
+              ><h1 class="text-6xl">2</h1>
+            </router-link>
           </div>
           <h6 class="mb-2 text-2xl font-extrabold">Create your Account</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
             -After setting an appointment, create an account. If you already
             have an account, please log in.
           </p>
-          <a
-            href="/"
-            aria-label=""
+          <router-link
+            :to="{ name: '' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
-            >Login / Sign up</a
-          >
+            >Login / Sign up
+          </router-link>
           <div
             class="top-0 right-0 flex items-center justify-center h-24 lg:-mr-8 lg:absolute"
           >
@@ -310,7 +371,11 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           <div
             class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-20 sm:h-20 hover:scale-110 hover:rounded-full"
           >
-            <h1 class="text-6xl">3</h1>
+            <router-link
+              :to="{ name: 'My History Page' }"
+              class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
+              ><h1 class="text-6xl">3</h1>
+            </router-link>
           </div>
           <h6 class="mb-2 text-2xl font-extrabold">Done.</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
@@ -318,15 +383,15 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
             appointments in My History. For payment, you can pay after the
             dental service.
           </p>
-          <a
-            href="/"
-            aria-label=""
+          <router-link
+            :to="{ name: 'My History Page' }"
             class="inline-flex items-center font-semibold transition-colors duration-200 ease-in-out text-deep-purple-accent-400 hover:text-teal-500 hover:scale-110"
-            >View Your History</a
-          >
+            >View Your History
+          </router-link>
         </div>
       </div>
     </div>
+    <!--- End of Instructions -->
   </BaseLayout>
 </template>
 <style>
