@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import isSignedIn from "../../composables/auth/isSignedIn";
 import signOut from "../../composables/auth/signOut";
+import userIsPatient from "../../composables/auth/userIsPatient";
 import { useProfilePictureStore } from "../../stores/profilePicture";
 const showMenu = ref(false);
 const showSettings = ref(false);
@@ -14,19 +15,19 @@ const toggleNav = () => {
 };
 
 const userIsLoggedIn = ref(false);
-onMounted(() => {
-  if (isSignedIn()) userIsLoggedIn.value = true;
+onMounted(async () => {
+  if (isSignedIn() && (await userIsPatient())) userIsLoggedIn.value = true;
 });
 
 const router = useRouter();
-const onToggleAccountButton = () => {
-  if (isSignedIn()) skrr.value = !skrr.value;
+const onToggleAccountButton = async () => {
+  if (isSignedIn() && (await userIsPatient())) skrr.value = !skrr.value;
   else router.push({ name: "Patient Login Page" });
 };
 
 const onLogout = async () => {
   await signOut();
-  router.push({ name: "Home" });
+  router.push({ name: "Patient Login Page" });
 };
 
 const profilePictureStore = useProfilePictureStore();
@@ -164,7 +165,7 @@ onMounted(async () => {
                   class="mr-4 transition-colors duration-200 hover:text-teal-500"
                 >
                   <img
-                    v-if="profilePictureStore.getDownloadURL"
+                    v-if="userIsLoggedIn && profilePictureStore.getDownloadURL"
                     :src="profilePictureStore.getDownloadURL"
                     alt="Profile Picture"
                     class="h-10 w-10 object-cover rounded-full"
