@@ -391,7 +391,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           </div>
           <h6 class="mb-2 text-2xl font-extrabold">Done.</h6>
           <p class="max-w-md mb-3 text-sm text-sky-700 sm:mx-auto">
-            View your schedule appointments in the
+            View your scheduled appointments in the
             <RouterLink
               :to="{ name: 'Patient Appointment History Page' }"
               class="border-b border-sky-700"
