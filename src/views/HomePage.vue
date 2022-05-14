@@ -1,53 +1,61 @@
 <script setup>
 import BaseLayout from "../components/patient/BaseLayout.vue";
 </script>
+<style>
+.homepage-hero-section:before {
+  content: "";
+  background-image: url("../assets/img/bgs/bg2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+}
+.homepage-hero-section:after {
+  content: "";
+  background-color: black;
+  opacity: 75%;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+</style>
 <template>
   <BaseLayout>
-    <div>
-      <div>
-        <div
-          class="relative bg-cover bg-no-repeat bg-center"
-          style="min-height: 90vh"
-        >
-          <img
-            src="../assets/img/bgs/bg2.jpg"
-            class="w-full object-cover h-[90vh]"
-            style="object-position: top left"
-          />
-          <div
-            class="flex flex-col justify-center items-center md:items-end absolute inset-0 text-center text-white p-10 bg-black opacity-75"
+    <div
+      class="homepage-hero-section relative bg-cover bg-no-repeat bg-center h-[90vh]"
+    >
+      <div
+        class="flex flex-col absolute w-full h-full justify-end items-center pb-12 md:pb-0 md:justify-center md:items-end md:pr-24"
+      >
+        <h2 class="text-2xl md:text-4xl text-right font-bold">
+          Get an <span class="text-teal-500">Appointment</span> Now!
+        </h2>
+        <p class="md:text-right">Don't let your Agony set it for you.</p>
+        <router-link :to="{ name: 'Appointments Page' }">
+          <button
+            class="bg-transparent text-teal-500 font-bold hover:text-white py-2 px-4 my-4 border-2 border-teal-500 rounded inline-flex items-center md:float-right hover:bg-teal-500 hover:border-teal-500 transition-all ease-in duration-75"
           >
-            <div
-              class="justify-center absolute inset-x bottom-20 md:inset-y-0 md:right-10 md:top-56"
+            <span>Get Started!</span>
+            <svg
+              class="ml-2 w-4 h-4 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <h2 class="text-2xl md:text-4xl text-right font-bold">
-                Get an <span class="text-teal-500">Appointment</span> Now!
-              </h2>
-              <p class="md:text-right">Don't let your Agony set it for you.</p>
-              <router-link :to="{ name: 'Appointments Page' }"
-                ><button
-                  class="bg-transparent text-teal-500 font-bold hover:text-white py-2 px-4 my-4 border-2 border-teal-500 rounded inline-flex items-center md:float-right hover:bg-teal-500 hover:border-teal-500 transition-all ease-in duration-75"
-                >
-                  <span>Get Started!</span>
-                  <svg
-                    class="ml-2 w-4 h-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </button>
-              </router-link>
-            </div>
-          </div>
-        </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </button>
+        </router-link>
       </div>
     </div>
 
@@ -55,7 +63,9 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
     <div
       class="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
     >
-      <h5 class="mt-5 mb-5 text-5xl font-bold text-center text-sky-700">
+      <h5
+        class="mt-5 mb-5 text-3xl md:text-5xl font-bold text-center text-sky-700"
+      >
         OUR SERVICES
       </h5>
       <div class="grid row-gap-8 sm:row-gap-0 sm:grid-cols-2 lg:grid-cols-3">
@@ -150,8 +160,10 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
     <!--- Start of Frequently Asked Questions -->
     <section>
       <div class="z-20 w-full bg-gradient-to-br from-teal-500 to-sky-700">
-        <div class="max-w-screen-xl px-4 py-10 mx-auto sm:px-6 lg:px-8 faqs">
-          <h5 class="mb-10 text-5xl font-bold text-center text-white">
+        <div class="max-w-4xl px-4 py-10 mx-auto sm:px-6 lg:px-8 faqs">
+          <h5
+            class="mb-10 text-3xl md:text-5xl font-bold text-center text-white"
+          >
             FREQUENTLY ASKED QUESTIONS
           </h5>
 
@@ -166,7 +178,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
               </div>
             </div>
 
-            <p class="relative mt-4 text-gray-500">
+            <p class="mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
               Yes, at least 15 minutes early to fill out essential paperwork and
               give the staff time to get you all set up.
@@ -175,7 +187,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           </blockquote>
 
           <blockquote
-            class="p-8 mt-2 transition-colors duration-200 ease-in-out bg-white rounded shadow-lg hover:bg-gray-200"
+            class="p-8 mt-4 transition-colors duration-200 ease-in-out bg-white rounded shadow-lg hover:bg-gray-200"
           >
             <div class="flex items-center">
               <div class="ml-4 text-sm">
@@ -184,7 +196,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
                 </p>
               </div>
             </div>
-            <p class="relative mt-4 text-gray-500">
+            <p class="mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
               The possible early signs of dental trouble are: Toothache;
               Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
@@ -194,7 +206,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           </blockquote>
 
           <blockquote
-            class="p-8 mt-2 transition-colors duration-200 ease-in-out bg-white rounded shadow-lg hover:bg-gray-200"
+            class="p-8 mt-4 transition-colors duration-200 ease-in-out bg-white rounded shadow-lg hover:bg-gray-200"
           >
             <div class="flex items-center">
               <div class="ml-4 text-sm">
@@ -203,7 +215,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
                 </p>
               </div>
             </div>
-            <p class="relative mt-4 text-gray-500">
+            <p class="mt-4 text-gray-500">
               <span class="text-xl">&ldquo;</span>
               The possible early signs of dental trouble are: Toothache;
               Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
@@ -211,6 +223,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
               <span class="text-xl">&rdquo;</span>
             </p>
           </blockquote>
+
           <div class="flex justify-center">
             <router-link
               :to="{ name: 'Frequently Asked Questions Page' }"
@@ -226,7 +239,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
 
     <!-- Start of Instructions -->
     <div
-      class="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
+      class="sm:px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
     >
       <div
         class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12"
@@ -342,9 +355,8 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
             <RouterLink
               :to="{ name: 'Patient Login Page' }"
               class="border-b border-sky-700"
+              >Sign in</RouterLink
             >
-              Sign in
-            </RouterLink>
             with an existing account.
           </p>
           <router-link
