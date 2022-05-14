@@ -23,7 +23,7 @@
       </div>
 
       <div
-        class="grid grid-cols-1 gap-8 ml-20 mr-20 sm:gap-20 sm:grid-cols-3 sm:justify-items-center"
+        class="grid grid-cols-1 gap-8 sm:ml-20 sm:mr-20 sm:gap-20 sm:grid-cols-3 sm:justify-items-center"
       >
         <div class="text-center">
           <h2
@@ -127,10 +127,14 @@
     <div class="p-2 flex items-center justify-center">
       <span
         class="text-sm font-semibold text-gray-500 text-center dark:text-gray-400"
-        >© 2022
-        <a href="/" class="font-semibold hover:underline text-sky-700"
-          >LFI Dental CLinic ™</a
-        >. All Rights Reserved.
+        >© 2022.
+        <RouterLink
+          :to="{ name: 'Home' }"
+          class="font-semibold hover:underline text-sky-700"
+        >
+          LFI Dental Clinic</RouterLink
+        >.
+        <div>All Rights Reserved.</div>
       </span>
     </div>
   </footer>
