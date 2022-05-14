@@ -43,12 +43,12 @@ const onSendButton = async () => {
           </h2>
           <div class="text-sky-700 mt-8 font-semibold">
             <span class="text-teal-500 font-bold">Address: </span>2305 Salvador
-            Ave. Jordan Plaines Phase 1 Subdivision, Barangay Sta.Monica,
+            Ave. Jordan Plaines Phase 1 Subdivision, Brgy. Sta. Monica,
             Novaliches, Quezon City
           </div>
           <div class="text-sky-700 mt-4 mb-5 font-semibold">
-            <span class="text-teal-500 font-bold">Mobile Number: </span>
-            09284632914 <br />
+            <span class="text-teal-500 font-bold">Mobile: </span>
+            09 2846 32914 <br />
             <span class="text-teal-500 font-bold">Landline: </span>
             857 99537
           </div>
