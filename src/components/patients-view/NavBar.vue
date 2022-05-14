@@ -32,7 +32,8 @@ const onLogout = async () => {
 
 const profilePictureStore = useProfilePictureStore();
 onMounted(async () => {
-  await profilePictureStore.initialize();
+  if (isSignedIn() && !profilePictureStore.isInitialized)
+    await profilePictureStore.initialize();
 });
 </script>
 
