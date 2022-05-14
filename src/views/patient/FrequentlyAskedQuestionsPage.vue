@@ -6,7 +6,7 @@ import BaseLayout from "../../components/patient/BaseLayout.vue";
     <!-- Frequently Asked Questions -->
     <section>
       <div class="z-20 w-full bg-gradient-to-br from-teal-500 to-sky-700">
-        <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8 faqs">
+        <div class="max-w-4xl px-4 py-16 mx-auto sm:px-6 lg:px-8 faqs">
           <h5 class="mb-10 text-5xl font-bold text-center text-white">
             FREQUENTLY ASKED QUESTIONS
           </h5>
