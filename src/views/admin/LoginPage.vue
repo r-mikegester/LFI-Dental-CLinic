@@ -101,6 +101,16 @@ const errorDialogBody = ref("");
             </button>
           </div>
         </form>
+        <!-- Back to Main site -->
+        <div class="text-center mb-3">
+          <RouterLink
+            :to="{ name: 'Home' }"
+            class="inline-flex justify-center items-center gap-1 hover:bg-teal-400/40 transition duration-200 rounded-xl px-2"
+          >
+            <span class="text-3xl pb-1">&laquo;</span>
+            <span class="pt-[6px] pb-2 font-medium">Back to Main site</span>
+          </RouterLink>
+        </div>
       </div>
     </main>
     <Footer />
