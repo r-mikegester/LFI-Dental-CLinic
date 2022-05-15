@@ -57,21 +57,16 @@ const personalInformation = reactive({
 const getAgeFromBirthdate = computed(() => {
   if (!personalInformation.birthDate) return "N/A";
 
-  const year = personalInformation.birthDate.split("-")[0];
-  const month = personalInformation.birthDate.split("-")[1];
-  const day = personalInformation.birthDate.split("-")[2];
-
-  const birthDate = new Date(
-    DateTime.fromObject({
-      year,
-      month,
-      day,
-    }).toISO()
-  );
-
-  const currentDate = new Date();
-
-  return currentDate.getFullYear() - birthDate.getFullYear();
+  const duration = DateTime.fromFormat(
+    personalInformation.birthDate,
+    "yyyy-MM-dd",
+    {
+      zone: "Asia/Manila",
+    }
+  ).diffNow("years").years;
+  const dropSign = Math.abs(duration);
+  const dropDecimals = Math.trunc(dropSign);
+  return dropDecimals;
 });
 
 const medicalHistory = reactive({
