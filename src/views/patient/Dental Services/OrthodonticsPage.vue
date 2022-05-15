@@ -1,6 +1,7 @@
 <script setup>
 import BaseLayout from "../../../components/patient/BaseLayout.vue";
 import HeroSection from "../../../components/patient/HeroSection.vue";
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
@@ -28,12 +29,15 @@ import HeroSection from "../../../components/patient/HeroSection.vue";
               aiming to improve dental health.
             </p>
             <div>
-              <button
-                type="button"
+              <RouterLink
                 class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Orthodontic Braces' },
+                }"
               >
                 Get this Service
-              </button>
+              </RouterLink>
             </div>
           </div>
         </article>
