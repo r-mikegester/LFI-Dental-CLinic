@@ -383,19 +383,51 @@ const errorDialogBody = ref("");
           <select class="w-full bg-transparent" v-model="selectedService">
             <option value="" selected>Choose a service ...</option>
             <option
-              title="A thorough examination of your oral health combined with a scale and clean and can be conducted by a dentist or a dental hygienist."
+              title="A thorough examination of your oral health combined with a scale and clean."
+            >
+              Oral Prophylaxis
+            </option>
+            <option
+              title="This can help you get your teeth back to their original function while also preventing further decay."
+            >
+              Tooth Restoration
+            </option>
+            <option
+              title="Also known as tooth bleaching. It is a process of lightening the color of human teeth."
+            >
+              Tooth Whitening
+            </option>
+            <option title="Removal of teeth">Tooth Extraction</option>
+            <option
+              title="Devices used in orthodontics that align and straighten teeth and help position them with regard to a person's bite, while also aiming to improve dental health. "
+            >
+              Orthodontic Braces
+            </option>
+            <option
+              title="It can strengthen enamel and protect teeth against damage from plaque. Along with possibly making dietary changes, using these fluoride treatments can help the teeth repair any minor damage from tooth decay. "
             >
               Fluoride Treatment
             </option>
-            <option>Oral Prophylaxis</option>
-            <option>Orthodontic Braces</option>
-            <option>Tooth Extraction</option>
-            <option>Tooth Restoration</option>
-            <option>Tooth Whitening</option>
-            <option>Complete Denture</option>
-            <option>Partial Denture</option>
-            <option>Jacket Crown</option>
-            <option>Fixed Bridge</option>
+            <option
+              title="This denture is an oral prosthetic device that replaces some of missing teeth. This is also removable denture."
+            >
+              Partial Denture
+            </option>
+            <option
+              title="A full-coverage oral prosthetic devices that replaces a complete arch of missing teeth. It is a removable appliance used when all teeth within a jaw have been lost and need to be prosthetically replaced."
+            >
+              Complete Denture
+            </option>
+            <option
+              title="A full porcelain ceramic covered crown which is used to protect the entire surface of a tooth. Crowns are an ideal way to rebuild teeth which have been broken or weakened by decay or large fillings."
+            >
+              Jacket Crown
+            </option>
+            <option
+              title="A partial denture that is secured permanently in the mouth by being cemented to the adjacent teeth or roots."
+            >
+              Fixed Bridge
+            </option>
           </select>
         </div>
         <div
