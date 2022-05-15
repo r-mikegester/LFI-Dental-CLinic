@@ -1,6 +1,7 @@
 <script setup>
 import BaseLayout from "../../../components/patient/BaseLayout.vue";
 import HeroSection from "../../../components/patient/HeroSection.vue";
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
@@ -28,12 +29,15 @@ import HeroSection from "../../../components/patient/HeroSection.vue";
               and clean and can be conducted by a dentist or a dental hygienist.
             </p>
             <div>
-              <button
-                type="button"
+              <RouterLink
                 class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Oral Prophylaxis' },
+                }"
               >
                 Get this Service
-              </button>
+              </RouterLink>
             </div>
           </div>
         </article>
@@ -45,12 +49,15 @@ import HeroSection from "../../../components/patient/HeroSection.vue";
               while also preventing further decay.
             </p>
             <div class="mb-6 md:mb-0">
-              <button
-                type="button"
+              <RouterLink
                 class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Tooth Restoration' },
+                }"
               >
                 Get this Service
-              </button>
+              </RouterLink>
             </div>
           </div>
           <div>
