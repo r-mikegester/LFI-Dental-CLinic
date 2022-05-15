@@ -68,19 +68,20 @@ const onCreate = async () => {
         />
       </div>
       <!-- Password -->
-      <div class="mb-8">
+      <div class="mb-6">
         <input
           type="password"
           placeholder="Password *"
           class="w-full px-4 py-2 rounded-full border border-teal-500"
           v-model="accountInformation.password"
         />
+        <div class="text-sm px-4">Password must be at least 8 characters.</div>
       </div>
       <!-- Retype Password -->
       <div class="mb-8">
         <input
           type="password"
-          placeholder="Confirm Password *"
+          placeholder="Retype Password *"
           class="w-full px-4 py-2 rounded-full border border-teal-500"
           v-model="accountInformation.retypePassword"
         />
@@ -90,6 +91,10 @@ const onCreate = async () => {
         <button
           type="button"
           class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
+          :class="{
+            'bg-emerald-200': !isAccountInformationValid,
+            'pointer-events-none': !isAccountInformationValid,
+          }"
           @click="onCreate()"
         >
           Create Account
