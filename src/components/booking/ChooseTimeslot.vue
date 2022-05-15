@@ -16,7 +16,7 @@ import getDate from "../../composables/calendar/getDate";
 import isSignedIn from "../../composables/auth/isSignedIn";
 import userIsPatient from "../../composables/auth/userIsPatient";
 import newAppointment from "../../composables/api/newAppointment";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 /* Logic for reactive calendar items */
 const selected = reactive({
@@ -254,6 +254,12 @@ const onGoNext = async () => {
 };
 
 const selectedService = ref("");
+
+const route = useRoute();
+onMounted(() => {
+  const preselectedService = route.query.service;
+  if (preselectedService) selectedService.value = preselectedService;
+});
 
 const isErrorDialogVisible = ref(false);
 const errorDialogBody = ref("");
