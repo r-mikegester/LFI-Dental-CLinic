@@ -31,7 +31,7 @@ import { RouterLink } from "vue-router";
             </p>
             <div>
               <RouterLink
-                class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                class="rounded-full px-3 py-1 uppercase border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium"
                 :to="{
                   name: 'Appointments Page',
                   query: { service: 'Complete Denture' },
@@ -51,7 +51,7 @@ import { RouterLink } from "vue-router";
             </p>
             <div>
               <RouterLink
-                class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                class="rounded-full px-3 py-1 uppercase border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium"
                 :to="{
                   name: 'Appointments Page',
                   query: { service: 'Partial Denture' },
@@ -85,7 +85,7 @@ import { RouterLink } from "vue-router";
             </p>
             <div>
               <RouterLink
-                class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                class="rounded-full px-3 py-1 uppercase border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium"
                 :to="{
                   name: 'Appointments Page',
                   query: { service: 'Jacket Crown' },
@@ -105,7 +105,7 @@ import { RouterLink } from "vue-router";
             </p>
             <div>
               <RouterLink
-                class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                class="rounded-full px-3 py-1 uppercase border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium"
                 :to="{
                   name: 'Appointments Page',
                   query: { service: 'Fixed Bridge' },
