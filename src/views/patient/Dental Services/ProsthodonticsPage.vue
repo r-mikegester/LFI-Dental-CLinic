@@ -1,6 +1,7 @@
 <script setup>
 import BaseLayout from "../../../components/patient/BaseLayout.vue";
 import HeroSection from "../../../components/patient/HeroSection.vue";
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
@@ -21,12 +22,15 @@ import HeroSection from "../../../components/patient/HeroSection.vue";
               missing teeth. This is also removable denture.
             </p>
             <div>
-              <button
-                type="button"
+              <RouterLink
                 class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Partial Denture' },
+                }"
               >
                 Get this Service
-              </button>
+              </RouterLink>
             </div>
           </div>
           <div class="mt-6 md:mt-0">
@@ -52,12 +56,15 @@ import HeroSection from "../../../components/patient/HeroSection.vue";
               fillings.
             </p>
             <div>
-              <button
-                type="button"
+              <RouterLink
                 class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Jacket Crown' },
+                }"
               >
                 Get this Service
-              </button>
+              </RouterLink>
             </div>
           </div>
         </article>
@@ -69,12 +76,15 @@ import HeroSection from "../../../components/patient/HeroSection.vue";
               being cemented to the adjacent teeth or roots.
             </p>
             <div>
-              <button
-                type="button"
+              <RouterLink
                 class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Fixed Bridge' },
+                }"
               >
                 Get this Service
-              </button>
+              </RouterLink>
             </div>
           </div>
           <div class="mt-6 md:mt-0">
