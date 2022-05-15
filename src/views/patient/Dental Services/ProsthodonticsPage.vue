@@ -15,6 +15,34 @@ import { RouterLink } from "vue-router";
     <section>
       <div class="max-w-6xl mx-auto px-6 py-24">
         <article class="grid md:grid-cols-2 max-w-4xl mx-auto mb-24">
+          <div class="mb-6 md:mb-0">
+            <img
+              src="../../../assets/img/dental-services/complete-denture.jpg"
+              class="mx-auto w-full max-w-xs"
+            />
+          </div>
+          <div class="flex flex-col justify-center text-justify md:pr-12">
+            <h4 class="text-2xl font-bold mb-3">Complete Denture</h4>
+            <p class="mb-3">
+              A full-coverage oral prosthetic devices that replace a complete
+              arch of missing teeth. It is a removable appliance used when all
+              teeth within a jaw have been lost and need to be prosthetically
+              replaced.
+            </p>
+            <div>
+              <RouterLink
+                class="rounded-full px-3 py-1 uppercase border border-sky-600"
+                :to="{
+                  name: 'Appointments Page',
+                  query: { service: 'Complete Denture' },
+                }"
+              >
+                Get this Service
+              </RouterLink>
+            </div>
+          </div>
+        </article>
+        <article class="grid md:grid-cols-2 max-w-4xl mx-auto mb-24">
           <div class="flex flex-col justify-center text-justify md:pl-12">
             <h4 class="text-2xl font-bold mb-3">Partial Denture</h4>
             <p class="mb-3">
