@@ -46,13 +46,13 @@ const errorDialogBody = ref("");
 </script>
 
 <template>
-  <div class="grid grid-rows-[1fr_auto] min-h-screen">
+  <div class="grid grid-rows-[minmax(100vh,_1fr)_auto]">
     <main class="font-[Poppins] px-4 text-sky-600">
       <div class="max-w-md mx-auto">
         <!-- Logo -->
         <div>
           <div
-            class="text-2xl font-medium pb-12 pt-24 flex flex-col items-center"
+            class="text-2xl font-medium pb-12 pt-12 xs:pt-24 flex flex-col items-center"
           >
             <img
               src="../../assets/img/lfi-logo.png"
@@ -63,22 +63,22 @@ const errorDialogBody = ref("");
           </div>
         </div>
         <!-- Login box -->
-        <form class="border border-teal-500 p-6 mb-32 rounded-2xl">
+        <form class="border border-teal-500 p-6 rounded-2xl mb-3">
           <!-- inputs -->
-          <div class="max-w-fit mx-auto text-right">
-            <div class="mb-10">
-              <label class="mr-4">Email:</label>
+          <div class="max-w-fit mx-auto xs:text-right">
+            <div class="mb-10 grid xs:grid-cols-[5rem_1fr] gap-2 items-center">
+              <label>Email:</label>
               <input
                 type="text"
-                class="border border-teal-500 py-2 px-3 rounded-2xl max-w-[18rem] min-w-0"
+                class="border border-teal-500 py-2 px-3 rounded-2xl min-w-0"
                 v-model="userCredentials.email"
               />
             </div>
-            <div class="mb-10">
-              <label class="mr-4">Password:</label>
+            <div class="mb-10 grid xs:grid-cols-[5rem_1fr] gap-2 items-center">
+              <label>Password:</label>
               <input
                 type="password"
-                class="border border-teal-500 py-2 px-3 rounded-2xl max-w-[18rem] min-w-0"
+                class="border border-teal-500 py-2 px-3 rounded-2xl min-w-0"
                 v-model="userCredentials.password"
               />
             </div>
