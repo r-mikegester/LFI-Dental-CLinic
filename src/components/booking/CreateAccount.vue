@@ -31,17 +31,28 @@ const isAccountInformationValid = computed(() => {
 });
 
 const onCreate = async () => {
-  if (isAccountInformationValid.value) {
-    await signUpWithEmailAndPassword(
-      accountInformation.email,
-      accountInformation.password,
-      accountInformation.fullName
-    );
+  try {
+    if (isAccountInformationValid.value) {
+      await signUpWithEmailAndPassword(
+        accountInformation.email,
+        accountInformation.password,
+        accountInformation.fullName
+      );
 
-    await signIn(accountInformation.email, accountInformation.password);
-    isSuccessModalVisible.value = true;
+      await signIn(accountInformation.email, accountInformation.password);
+      isSuccessModalVisible.value = true;
+    }
+  } catch (e) {
+    const errorStr = e.message.split(": ")[e.message.split(": ").length - 1];
+    switch (errorStr) {
+      case "Email already exists":
+        isErrorDialogVisible.value = true;
+        break;
+    }
   }
 };
+
+const isErrorDialogVisible = ref(true);
 </script>
 
 <template>
@@ -120,6 +131,36 @@ const onCreate = async () => {
         >
           Continue
         </RouterLink>
+      </div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isErrorDialogVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-1">Invalid email</div>
+    </template>
+    <template #body>
+      <div class="max-w-[32rem] text-justify mb-3">
+        The email you have entered is already in use. Please choose another
+        email, or
+        <RouterLink
+          :to="{ name: 'Appointments Page Login' }"
+          class="underline underline-offset-8 decoration-dotted hover:text-teal-500 transition duration-200 font-semibold"
+        >
+          Log In
+        </RouterLink>
+        with an existing account.
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="border border-sky-600 px-6 py-1 font-medium hover:bg-sky-600 hover:text-white transition duration-200"
+          @click="isErrorDialogVisible = false"
+        >
+          OK
+        </button>
       </div>
     </template>
   </BoxDialog>
