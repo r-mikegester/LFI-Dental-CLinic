@@ -1,11 +1,11 @@
 <script setup>
 import { getAuth } from "firebase/auth";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import BaseLayout from "../../components/patient/BaseLayout.vue";
 import HeroSection from "../../components/patient/HeroSection.vue";
 import MedicalChart from "../../components/shared/MedicalChart.vue";
 import getMedicalChart from "../../composables/api/medical-chart/getMedicalChart";
-// import updateMedicalChart from "../../composables/api/updateMedicalChart";
+import updateMedicalChart from "../../composables/api/updateMedicalChart";
 
 const auth = getAuth();
 const patientUid = auth.currentUser.uid;
@@ -32,20 +32,20 @@ const isRequiredFieldsValid = (personalInformation) => {
   return true;
 };
 
-// const isSubmitDisabled = ref(false);
+const isSubmitDisabled = ref(false);
 
-// const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
-//   if (isRequiredFieldsValid(personalInformation)) {
-//     isSubmitDisabled.value = true;
-//     await updateMedicalChart(
-//       patientUid,
-//       personalInformation,
-//       medicalHistory,
-//       dentalHistory
-//     );
-//     isSubmitDisabled.value = false;
-//   }
-// };
+const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
+  if (isRequiredFieldsValid(personalInformation)) {
+    isSubmitDisabled.value = true;
+    await updateMedicalChart(
+      patientUid,
+      personalInformation,
+      medicalHistory,
+      dentalHistory
+    );
+    isSubmitDisabled.value = false;
+  }
+};
 </script>
 <template>
   <BaseLayout>
@@ -65,7 +65,7 @@ const isRequiredFieldsValid = (personalInformation) => {
           :medicalHistory="medicalChart.medicalHistory"
           :dentalHistory="medicalChart.dentalHistory"
         >
-          <!-- <template
+          <template
             #default="{ personalInformation, medicalHistory, dentalHistory }"
           >
             <button
@@ -82,7 +82,7 @@ const isRequiredFieldsValid = (personalInformation) => {
               <span v-if="isSubmitDisabled">Saving ...</span>
               <span v-else>Submit</span>
             </button>
-          </template> -->
+          </template>
         </MedicalChart>
       </div>
       <div class="text-2xl font-bold text-center mt-12" v-else>
