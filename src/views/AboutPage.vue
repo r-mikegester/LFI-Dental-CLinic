@@ -21,21 +21,21 @@ import heroImage from "../assets/img/about/bg-about.png";
       <div class="max-w-fit mx-auto">
         <h3 class="font-bold text-center text-3xl mb-3">History</h3>
         <p class="max-w-4xl text-center">
-          Doctor Lani Isidro earned her bachelor's degree in 1989 from Manila
+          Dr. Lani Isidro earned her bachelor's degree in 1989 from Manila
           Central University. Coming from a family of doctors, she passed her
           licensure exam in 1991. Her desire to help others through her degree
           was her inspiration in opening her first dental clinic in Monserrat
-          Morning Breeze with the support of her older sister, optometrist
-          Doctor Lota Fragante. In 1997, she chose to relocate her dental
-          practice to their home at Dolmar Golden Hills Llano Road Novaliches
-          Caloocan City so that she could fulfill her lifelong dream of being a
-          dentist and a mother. After 14 years, the Lord prompted her to
-          relocate her dentistry business to Jordan Plains Subdivision
-          Novaliches Quezon City, beside Jesus Amazing Grace Church where she
-          was appointed as a full pledge pastor. Serving not just the patient's
-          toothache but also leading and helping others to know Christ more. In
-          2010, she studied orthodontics at Prime Orthodontics Studies and
-          Training Philippines, INC.
+          Morning Breeze with the support of her older sister, optometrist Dr.
+          Lota Fragante. In 1997, she chose to relocate her dental practice to
+          their home at Dolmar Golden Hills Llano Road Novaliches Caloocan City
+          so that she could fulfill her lifelong dream of being a dentist and a
+          mother. After 14 years, the Lord prompted her to relocate her
+          dentistry business to Jordan Plains Subdivision Novaliches Quezon
+          City, beside Jesus Amazing Grace Church where she was appointed as a
+          full pledge pastor. Serving not just the patient's toothache but also
+          leading and helping others to know Christ more. In 2010, she studied
+          orthodontics at Prime Orthodontics Studies and Training Philippines,
+          Inc.
         </p>
       </div>
     </section>
@@ -56,12 +56,12 @@ import heroImage from "../assets/img/about/bg-about.png";
               Meet our Dentists
             </h3>
             <div class="mb-12 text-xl">
-              <p class="font-bold">Dra. Lani Isidro</p>
+              <p class="font-bold">Dr. Lani Isidro</p>
               <p>Founder of LFI Dental Clinic</p>
             </div>
             <div class="text-right text-xl">
-              <p class="font-bold">Dra. Laarni Isidro</p>
-              <p>Daughter of Dra. Lani Isidro</p>
+              <p class="font-bold">Dr. Laarni Isidro</p>
+              <p>Daughter of Dr. Lani Isidro</p>
             </div>
           </div>
           <div>
@@ -83,14 +83,14 @@ import heroImage from "../assets/img/about/bg-about.png";
             class="max-w-[19rem] w-full ml-auto"
           />
           <div class="flex flex-col justify-center px-6">
-            <p class="font-bold text-xl">Dra. Lani Isidro</p>
+            <p class="font-bold text-xl">Dr. Lani Isidro</p>
             <p>Founder of LFI Dental Clinic</p>
           </div>
         </div>
         <div class="grid grid-cols-2">
           <div class="flex flex-col justify-center px-6 text-right">
-            <p class="font-bold text-xl">Dra. Laarni Isidro</p>
-            <p>Dra. Laarni Isidro</p>
+            <p class="font-bold text-xl">Dr. Laarni Isidro</p>
+            <p>Dr. Laarni Isidro</p>
           </div>
           <img
             src="../assets/img/about/laarni.png"
