@@ -2,16 +2,6 @@
 import BaseLayout from "../components/patient/BaseLayout.vue";
 </script>
 <style>
-.homepage-hero-section:before {
-  content: "";
-  background-image: url("../assets/img/bgs/bg2.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -1;
-}
 .homepage-hero-section:after {
   content: "";
   background-color: black;
@@ -28,10 +18,17 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
     <div
       class="homepage-hero-section relative bg-cover bg-no-repeat bg-center h-[90vh]"
     >
+      <img
+        src="../assets/img/bgs/bg2.jpg"
+        alt="Girl smiling"
+        class="-z-[1] absolute w-full h-full object-cover object-[-5rem_0px] sm:object-center"
+      />
       <div
-        class="flex flex-col absolute w-full h-full justify-end items-center pb-12 md:pb-0 md:justify-center md:items-end md:pr-24"
+        class="flex flex-col absolute w-full h-full justify-end items-center pb-20 md:pb-0 md:justify-center md:items-end md:pr-24"
       >
-        <h2 class="text-2xl md:text-4xl text-right font-bold">
+        <h2
+          class="text-2xl text-center md:text-4xl md:text-right font-bold px-6 md:px-0"
+        >
           Get an <span class="text-teal-500">Appointment</span> Now!
         </h2>
         <p class="md:text-right">Don't let your agony set it for you.</p>
@@ -285,7 +282,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
           Set your appointment now through these three (3) easy steps.
         </p>
       </div>
-      <div class="grid gap-8 row-gap-0 lg:grid-cols-3">
+      <div class="grid gap-8 row-gap-0 lg:grid-cols-3 px-6">
         <div class="relative text-center">
           <div
             class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-colors duration-200 ease-in-out bg-gray-100 rounded-full hover:bg-teal-300 sm:w-20 sm:h-20 hover:scale-110 hover:rounded-full"
