@@ -94,7 +94,7 @@ onMounted(async () => {
           <!-- Dropdown menu -->
           <div
             v-show="show"
-            class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 md:border-none md:rounded-md lg:border-none lg:shadow-md lg:absolute lg:right-0 w-44"
+            class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 xl:rounded-md xl:border-none xl:shadow-md xl:absolute xl:right-0 w-44"
           >
             <router-link
               :to="{ name: 'General Dentistry Page' }"
@@ -155,7 +155,7 @@ onMounted(async () => {
         class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
       >
         <li>
-          <div class="relative pb-10 lg:pb-0">
+          <div class="relative pb-10 xl:pb-0">
             <!-- Dropdown toggle button -->
             <button
               @click="onToggleAccountButton"
@@ -192,7 +192,7 @@ onMounted(async () => {
             <div v-if="userIsLoggedIn">
               <div
                 v-show="skrr"
-                class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 rounded-none md:rounded-md lg:shadow-xl md:border-none sm:shadow-none lg:absolute lg:right-0 w-44"
+                class="py-2 mt-2 transition-colors duration-200 bg-white border-l-2 border-teal-500 rounded-none xl:rounded-md xl:shadow-xl xl:border-none sm:shadow-none xl:absolute xl:right-0 w-44"
               >
                 <router-link
                   :to="{ name: 'Patient Account Settings Page' }"
