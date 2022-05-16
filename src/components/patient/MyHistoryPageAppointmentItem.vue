@@ -45,7 +45,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-7 px-6 py-3 border-b border-teal-500 items-center">
+  <!-- Desktop -->
+  <div
+    class="hidden sm:grid grid-cols-7 px-6 py-3 border-b border-teal-500 items-center"
+  >
     <div class="overflow-hidden text-ellipsis">
       {{ getMonthDayYearOfTimeslot(appointment.uid) }}
       {{ getHoursMinutesOfTimeslot(appointment.uid) }}
@@ -58,12 +61,13 @@ onMounted(() => {
           params: { timeslot: appointment.uid },
         }"
         v-if="true === appointment.procedureVisible"
+        class="font-medium"
       >
         View
       </RouterLink>
       <button
         type="button"
-        class="font-normal"
+        class="font-medium"
         @click="onRequestAccess()"
         v-else-if="false === appointment.procedureVisible"
       >
@@ -71,7 +75,7 @@ onMounted(() => {
       </button>
       <button
         type="button"
-        class="font-normal"
+        class="font-medium"
         @click="onCancelRequestAccess()"
         v-else
       >
@@ -94,6 +98,7 @@ onMounted(() => {
     </div>
     <div class="text-center">
       <button
+        v-if="cancelDeadline && !appointment.attended"
         type="button"
         @click="onShowCancelDialog()"
         :class="{
@@ -104,12 +109,118 @@ onMounted(() => {
             ? ''
             : 'You may only cancel up to three (3) days before the appointment'
         "
-        v-if="cancelDeadline && !appointment.attended"
       >
         Cancel
       </button>
     </div>
   </div>
+
+  <!-- Mobile -->
+  <div class="sm:hidden border border-teal-500 px-6 py-4 rounded-3xl">
+    <div>
+      <div class="font-medium text-teal-500">Date</div>
+      <div class="font-semibold text-2xl leading-5 mb-3">
+        {{ getMonthDayYearOfTimeslot(appointment.uid) }}
+        {{ getHoursMinutesOfTimeslot(appointment.uid) }}
+      </div>
+    </div>
+    <div>
+      <div class="font-medium text-teal-500">Service</div>
+      <div class="font-semibold text-2xl leading-5 mb-3">
+        {{ appointment.service }}
+      </div>
+    </div>
+    <div>
+      <div class="font-medium text-teal-500">Price</div>
+      <div class="font-semibold text-2xl leading-5 mb-3">
+        <span v-if="appointment.price === 0">No price set</span>
+        <span v-else>
+          {{ appointment.price }}
+        </span>
+      </div>
+    </div>
+    <div>
+      <div class="font-medium text-teal-500">Balance</div>
+      <div class="font-semibold text-2xl leading-5 mb-3">
+        {{ appointment.balance }}
+      </div>
+    </div>
+    <div>
+      <div class="font-medium text-teal-500">Status</div>
+      <div class="font-semibold text-2xl leading-5 mb-3">
+        <span v-if="appointment.attended">
+          <span v-if="null === appointment.status">Pending status</span>
+          <span v-else>{{ appointment.status }}</span>
+        </span>
+        <span v-else>Pending appointment</span>
+      </div>
+    </div>
+    <div>
+      <div class="font-medium text-teal-500">Actions</div>
+      <!-- Request Procedure -->
+      <div class="text-center mb-3">
+        <RouterLink
+          :to="{
+            name: 'Patient Procedure Page',
+            params: { timeslot: appointment.uid },
+          }"
+          v-if="true === appointment.procedureVisible"
+          class="w-full xs:w-64 inline-block text-center bg-sky-400 text-white px-3 py-2 rounded-lg font-semibold hover:bg-sky-500 transition duration-200"
+        >
+          View
+        </RouterLink>
+        <button
+          type="button"
+          class="w-full xs:w-64 bg-teal-500 text-white px-3 py-2 rounded-lg font-semibold hover:bg-teal-400 transition duration-200"
+          @click="onRequestAccess()"
+          v-else-if="false === appointment.procedureVisible"
+        >
+          Request Access
+        </button>
+        <button
+          type="button"
+          class="w-full xs:w-64 bg-red-500 text-white px-3 py-2 rounded-lg font-semibold hover:bg-red-400 transition duration-200"
+          @click="onCancelRequestAccess()"
+          v-else
+        >
+          Cancel request
+        </button>
+      </div>
+      <!-- Cancel Service -->
+      <div class="text-center">
+        <button
+          v-if="
+            cancelDeadline &&
+            !appointment.attended &&
+            Date.now() < cancelDeadline.getTime()
+          "
+          type="button"
+          @click="onShowCancelDialog()"
+          class="w-full xs:w-64 border border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white px-3 py-2 rounded-lg font-semibold transition duration-200"
+          title="You may only cancel up to three (3) days before the appointment"
+        >
+          Cancel
+        </button>
+        <button
+          v-else-if="cancelDeadline && !appointment.attended"
+          type="button"
+          @click="onShowCancelDialog()"
+          class="w-full xs:w-64 border border-gray-500 text-gray-500 cursor-not-allowed px-3 py-2 rounded-lg font-semibold transition duration-200"
+          :class="{
+            'text-gray-300': !(Date.now() < cancelDeadline.getTime()),
+          }"
+          :title="
+            Date.now() < cancelDeadline.getTime()
+              ? ''
+              : 'You may only cancel up to three (3) days before the appointment'
+          "
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
   <SimpleModalDialog v-if="isCancelDialogVisible">
     <template #header>
       <div class="font-semibold text-xl mb-2">Cancel Appointment</div>
@@ -122,7 +233,7 @@ onMounted(() => {
       </div>
     </template>
     <template #actions>
-      <div class="flex justify-between">
+      <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
           class="bg-teal-500 text-white px-3 py-2 rounded-lg font-semibold hover:bg-teal-400 transition duration-200"
