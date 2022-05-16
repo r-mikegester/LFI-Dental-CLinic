@@ -22,7 +22,7 @@ onMounted(async () => {
 
 <template>
   <nav
-    class="w-64 bg-teal-500/40 text-sky-700 h-full hidden md:grid grid-rows-[auto_1fr]"
+    class="admin-view-sidebar w-64 bg-teal-500/40 text-sky-700 h-full hidden md:grid grid-rows-[auto_1fr]"
   >
     <!-- image -->
     <div class="flex flex-col items-center py-6">
@@ -97,7 +97,7 @@ onMounted(async () => {
   </nav>
 </template>
 <style>
-nav .router-link-exact-active {
+.admin-view-sidebar .router-link-exact-active {
   @apply bg-teal-500/40;
 }
 </style>
