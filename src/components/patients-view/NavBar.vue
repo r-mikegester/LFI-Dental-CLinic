@@ -39,7 +39,7 @@ onMounted(async () => {
 
 <template>
   <nav
-    class="patient-view-navbar sticky top-0 z-40 w-full px-6 bg-white shadow-lg text-sky-700 xl:flex xl:justify-between xl:items-center"
+    class="patient-view-navbar fixed xl:sticky top-0 z-40 w-full px-6 bg-white shadow-lg text-sky-700 xl:flex xl:justify-between xl:items-center"
   >
     <div class="flex items-center justify-between">
       <router-link
@@ -73,7 +73,7 @@ onMounted(async () => {
       class="flex-col space-y-4 xl:flex xl:space-y-0 xl:flex-row xl:items-center xl:space-x-10 xl:mt-0 shrink"
     >
       <router-link
-        class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110 shrink"
+        class="font-semibold transition-colors duration-200 hover:text-teal-500 xl:hover:scale-110 shrink"
         :to="{ name: 'Home' }"
       >
         Home
@@ -86,7 +86,7 @@ onMounted(async () => {
             class="flex items-center font-semibold transition-colors duration-200 bg-white rounded-md text-sky-700 focus:outline-none hover:text-teal-500"
           >
             <span
-              class="mr-4 transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
+              class="mr-4 transition-colors duration-200 hover:text-teal-500 xl:hover:scale-110"
               >Dental Services</span
             >
           </button>
@@ -136,17 +136,17 @@ onMounted(async () => {
         </div>
       </li>
       <router-link
-        class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
+        class="font-semibold transition-colors duration-200 hover:text-teal-500 xl:hover:scale-110"
         to="/appointments"
         >Set an Appointment</router-link
       >
       <router-link
-        class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
+        class="font-semibold transition-colors duration-200 hover:text-teal-500 xl:hover:scale-110"
         to="/about"
         >About Us</router-link
       >
       <router-link
-        class="font-semibold transition-colors duration-200 hover:text-teal-500 md:hover:scale-110"
+        class="font-semibold transition-colors duration-200 hover:text-teal-500 xl:hover:scale-110"
         to="/contact"
         >Contact Us</router-link
       >
@@ -226,9 +226,10 @@ onMounted(async () => {
       </ul>
     </ul>
   </nav>
+  <div class="h-[4.5rem] xl:hidden"></div>
 </template>
 <style>
-.patient-view-navbar .router-link-exact-active {
+.patient-view-navbar ul .router-link-exact-active {
   color: rgb(40, 187, 187);
 }
 </style>
