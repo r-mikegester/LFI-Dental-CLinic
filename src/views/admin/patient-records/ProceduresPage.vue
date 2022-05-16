@@ -93,36 +93,61 @@ const onDisallowAccess = async () => {
         {{ procedure.body }}
       </div>
 
-      <div class="flex justify-end mt-4">
-        <button
-          v-if="isEditingMode"
-          class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
-          @click="onSave()"
-        >
-          Save
-        </button>
-        <button
-          class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
-          @click="onEdit()"
-          v-else
-        >
-          Edit
-        </button>
-
-        <button
-          class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
-          @click="onDisallowAccess()"
-          v-if="procedure.visible"
-        >
-          Remove Access
-        </button>
-        <button
-          class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
-          @click="onAllowAccess()"
-          v-else
-        >
-          Allow Access
-        </button>
+      <div
+        class="flex mt-4"
+        :class="{
+          'justify-between': procedure.visible === 'requesting',
+          'justify-end':
+            procedure.visible === true || procedure.visible === false,
+        }"
+      >
+        <div>
+          <button
+            v-if="isEditingMode"
+            class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
+            @click="onSave()"
+          >
+            Save
+          </button>
+          <button
+            class="border-teal-500 border 1px rounded-full py-1 px-5 text-sm mr-3 hover:bg-teal-500 hover:text-white"
+            @click="onEdit()"
+            v-else
+          >
+            Edit
+          </button>
+        </div>
+        <div>
+          <button
+            class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
+            @click="onAllowAccess()"
+            v-if="procedure.visible === false"
+          >
+            Allow Access
+          </button>
+          <button
+            class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
+            @click="onDisallowAccess()"
+            v-if="procedure.visible === true"
+          >
+            Remove Access
+          </button>
+          <div v-if="procedure.visible === 'requesting'" class="flex gap-3">
+            Requesting access:
+            <button
+              class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
+              @click="onAllowAccess()"
+            >
+              Allow
+            </button>
+            <button
+              class="border-teal-500 border 1px rounded-full py-1 px-2 text-sm hover:bg-teal-500 hover:text-white"
+              @click="onDisallowAccess()"
+            >
+              Deny
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="text-2xl font-bold text-center mt-12" v-else>
