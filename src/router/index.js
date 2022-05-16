@@ -275,6 +275,12 @@ const router = createRouter({
       component: () => import("../views/patient/LoginPage.vue"),
       beforeEnter: [redirectToPatientAppointmentHistoryPageIfPatientUser],
     },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: {
+        name: "404 Not Found Page",
+      },
+    },
   ],
 });
 
