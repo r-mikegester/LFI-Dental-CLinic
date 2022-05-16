@@ -20,7 +20,7 @@ const userAppointments = getUserAppointments(patientUid);
       <div>
         <!-- Header -->
         <div
-          class="grid grid-cols-7 font-semibold px-6 py-3 bg-teal-500/40 uppercase"
+          class="hidden sm:grid grid-cols-7 font-semibold px-6 py-3 bg-teal-500/40 uppercase"
         >
           <div class="overflow-hidden text-ellipsis">DATE</div>
           <div class="overflow-hidden text-ellipsis">SERVICE</div>
@@ -31,7 +31,7 @@ const userAppointments = getUserAppointments(patientUid);
           <div class="overflow-hidden text-ellipsis text-center">Actions</div>
         </div>
         <!-- Body -->
-        <div>
+        <div class="grid gap-2 sm:block">
           <MyHistoryPageAppointmentItem
             v-for="userAppointment in userAppointments"
             :key="userAppointment.uid"
