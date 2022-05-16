@@ -34,7 +34,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
         <h2 class="text-2xl md:text-4xl text-right font-bold">
           Get an <span class="text-teal-500">Appointment</span> Now!
         </h2>
-        <p class="md:text-right">Don't let your Agony set it for you.</p>
+        <p class="md:text-right">Don't let your agony set it for you.</p>
         <router-link :to="{ name: 'Appointments Page' }">
           <button
             class="bg-transparent text-teal-500 font-bold hover:text-white py-2 px-4 my-4 border-2 border-teal-500 rounded inline-flex items-center md:float-right hover:bg-teal-500 hover:border-teal-500 transition-all ease-in duration-75"
