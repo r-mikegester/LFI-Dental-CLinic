@@ -39,7 +39,7 @@ onMounted(async () => {
 
 <template>
   <nav
-    class="patient-view-navbar fixed xl:sticky top-0 z-40 w-full px-6 bg-white shadow-lg text-sky-700 xl:flex xl:justify-between xl:items-center"
+    class="fixed xl:sticky top-0 z-40 w-full px-6 bg-white shadow-lg text-sky-700 xl:flex xl:justify-between xl:items-center"
   >
     <div class="flex items-center justify-between">
       <router-link
@@ -70,7 +70,7 @@ onMounted(async () => {
     <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
     <ul
       :class="showMenu ? 'flex' : 'hidden'"
-      class="flex-col space-y-4 xl:flex xl:space-y-0 xl:flex-row xl:items-center xl:space-x-10 xl:mt-0 shrink"
+      class="patient-view-navbar flex-col space-y-4 xl:flex xl:space-y-0 xl:flex-row xl:items-center xl:space-x-10 xl:mt-0 shrink"
     >
       <router-link
         class="font-semibold transition-colors duration-200 hover:text-teal-500 xl:hover:scale-110 shrink"
@@ -152,7 +152,7 @@ onMounted(async () => {
       >
       <ul
         :class="showSettings ? 'flex' : 'hidden'"
-        class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
+        class="patient-view-navbar flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
       >
         <li>
           <div class="relative pb-10 xl:pb-0">
@@ -229,7 +229,7 @@ onMounted(async () => {
   <div class="h-[4.5rem] xl:hidden"></div>
 </template>
 <style>
-.patient-view-navbar ul .router-link-exact-active {
+.patient-view-navbar .router-link-exact-active {
   color: rgb(40, 187, 187);
 }
 </style>
