@@ -50,7 +50,7 @@ onMounted(async () => {
           src="../../assets/img/lfi-logo-transparent.png"
           class="h-12 px-4"
         />
-        <span class="hidden xs:inline">LFI DENTAL CLINIC</span>
+        <span class="hidden xst:inline">LFI DENTAL CLINIC</span>
       </router-link>
       <!-- Mobile menu button -->
       <div @click="toggleNav" class="xl:hidden shrink-0">
