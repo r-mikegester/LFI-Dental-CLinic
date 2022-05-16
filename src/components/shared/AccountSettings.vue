@@ -151,23 +151,42 @@ const errorDialog = reactive({
       </div>
       <!-- Name -->
       <div
-        class="border-b-[1px] border-teal-500 p-4 grid grid-cols-[2fr_4fr_3fr]"
+        class="border-b-[1px] border-teal-500 p-4 grid sm:grid-cols-[2fr_4fr_3fr]"
       >
-        <div class="font-semibold">Name</div>
-        <div>{{ userInfo.fullName }}</div>
-        <div class="text-right text-teal-500 hover:text-teal-400">
+        <div class="font-semibold flex justify-between">
+          <div>Name</div>
+          <div class="text-right text-teal-500 hover:text-teal-400 sm:hidden">
+            <button type="button" @click="isNameDialogVisible = true">
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="overflow-hidden text-ellipsis">{{ userInfo.fullName }}</div>
+        <div
+          class="text-right text-teal-500 hover:text-teal-400 hidden sm:block"
+        >
           <button type="button" @click="isNameDialogVisible = true">
             Edit
           </button>
         </div>
       </div>
+
       <!-- Email -->
       <div
-        class="border-b-[1px] border-teal-500 p-4 grid grid-cols-[2fr_4fr_3fr]"
+        class="border-b-[1px] border-teal-500 p-4 grid sm:grid-cols-[2fr_4fr_3fr]"
       >
-        <div class="font-semibold">Email</div>
-        <div>{{ userInfo.email }}</div>
-        <div class="text-right text-teal-500 hover:text-teal-400">
+        <div class="font-semibold flex justify-between">
+          <div>Email</div>
+          <div class="text-right text-teal-500 hover:text-teal-400 sm:hidden">
+            <button type="button" @click="isEmailDialogVisible = true">
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="overflow-hidden text-ellipsis">{{ userInfo.email }}</div>
+        <div
+          class="text-right text-teal-500 hover:text-teal-400 hidden sm:block"
+        >
           <button type="button" @click="isEmailDialogVisible = true">
             Edit
           </button>
@@ -193,7 +212,7 @@ const errorDialog = reactive({
         <div>New Email:</div>
         <input
           type="text"
-          class="border border-sky-600 px-2 py-1"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
           v-model="userCredentials.newEmail"
         />
       </div>
@@ -201,13 +220,13 @@ const errorDialog = reactive({
         <div>Password:</div>
         <input
           type="password"
-          class="border border-sky-600 px-2 py-1"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
           v-model="userCredentials.password"
         />
       </div>
     </template>
     <template #actions>
-      <div class="flex justify-between">
+      <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
           class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
@@ -233,13 +252,13 @@ const errorDialog = reactive({
         <div>Name:</div>
         <input
           type="text"
-          class="border border-sky-600 px-2 py-1"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
           v-model="userCredentials.fullName"
         />
       </div>
     </template>
     <template #actions>
-      <div class="flex justify-between">
+      <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
           class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
@@ -265,7 +284,7 @@ const errorDialog = reactive({
         <div>Old Password:</div>
         <input
           type="password"
-          class="border border-sky-600 px-2 py-1"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
           v-model="userCredentials.password"
         />
       </div>
@@ -273,13 +292,13 @@ const errorDialog = reactive({
         <div>New Password:</div>
         <input
           type="password"
-          class="border border-sky-600 px-2 py-1"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
           v-model="userCredentials.newPassword"
         />
       </div>
     </template>
     <template #actions>
-      <div class="flex justify-between">
+      <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
           class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
@@ -321,36 +340,36 @@ const errorDialog = reactive({
           <input
             type="file"
             accept="image/*"
-            class="text-sm w-48"
+            class="text-sm min-w-0 w-[min(100%,_12rem)]"
             ref="inputFile"
           />
         </div>
       </div>
     </template>
     <template #actions>
-      <div class="flex justify-between gap-4">
+      <div class="flex flex-col xs:flex-row justify-between gap-4">
         <button
           type="button"
           class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
-          @click="isProfilePicturelDialogVisible = false"
+          @click="onRemoveProfilePicture()"
+          v-if="userInfo.profilePictureURL"
         >
-          Close
+          Remove
         </button>
-        <div class="flex gap-4">
-          <button
-            type="button"
-            class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
-            @click="onRemoveProfilePicture()"
-            v-if="userInfo.profilePictureURL"
-          >
-            Remove
-          </button>
+        <div class="flex flex-col xs:flex-row gap-4">
           <button
             type="button"
             class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
             @click="onChangeProfilePicture()"
           >
             Update
+          </button>
+          <button
+            type="button"
+            class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+            @click="isProfilePicturelDialogVisible = false"
+          >
+            Close
           </button>
         </div>
       </div>
