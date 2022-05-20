@@ -52,7 +52,7 @@ const onCreate = async () => {
   }
 };
 
-const isErrorDialogVisible = ref(true);
+const isErrorDialogVisible = ref(false);
 </script>
 
 <template>
