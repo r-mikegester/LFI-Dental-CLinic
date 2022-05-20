@@ -31,7 +31,7 @@ const userAppointments = getUserAppointments(patientUid);
           <div class="overflow-hidden text-ellipsis text-center">Actions</div>
         </div>
         <!-- Body -->
-        <div class="grid gap-2 sm:block">
+        <div class="grid gap-4 sm:block">
           <MyHistoryPageAppointmentItem
             v-for="userAppointment in userAppointments"
             :key="userAppointment.uid"
