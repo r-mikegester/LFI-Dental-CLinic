@@ -4,31 +4,53 @@ import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYea
 import getUserProfile from "../../composables/api/getUserProfile";
 import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot";
 import setUserAppointmentAttended from "../../composables/api/user-appointment-attended/setUserAppointmentAttended";
-import unsetUserAppointmentAttended from "../../composables/api/user-appointment-attended/unsetUserAppointmentAttended";
+import setUserAppointmentNotAttended from "../../composables/api/user-appointment-attended/setUserAppointmentNotAttended";
+import setUserAppointmentPending from "../../composables/api/user-appointment-attended/setUserAppointmentPending";
 
 const props = defineProps({
   timeslot: String,
   service: String,
   patientUid: String,
-  attended: Boolean,
+  attended: [Boolean, String],
 });
 
 const userProfile = ref(null);
 const attended = ref(null);
 onMounted(async () => {
-  userProfile.value = await getUserProfile(props.patientUid);
   attended.value = props.attended;
+  switch (props.attended) {
+    case true:
+      attended.value = "Yes";
+      break;
+    case false:
+      attended.value = "No";
+      break;
+    case "pending":
+      attended.value = "pending";
+      break;
+  }
+  userProfile.value = await getUserProfile(props.patientUid);
 });
 
 const emit = defineEmits(["attended-changed"]);
 
-const onChange = async () => {
-  if (attended.value) {
-    await setUserAppointmentAttended(props.patientUid, props.timeslot);
-    emit("attended-changed", attended.value, props.timeslot);
-  } else {
-    await unsetUserAppointmentAttended(props.patientUid, props.timeslot);
-    emit("attended-changed", attended.value, props.timeslot);
+const onInput = async (e) => {
+  switch (e.target.value) {
+    case "Yes":
+      attended.value = e.target.value;
+      await setUserAppointmentAttended(props.patientUid, props.timeslot);
+      emit("attended-changed", attended.value, props.timeslot);
+      break;
+    case "No":
+      attended.value = e.target.value;
+      await setUserAppointmentNotAttended(props.patientUid, props.timeslot);
+      emit("attended-changed", attended.value, props.timeslot);
+      break;
+    case "pending":
+      attended.value = e.target.value;
+      await setUserAppointmentPending(props.patientUid, props.timeslot);
+      emit("attended-changed", attended.value, props.timeslot);
+      break;
   }
 };
 </script>
@@ -42,6 +64,7 @@ const onChange = async () => {
       <span v-if="userProfile">
         {{ userProfile.userRecord.displayName }}
       </span>
+      <span v-else>Loading ...</span>
     </div>
     <div class="overflow-hidden text-ellipsis">
       {{ props.service }}
@@ -50,7 +73,12 @@ const onChange = async () => {
       {{ getHoursMinutesOfTimeslot(parseInt(props.timeslot)) }}
     </div>
     <div>
-      <input type="checkbox" @change="onChange()" v-model="attended" />
+      <select @input="onInput" :value="attended" v-if="attended">
+        <option value="pending" selected>Choose ...</option>
+        <option>Yes</option>
+        <option>No</option>
+      </select>
+      <span v-else>Loading ...</span>
     </div>
   </div>
 </template>
