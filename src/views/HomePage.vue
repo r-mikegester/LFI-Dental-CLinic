@@ -58,6 +58,7 @@ import BaseLayout from "../components/patient/BaseLayout.vue";
 
     <!-- ====== Services Section Start -->
     <div
+      id="services"
       class="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
     >
       <h5
