@@ -55,32 +55,34 @@ onMounted(() => {
     </div>
     <div class="overflow-hidden text-ellipsis">{{ appointment.service }}</div>
     <div class="overflow-hidden text-ellipsis">
-      <RouterLink
-        :to="{
-          name: 'Patient Procedure Page',
-          params: { timeslot: appointment.uid },
-        }"
-        v-if="true === appointment.procedureVisible"
-        class="font-medium"
-      >
-        View
-      </RouterLink>
-      <button
-        type="button"
-        class="font-medium"
-        @click="onRequestAccess()"
-        v-else-if="false === appointment.procedureVisible"
-      >
-        Request Access
-      </button>
-      <button
-        type="button"
-        class="font-medium"
-        @click="onCancelRequestAccess()"
-        v-else
-      >
-        Cancel request
-      </button>
+      <div v-if="true === appointment.attended">
+        <RouterLink
+          :to="{
+            name: 'Patient Procedure Page',
+            params: { timeslot: appointment.uid },
+          }"
+          v-if="true === appointment.procedureVisible"
+          class="font-medium"
+        >
+          View
+        </RouterLink>
+        <button
+          type="button"
+          class="font-medium"
+          @click="onRequestAccess()"
+          v-else-if="false === appointment.procedureVisible"
+        >
+          Request Access
+        </button>
+        <button
+          type="button"
+          class="font-medium"
+          @click="onCancelRequestAccess()"
+          v-else
+        >
+          Cancel request
+        </button>
+      </div>
     </div>
     <div class="overflow-hidden text-ellipsis">
       <span v-if="appointment.price === 0">No price set</span>
@@ -158,7 +160,7 @@ onMounted(() => {
     <div>
       <div class="font-medium text-teal-500">Actions</div>
       <!-- Request Procedure -->
-      <div class="text-center mb-3">
+      <div class="text-center mb-3" v-if="true === appointment.attended">
         <RouterLink
           :to="{
             name: 'Patient Procedure Page',
