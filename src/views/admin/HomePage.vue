@@ -1,6 +1,34 @@
 <script setup>
 import BaseLayout from "../../components/admin/BaseLayout.vue";
 import { RouterLink } from "vue-router";
+import { onMounted, reactive, ref } from "vue";
+import getReminders from "../../composables/firestore/reminders/getReminders";
+import setReminders from "../../composables/firestore/reminders/setReminders";
+import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue";
+
+const isEditing = ref(false);
+const reminders = reactive({
+  message: "",
+});
+
+const showReminders = ref(false);
+onMounted(async () => {
+  const { message } = await getReminders();
+  if (message) {
+    reminders.message = message;
+    showReminders.value = true;
+    console.log(showReminders.value);
+  }
+});
+
+const onEdit = () => {
+  isEditing.value = true;
+};
+
+const onSave = async () => {
+  await setReminders(reminders.message);
+  isEditing.value = false;
+};
 </script>
 
 <template>
@@ -18,7 +46,7 @@ import { RouterLink } from "vue-router";
           Welcome back to L.F.I. Dental Clinic. Have a great day!
         </div>
       </div>
-      <div class="grid lg:grid-cols-[auto_auto]">
+      <div class="grid lg:grid-cols-[auto_1fr]">
         <!-- Big Buttons -->
         <div
           class="grid justify-center xl:grid-cols-2 max-w-2xl gap-12 auto-rows-[10rem]"
@@ -53,24 +81,64 @@ import { RouterLink } from "vue-router";
           </RouterLink>
         </div>
         <!-- Schedules-->
-        <div class="pt-8 lg:pt-0 lg:pl-8 flex lg:block xl:flex justify-center">
-          <div class="xl:mt-auto max-w-xs border border-teal-500 rounded-xl">
+        <div class="pt-12 lg:pt-0 grid grid-rows-[auto] px-12">
+          <div
+            class="max-w-xs mt-auto mx-auto w-full border border-teal-500 rounded-xl"
+          >
             <div class="pl-6 pr-3 pt-3 flex justify-between">
               <div>Reminders</div>
               <button
+                v-if="isEditing"
                 class="px-4 text-sm border border-teal-500 hover:bg-teal-400 hover:text-white transition duration-200 rounded-xl"
+                @click="onSave()"
+              >
+                Save
+              </button>
+              <button
+                v-else
+                class="px-4 text-sm border border-teal-500 hover:bg-teal-400 hover:text-white transition duration-200 rounded-xl"
+                @click="onEdit()"
               >
                 Edit
               </button>
             </div>
-            <div class="h-40 p-2">
+            <div class="h-40 p-2 w-full">
               <textarea
-                class="h-full w-full border border-gray-400 rounded-b-lg px-2 py-1 resize-none"
+                v-if="isEditing"
+                v-model="reminders.message"
+                class="text-sm h-full w-full border border-gray-400 rounded-b-lg px-2 py-1 resize-none"
               ></textarea>
+              <div
+                v-else
+                class="text-sm h-full w-full border border-gray-400 rounded-b-lg px-2 py-1 resize-none"
+              >
+                {{ reminders.message }}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </BaseLayout>
+  <SimpleModalDialog v-if="showReminders">
+    <template #header>
+      <div class="font-medium mb-3">Reminders:</div>
+    </template>
+    <template #body>
+      <div class="w-[min(100vw_-_6rem,_24rem)] mb-6">
+        {{ reminders.message }}
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-1 border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium rounded-full"
+          @click="showReminders = false"
+        >
+          OK
+        </button>
+      </div>
+    </template>
+  </SimpleModalDialog>
 </template>
