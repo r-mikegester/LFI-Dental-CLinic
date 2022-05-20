@@ -10,7 +10,7 @@ export default async (patientUid, slotSeconds) => {
   const idToken = await getUserToken();
   const link = `${backendBaseURL}/users/${patientUid}/appointments/${slotSeconds}/attended`;
   const response = await fetch(link, {
-    method: "PATCH",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
