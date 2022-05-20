@@ -1,14 +1,16 @@
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
+import { getAuth } from "firebase/auth";
 import newAppointment from "../../composables/api/newAppointment";
 import MedicalChart from "../shared/MedicalChart.vue";
-import { ref } from "vue";
 import updateMedicalChart from "../../composables/api/updateMedicalChart";
-import { getAuth } from "firebase/auth";
 
 const appointmentDetailsStore = useAppointmentDetailsStore();
 const router = useRouter();
+const auth = getAuth();
+const patientUid = auth.currentUser.uid;
 
 const isRequiredFieldsValid = (personalInformation) => {
   if (personalInformation.fullName === "") return false;
@@ -20,11 +22,9 @@ const isRequiredFieldsValid = (personalInformation) => {
 
 const isSubmitDisabled = ref(false);
 
-const auth = getAuth();
 const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
   if (isRequiredFieldsValid(personalInformation)) {
     isSubmitDisabled.value = true;
-    const patientUid = auth.currentUser.uid;
     await updateMedicalChart(
       patientUid,
       personalInformation,
@@ -46,7 +46,7 @@ const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
 
 <template>
   <div class="max-w-5xl mx-auto px-3 py-12">
-    <MedicalChart>
+    <MedicalChart :patientUid="patientUid">
       <template
         #default="{ personalInformation, medicalHistory, dentalHistory }"
       >
