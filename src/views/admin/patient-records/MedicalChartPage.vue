@@ -8,6 +8,8 @@ import updateMedicalChart from "../../../composables/api/updateMedicalChart";
 
 const route = useRoute();
 const patientUid = route.params.uid;
+
+const medicalChartIsLoading = ref(false);
 const medicalChart = reactive({
   personalInformation: null,
   medicalHistory: null,
@@ -17,9 +19,12 @@ const medicalChart = reactive({
 onMounted(async () => {
   const { personalInformation, medicalHistory, dentalHistory } =
     await getMedicalChart(patientUid);
-  medicalChart.personalInformation = personalInformation;
-  medicalChart.medicalHistory = medicalHistory;
-  medicalChart.dentalHistory = dentalHistory;
+
+  if (personalInformation)
+    medicalChart.personalInformation = personalInformation;
+  if (medicalHistory) medicalChart.medicalHistory = medicalHistory;
+  if (dentalHistory) medicalChart.dentalHistory = dentalHistory;
+  medicalChartIsLoading.value = true;
 });
 
 /* Validation and submission */
@@ -62,14 +67,7 @@ const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
         Medical Chart
       </RouterLink>
     </h1>
-    <div
-      class="xl:px-24"
-      v-if="
-        medicalChart.personalInformation &&
-        medicalChart.medicalHistory &&
-        medicalChart.dentalHistory
-      "
-    >
+    <div class="xl:px-24" v-if="medicalChartIsLoading">
       <MedicalChart
         :patientUid="patientUid"
         :personalInformation="medicalChart.personalInformation"
