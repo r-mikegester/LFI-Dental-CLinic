@@ -1,8 +1,10 @@
 <script setup>
+import { getAuth } from "firebase/auth";
 import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import newAppointment from "../../composables/api/newAppointment";
 import signIn from "../../composables/auth/signIn";
+import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart";
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
 import BoxDialog from "../dialogs/BoxDialog.vue";
 
@@ -27,22 +29,35 @@ const isAccountCredentialsValid = computed(() => {
 const appointmentDetailsStore = useAppointmentDetailsStore();
 
 const router = useRouter();
+const auth = getAuth();
 const onSignIn = async () => {
   try {
     if (isAccountCredentialsValid.value) {
       await signIn(accountCredentials.email, accountCredentials.password);
-      /* Set appointment if there is a queued appointment. */
-      if (appointmentDetailsStore.isInitialized) {
-        await newAppointment(
-          appointmentDetailsStore.getSlotSeconds,
-          appointmentDetailsStore.getService
-        );
-        appointmentDetailsStore.$reset;
-      }
+      const patientUid = auth.currentUser.uid;
+      const medicalChartIsFilled = await isFilledInMedicalChart(patientUid);
 
-      router.push({
-        name: "Patient Appointment History Page",
-      });
+      if (appointmentDetailsStore.isInitialized) {
+        if (medicalChartIsFilled) {
+          /* Set appointment if there is a queued appointment,
+             and the medical chart is already filled in. */
+          await newAppointment(
+            appointmentDetailsStore.getSlotSeconds,
+            appointmentDetailsStore.getService
+          );
+
+          appointmentDetailsStore.$reset;
+          isSuccessModalVisible.value = true;
+        } else {
+          /* Redirect users to medical chart if not filled in.  */
+          router.push({
+            name: "Appointments Page Medical Chart",
+          });
+        }
+      } else
+        router.push({
+          name: "Patient Appointment History Page",
+        });
     }
   } catch (e) {
     switch (e.code) {
@@ -127,7 +142,7 @@ const errorDialogBody = ref("");
       <div class="flex justify-end">
         <RouterLink
           class="border border-sky-600 px-6 py-1"
-          :to="{ name: 'Appointments Page' }"
+          :to="{ name: 'Patient Appointment History Page' }"
         >
           Done
         </RouterLink>
