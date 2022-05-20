@@ -92,15 +92,17 @@ onMounted(() => {
     </div>
     <div class="overflow-hidden text-ellipsis">{{ appointment.balance }}</div>
     <div class="overflow-hidden text-ellipsis">
-      <span v-if="appointment.attended">
+      <span v-if="appointment.attended === 'pending'">
+        Pending appointment
+      </span>
+      <span v-else-if="appointment.attended === true">
         <span v-if="null === appointment.status">Pending status</span>
         <span v-else>{{ appointment.status }}</span>
       </span>
-      <span v-else>Pending appointment</span>
     </div>
     <div class="text-center">
       <button
-        v-if="cancelDeadline && !appointment.attended"
+        v-if="cancelDeadline && appointment.attended === 'pending'"
         type="button"
         @click="onShowCancelDialog()"
         :class="{
@@ -150,11 +152,13 @@ onMounted(() => {
     <div>
       <div class="font-medium text-teal-500">Status</div>
       <div class="font-semibold text-2xl leading-5 mb-3">
-        <span v-if="appointment.attended">
+        <span v-if="appointment.attended === 'pending'">
+          Pending appointment
+        </span>
+        <span v-else-if="appointment.attended === true">
           <span v-if="null === appointment.status">Pending status</span>
           <span v-else>{{ appointment.status }}</span>
         </span>
-        <span v-else>Pending appointment</span>
       </div>
     </div>
     <div>
@@ -193,7 +197,7 @@ onMounted(() => {
         <button
           v-if="
             cancelDeadline &&
-            !appointment.attended &&
+            appointment.attended === 'pending' &&
             Date.now() < cancelDeadline.getTime()
           "
           type="button"
@@ -204,9 +208,8 @@ onMounted(() => {
           Cancel
         </button>
         <button
-          v-else-if="cancelDeadline && !appointment.attended"
+          v-else-if="cancelDeadline && appointment.attended === 'pending'"
           type="button"
-          @click="onShowCancelDialog()"
           class="w-full xs:w-64 border border-gray-500 text-gray-500 cursor-not-allowed px-3 py-2 rounded-lg font-semibold transition duration-200"
           :class="{
             'text-gray-300': !(Date.now() < cancelDeadline.getTime()),
