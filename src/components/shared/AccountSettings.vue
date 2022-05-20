@@ -356,22 +356,20 @@ const errorDialog = reactive({
         >
           Remove
         </button>
-        <div class="flex flex-col xs:flex-row gap-4">
-          <button
-            type="button"
-            class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
-            @click="onChangeProfilePicture()"
-          >
-            Update
-          </button>
-          <button
-            type="button"
-            class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
-            @click="isProfilePicturelDialogVisible = false"
-          >
-            Close
-          </button>
-        </div>
+        <button
+          type="button"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          @click="onChangeProfilePicture()"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          @click="isProfilePicturelDialogVisible = false"
+        >
+          Close
+        </button>
       </div>
     </template>
   </BoxDialog>
