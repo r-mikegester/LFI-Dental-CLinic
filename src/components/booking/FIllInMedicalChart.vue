@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import newAppointment from "../../composables/api/newAppointment";
 import MedicalChart from "../shared/MedicalChart.vue";
 import updateMedicalChart from "../../composables/api/updateMedicalChart";
+import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart";
 
 const appointmentDetailsStore = useAppointmentDetailsStore();
 const router = useRouter();
@@ -31,6 +32,8 @@ const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
       medicalHistory,
       dentalHistory
     );
+
+    await setFilledInMedicalChart(patientUid);
 
     await newAppointment(
       appointmentDetailsStore.getSlotSeconds,
