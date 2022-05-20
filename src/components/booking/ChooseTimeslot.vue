@@ -391,6 +391,7 @@ const errorDialogBody = ref("");
           >
             <select class="w-full bg-transparent" v-model="selectedService">
               <option value="" selected>Choose a service ...</option>
+              <option>Check up</option>
               <option
                 title="A thorough examination of your oral health combined with a scale and clean."
               >
