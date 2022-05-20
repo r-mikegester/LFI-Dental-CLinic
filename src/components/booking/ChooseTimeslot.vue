@@ -17,6 +17,8 @@ import isSignedIn from "../../composables/auth/isSignedIn";
 import userIsPatient from "../../composables/auth/userIsPatient";
 import newAppointment from "../../composables/api/newAppointment";
 import { useRoute, useRouter, RouterLink } from "vue-router";
+import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart";
+import { getAuth } from "firebase/auth";
 
 /* Logic for reactive calendar items */
 const selected = reactive({
@@ -235,21 +237,33 @@ const appointmentDetailsStore = useAppointmentDetailsStore();
 const isAccountExistsDialogVisible = ref(false);
 
 const router = useRouter();
+const auth = getAuth();
 const onGoNext = async () => {
   appointmentDetailsStore.setDetails(
     selectedService.value,
     selectedTimeslot.value
   );
+  if (isSignedIn()) {
+    const isUserAPatient = await userIsPatient();
+    const patientUid = auth.currentUser.uid;
 
-  if (isSignedIn() && (await userIsPatient())) {
-    await newAppointment(
-      appointmentDetailsStore.getSlotSeconds,
-      appointmentDetailsStore.getService
-    );
-    appointmentDetailsStore.$reset;
-    router.push({
-      name: "Patient Appointment History Page",
-    });
+    if (isUserAPatient) {
+      const isMedicalChartFilledIn = await isFilledInMedicalChart(patientUid);
+      if (isMedicalChartFilledIn) {
+        await newAppointment(
+          appointmentDetailsStore.getSlotSeconds,
+          appointmentDetailsStore.getService
+        );
+        appointmentDetailsStore.$reset;
+
+        router.push({
+          name: "Patient Appointment History Page",
+        });
+      } else
+        router.push({
+          name: "Appointments Page Medical Chart",
+        });
+    } else isAccountExistsDialogVisible.value = true;
   } else isAccountExistsDialogVisible.value = true;
 };
 
