@@ -120,25 +120,54 @@ const onSave = async () => {
       </div>
     </div>
   </BaseLayout>
-  <SimpleModalDialog v-if="showReminders">
-    <template #header>
-      <div class="font-medium mb-3">Reminders:</div>
-    </template>
-    <template #body>
-      <div class="w-[min(100vw_-_6rem,_24rem)] mb-6">
-        {{ reminders.message }}
-      </div>
-    </template>
-    <template #actions>
-      <div class="flex justify-end">
-        <button
-          type="submit"
-          class="px-4 py-1 border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium rounded-full"
-          @click="showReminders = false"
-        >
-          OK
-        </button>
-      </div>
-    </template>
-  </SimpleModalDialog>
+  <transition name="fade">
+    <div v-show="showReminders">
+      <SimpleModalDialog>
+        <template #header>
+          <div class="font-medium mb-3">Reminders:</div>
+        </template>
+        <template #body>
+          <div class="w-[min(100vw_-_6rem,_24rem)] mb-6">
+            {{ reminders.message }}
+          </div>
+        </template>
+        <template #actions>
+          <div class="flex justify-end">
+            <button
+              type="submit"
+              class="px-4 py-1 border border-sky-600 hover:bg-sky-600 hover:text-white transition duration-200 font-medium rounded-full"
+              @click="showReminders = false"
+            >
+              OK
+            </button>
+          </div>
+        </template>
+      </SimpleModalDialog>
+    </div>
+  </transition>
 </template>
+<style>
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-enter-active {
+  transition: all 1s ease;
+}
+
+.fade-leave-from {
+  opacity: 1;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave-active {
+  transition: all 1s ease;
+}
+</style>
