@@ -255,7 +255,7 @@ const onGoNext = async () => {
           appointmentDetailsStore.getService
         );
 
-        appointmentDetailsStore.$reset;
+        appointmentDetailsStore.$reset();
         isSuccessModalVisible.value = true;
       } else
         router.push({
