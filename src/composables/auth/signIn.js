@@ -14,7 +14,7 @@ export default async (email, password) => {
     password
   );
   const profilePictureStore = useProfilePictureStore();
-  profilePictureStore.$reset;
+  profilePictureStore.$reset();
   profilePictureStore.initialize();
 
   const user = userCredential.user;
