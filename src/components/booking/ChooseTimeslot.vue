@@ -254,11 +254,9 @@ const onGoNext = async () => {
           appointmentDetailsStore.getSlotSeconds,
           appointmentDetailsStore.getService
         );
-        appointmentDetailsStore.$reset;
 
-        router.push({
-          name: "Patient Appointment History Page",
-        });
+        appointmentDetailsStore.$reset;
+        isSuccessModalVisible.value = true;
       } else
         router.push({
           name: "Appointments Page Medical Chart",
@@ -277,6 +275,7 @@ onMounted(() => {
 
 const isErrorDialogVisible = ref(false);
 const errorDialogBody = ref("");
+const isSuccessModalVisible = ref(false);
 </script>
 
 <template>
@@ -506,6 +505,35 @@ const errorDialogBody = ref("");
         </button>
       </div>
       <div></div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isSuccessModalVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-1">✅ Success</div>
+    </template>
+    <template #body>
+      <div class="max-w-[32rem] text-justify mb-3">
+        <!-- Your account has been created. Some additional information will be asked
+        in order to complete your appointment. -->
+        We have scheduled your appointment with one of our dentists. Please
+        remember to attend your appointment on the reserved date and time.
+      </div>
+      <div class="max-w-[32rem] text-justify mb-3">
+        You may cancel your appointment up to
+        <span class="font-semibold">three (3) days</span> prior to the scheduled
+        date.
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-end">
+        <RouterLink
+          class="border border-sky-600 px-6 py-1"
+          :to="{ name: 'Patient Appointment History Page' }"
+        >
+          Done
+        </RouterLink>
+      </div>
     </template>
   </BoxDialog>
 
