@@ -1,15 +1,14 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
 import { getAuth } from "firebase/auth";
 import newAppointment from "../../composables/api/newAppointment";
 import MedicalChart from "../shared/MedicalChart.vue";
 import updateMedicalChart from "../../composables/api/updateMedicalChart";
 import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart";
+import BoxDialog from "../dialogs/BoxDialog.vue";
 
 const appointmentDetailsStore = useAppointmentDetailsStore();
-const router = useRouter();
 const auth = getAuth();
 const patientUid = auth.currentUser.uid;
 
