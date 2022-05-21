@@ -39,7 +39,7 @@ const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
       appointmentDetailsStore.getService
     );
 
-    appointmentDetailsStore.$reset;
+    appointmentDetailsStore.$reset();
     isSuccessModalVisible.value = true;
   }
 };
