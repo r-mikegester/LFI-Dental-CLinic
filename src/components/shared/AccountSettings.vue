@@ -75,7 +75,7 @@ const isNameDialogVisible = ref(false);
 const onChangeName = async () => {
   await updateFullName(userCredentials.fullName);
   userInfo.fullName = userCredentials.fullName;
-  userFullnameStore.$reset;
+  userFullnameStore.$reset();
   await userFullnameStore.initialize();
   isNameDialogVisible.value = false;
   clearUserCredentials();
@@ -107,7 +107,7 @@ const onChangeProfilePicture = async () => {
   if (inputFile.value.files.length === 1) {
     const imagePath = await uploadProfilePicture(inputFile.value.files[0]);
     await updateProfilePicture(imagePath);
-    profilePictureStore.$reset;
+    profilePictureStore.$reset();
     await profilePictureStore.initialize();
     userInfo.profilePictureURL = imagePath;
     userInfo.profilePictureDownloadURL = await getDownloadURL(imagePath);
@@ -120,7 +120,7 @@ const onRemoveProfilePicture = async () => {
     await deleteProfilePicture();
     await updateProfilePicture("");
 
-    profilePictureStore.$reset;
+    profilePictureStore.$reset();
     await profilePictureStore.initialize();
 
     userInfo.profilePictureURL = "";
