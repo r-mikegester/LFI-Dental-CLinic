@@ -46,7 +46,7 @@ const onSignIn = async () => {
             appointmentDetailsStore.getService
           );
 
-          appointmentDetailsStore.$reset;
+          appointmentDetailsStore.$reset();
           isSuccessModalVisible.value = true;
         } else {
           /* Redirect users to medical chart if not filled in.  */
