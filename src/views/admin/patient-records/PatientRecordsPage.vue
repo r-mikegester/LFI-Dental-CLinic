@@ -3,28 +3,54 @@ import BaseLayout from "../../../components/admin//BaseLayout.vue";
 import { computed, onMounted, ref } from "vue";
 import listUserProfiles from "../../../composables/api/listUserProfiles";
 import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue";
+import listUserProfilesStartingWith from "../../../composables/api/users-list/listUserProfilesStartingWith";
 
-const usersList = ref([]);
+const patientsList = ref([]);
 
 const patientsListIsLoaded = ref(false);
+const nextPageStartsAtUid = ref(null);
+const pageNumber = ref(1);
+const pageSize = 5;
+
 onMounted(async () => {
-  usersList.value = await listUserProfiles();
+  patientsList.value = await listUserProfiles();
+
+  if (patientsList.value.nextValueUid)
+    nextPageStartsAtUid.value = patientsList.value.nextValueUid;
+
   patientsListIsLoaded.value = true;
 });
 
-const patientsList = computed(() => {
-  return usersList.value.filter(
-    (user) => user.customClaims.accountType === "patient"
+const visiblePatientsList = computed(() => {
+  const result = patientsList.value.users.slice(
+    (pageNumber.value - 1) * pageSize,
+    (pageNumber.value - 1) * pageSize + pageSize
   );
+  return result;
 });
 
-const nameFilter = ref("");
+const onNextPage = async () => {
+  patientsList.value.users = patientsList.value.users.slice(
+    0,
+    (pageNumber.value - 1) * pageSize + pageSize
+  );
 
-const patientsListFilteredByName = computed(() => {
-  return patientsList.value.filter((user) => {
-    return user.displayName.toLowerCase().includes(nameFilter.value);
-  });
-});
+  const newItems = await listUserProfilesStartingWith(
+    nextPageStartsAtUid.value
+  );
+  patientsList.value.users = [...patientsList.value.users, ...newItems.users];
+
+  if (newItems.nextValueUid) {
+    nextPageStartsAtUid.value = newItems.nextValueUid;
+  } else nextPageStartsAtUid.value = null;
+
+  pageNumber.value++;
+};
+
+const onPrevPage = async () => {
+  nextPageStartsAtUid.value = visiblePatientsList.value[0].uid;
+  pageNumber.value--;
+};
 </script>
 
 <template>
@@ -53,7 +79,7 @@ const patientsListFilteredByName = computed(() => {
         </div>
       </div>
       <div v-if="patientsListIsLoaded">
-        <div v-if="patientsList.length > 0">
+        <div v-if="patientsList.users.length > 0">
           <div class="bg-teal-500/40">
             <div
               class="p-4 gap-4 grid grid-cols-[minmax(0,_1fr)_minmax(0,_2fr)_repeat(3,_minmax(0,_1fr))] font-semibold"
@@ -65,14 +91,32 @@ const patientsListFilteredByName = computed(() => {
               <div>Dental Treatment</div>
             </div>
           </div>
-          <div v-if="patientsListFilteredByName.length > 0">
+          <div v-if="visiblePatientsList.length > 0">
             <PatientRecordsPagePatientItem
-              v-for="user in patientsListFilteredByName"
+              v-for="user in visiblePatientsList"
               :key="user.uid"
               :uid="user.uid"
               :email="user.email"
               :fullName="user.displayName"
             />
+          </div>
+          <div class="flex justify-end gap-3">
+            <button
+              v-if="pageNumber > 1"
+              type="button"
+              class="px-3 py-1 mt-3 font-medium border border-teal-500 hover:bg-teal-500 hover:text-white transition duration-200"
+              @click="onPrevPage()"
+            >
+              Previous
+            </button>
+            <button
+              v-if="nextPageStartsAtUid"
+              type="button"
+              class="px-3 py-1 mt-3 font-medium border border-teal-500 hover:bg-teal-500 hover:text-white transition duration-200"
+              @click="onNextPage()"
+            >
+              Next
+            </button>
           </div>
         </div>
         <div class="text-2xl text-center mt-12" v-else>No patients found</div>
