@@ -11,11 +11,28 @@ export default async (fullName) => {
   await updateProfile(auth.currentUser, {
     displayName: fullName,
   });
+
+  const uid = auth.currentUser.uid;
+  const docRefPatientEntry = doc(db, `users/${uid}`);
+
+  await setDoc(
+    docRefPatientEntry,
+    {
+      displayName: fullName,
+    },
+    {
+      merge: true,
+    }
+  );
+
   if (await userIsPatient()) {
-    const uid = auth.currentUser.uid;
-    const docRef = doc(db, `users/${uid}/patientRecords/medicalChart`);
+    const docRefMedicalChart = doc(
+      db,
+      `users/${uid}/patientRecords/medicalChart`
+    );
+
     await setDoc(
-      docRef,
+      docRefMedicalChart,
       {
         personalInformation: {
           fullName,
@@ -26,5 +43,6 @@ export default async (fullName) => {
       }
     );
   }
+
   await auth.currentUser.reload();
 };
