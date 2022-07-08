@@ -42,6 +42,7 @@ const onSignIn = async () => {
           /* Set appointment if there is a queued appointment,
              and the medical chart is already filled in. */
           await newAppointment(
+            patientUid,
             appointmentDetailsStore.getSlotSeconds,
             appointmentDetailsStore.getService
           );
