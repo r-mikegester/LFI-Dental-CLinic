@@ -2,7 +2,7 @@ import getUserToken from "../auth/getUserToken";
 import backendBaseURL from "../api/backendBaseURL";
 import HttpError from "../helpers/HttpError";
 
-export default async (slotSeconds, service) => {
+export default async (patientUid, slotSeconds, service) => {
   const idToken = await getUserToken();
 
   const link = `${backendBaseURL}/timeslots/appointments`;
@@ -13,6 +13,7 @@ export default async (slotSeconds, service) => {
       Authorization: `Bearer ${idToken}`,
     },
     body: JSON.stringify({
+      patientUid,
       slotSeconds,
       service,
     }),
