@@ -16,7 +16,7 @@ export default async (
   if (!medicalHistory) throw new ParameterError("medicalHistory");
   if (!dentalHistory) throw new ParameterError("dentalHistory");
 
-  const link = `${backendBaseURL}/users/${patientUid}/medicalchart`;
+  const link = `${backendBaseURL}/users/${patientUid}/charts/medical-chart`;
   const response = await fetch(link, {
     method: "PATCH",
     headers: {
