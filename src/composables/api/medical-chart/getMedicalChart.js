@@ -8,7 +8,7 @@ export default async (patientUid) => {
 
   if (!patientUid) throw new ParameterError("patientUid");
 
-  const link = `${backendBaseURL}/users/${patientUid}/medicalchart`;
+  const link = `${backendBaseURL}/users/${patientUid}/charts/medical-chart`;
   const response = await fetch(link, {
     headers: {
       Authorization: `Bearer ${idToken}`,
