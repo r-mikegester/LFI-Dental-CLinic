@@ -2,10 +2,10 @@ import getUserToken from "../auth/getUserToken";
 import backendBaseURL from "./backendBaseURL";
 import HttpError from "../helpers/HttpError";
 
-export default async (slotSeconds) => {
+export default async (patientUid, slotSeconds) => {
   const idToken = await getUserToken();
 
-  const link = `${backendBaseURL}/timeslots/appointments/${slotSeconds}`;
+  const link = `${backendBaseURL}/users/${patientUid}/appointments/${slotSeconds}/cancel`;
   const response = await fetch(link, {
     method: "DELETE",
     headers: {
