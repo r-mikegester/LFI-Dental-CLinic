@@ -251,6 +251,7 @@ const onGoNext = async () => {
       const isMedicalChartFilledIn = await isFilledInMedicalChart(patientUid);
       if (isMedicalChartFilledIn) {
         await newAppointment(
+          patientUid,
           appointmentDetailsStore.getSlotSeconds,
           appointmentDetailsStore.getService
         );
