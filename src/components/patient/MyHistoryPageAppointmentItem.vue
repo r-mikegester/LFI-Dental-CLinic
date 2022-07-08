@@ -32,7 +32,7 @@ const onShowCancelDialog = () => {
 };
 
 const onCancelAppointment = async () => {
-  await cancelAppointment(props.appointment.uid);
+  await cancelAppointment(patientUid, props.appointment.uid);
 };
 
 const cancelDeadline = ref(null);
