@@ -35,6 +35,7 @@ const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
     await setFilledInMedicalChart(patientUid);
 
     await newAppointment(
+      patientUid,
       appointmentDetailsStore.getSlotSeconds,
       appointmentDetailsStore.getService
     );
