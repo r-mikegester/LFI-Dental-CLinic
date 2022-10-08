@@ -1,1 +1,1 @@
-export default "https://lfidentalclinic.herokuapp.com";
+export default "https://lfidentalclinic.onrender.com";
