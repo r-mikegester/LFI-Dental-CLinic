@@ -1,81 +1,112 @@
 <script setup>
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/vue-query";
+import { ref, computed } from "vue";
 import BaseLayout from "../../components/admin/BaseLayout.vue";
 import MessageChooserItem from "../../components/admin/MessageChooserItem.vue";
 import getAllMessages from "../../composables/api/getAllMessages";
+import { toggleMessageArchiveStatus } from "../../composables/api/Messages";
 
-const messageItems = ref([]);
-const selectedItem = reactive({
-  subject: "",
-  body: "",
+const { data, isLoading } = useQuery({
+  queryKey: ["messagesList"],
+  queryFn: getAllMessages,
 });
 
-const pageIsLoading = ref(true);
+const selectedTab = ref("inbox");
+const selectedItemUid = ref(null);
 
-onMounted(async () => {
-  const messages = await getAllMessages();
-  messages.forEach((message) => {
-    messageItems.value.push({
-      uid: message.uid,
-      senderName: message.senderName,
-      subject: message.subject,
-      body: message.body,
-      createdAtUnixSecs: message.createdAt._seconds,
-      clicked: false,
-    });
-  });
-  messageItems.value.sort((a, b) => {
+const onSelectTab = (tab) => {
+  selectedItemUid.value = null;
+  selectedTab.value = tab;
+};
+
+const selectedItem = computed(() => {
+  const itemFound = data.value.find(
+    (message) => selectedItemUid.value === message.uid
+  );
+
+  if (!itemFound)
+    return {
+      body: "",
+      subject: "",
+    };
+
+  return itemFound;
+});
+
+const messageItems = computed(() => {
+  if (!data.value) return [];
+
+  const messages = data.value.map(
+    ({ uid, senderName, subject, body, createdAt, isArchived }) => {
+      return {
+        uid,
+        senderName,
+        subject,
+        body,
+        createdAtUnixSecs: createdAt._seconds,
+        isArchived,
+        clicked: selectedItemUid.value === uid ? true : false,
+      };
+    }
+  );
+
+  const filteredMessages =
+    selectedTab.value === "archived"
+      ? messages.filter(({ isArchived }) => isArchived)
+      : messages.filter(({ isArchived }) => !isArchived);
+
+  return filteredMessages.sort((a, b) => {
     if (a.createdAtUnixSecs < b.createdAtUnixSecs) return 1;
     if (a.createdAtUnixSecs > b.createdAtUnixSecs) return -1;
     return 0;
   });
-  await nextTick();
-  pageIsLoading.value = false;
 });
 
-const onItemClicked = (newItemClicked) => {
-  const lastItemClicked = messageItems.value.find((message) => message.clicked);
-  if (lastItemClicked === newItemClicked) {
-    selectedItem.subject = "";
-    selectedItem.body = "";
-
-    messageItems.value = messageItems.value.map((message) => ({
-      ...message,
-      clicked: false,
-    }));
-    return;
-  }
-
-  messageItems.value = messageItems.value.map((message) => {
-    // Assign new message subject and body,
-    // if the current message is the clicked item.
-    if (message === newItemClicked) {
-      selectedItem.subject = message.subject;
-      selectedItem.body = message.body;
-    }
-
-    return {
-      ...message,
-      clicked: message === newItemClicked ? true : false,
-    };
-  });
+const onItemClicked = (uid) => {
+  selectedItemUid.value = uid;
 };
 
-const onItemDeleted = (uid) => {
-  messageItems.value = messageItems.value.filter((message) => {
-    if (message.uid === uid) return false;
-    else return true;
-  });
-  selectedItem.subject = "";
-  selectedItem.body = "";
+const queryClient = useQueryClient();
+
+const mutation = useMutation({
+  mutationFn: toggleMessageArchiveStatus,
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ["messagesList"],
+    });
+  },
+});
+
+const onItemArchived = (uid) => {
+  mutation.mutate(uid);
 };
 </script>
 
 <template>
   <BaseLayout>
     <div class="px-6">
-      <h1 class="font-semibold text-2xl pb-3">Messages</h1>
-      <div v-if="pageIsLoading">
+      <h1 class="flex justify-between">
+        <div class="font-semibold text-2xl pb-3">Messages</div>
+        <div class="flex items-end">
+          <button
+            :class="[selectedTab === 'inbox' ? 'bg-teal-500 text-white' : '']"
+            class="px-2 py-1 cursor-pointer"
+            @click="onSelectTab('inbox')"
+          >
+            Inbox
+          </button>
+          <button
+            :class="[
+              selectedTab === 'archived' ? 'bg-teal-500 text-white' : '',
+            ]"
+            class="px-2 py-1 cursor-pointer"
+            @click="onSelectTab('archived')"
+          >
+            Archived
+          </button>
+        </div>
+      </h1>
+      <div v-if="isLoading || isRefetchingDueToMutation">
         <!-- Loading message -->
         <div class="text-2xl font-bold text-center">Loading messages ...</div>
       </div>
@@ -90,7 +121,7 @@ const onItemDeleted = (uid) => {
                 :key="message.uid"
                 :message="message"
                 @itemClicked="onItemClicked"
-                @itemDeleted="onItemDeleted"
+                @itemArchived="onItemArchived"
               />
             </div>
             <!-- Message content column -->

@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@tanstack/vue-query": "^4.14.3",
     "firebase": "^9.6.11",
     "luxon": "^2.3.2",
     "pinia": "^2.0.13",
