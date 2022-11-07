@@ -5,7 +5,7 @@
   >
     <!-- Modal box -->
     <div
-      class="max-w-prose mx-3 px-6 py-4 bg-white text-sky-600 border border-sky-600 font-[Poppins] shadow-md"
+      class="max-w-prose mx-3 px-6 py-4 bg-white text-sky-600 border border-sky-600 font-[Poppins] shadow-md rounded-md"
     >
       <div>
         <slot name="header"></slot>

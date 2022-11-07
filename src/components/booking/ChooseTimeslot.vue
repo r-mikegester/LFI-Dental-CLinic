@@ -286,7 +286,7 @@ const isSuccessModalVisible = ref(false)
     <!-- Legends column -->
     <div>
       <div
-        class="border border-sky-700 pl-4 pr-12 py-2 mb-3 md:mb-0 max-w-fit md:max-w-none"
+        class="border border-sky-700 pl-4 pr-12 py-2 mb-3 md:mb-0 max-w-fit md:max-w-none rounded-md"
       >
         <div class="mb-3">Legends:</div>
         <div class="mb-3">

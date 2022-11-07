@@ -193,8 +193,9 @@ const errorDialog = reactive({
         </div>
       </div>
       <!-- Password -->
-      <div class="p-4 grid grid-cols-2">
+      <div class="p-4 grid sm:grid-cols-[2fr_4fr_3fr]">
         <div class="font-semibold">Password</div>
+        <div>********</div>
         <div
           class="text-right text-teal-500 hover:text-teal-400"
           @click="isPasswordlDialogVisible = true"
@@ -212,7 +213,7 @@ const errorDialog = reactive({
         <div>New Email:</div>
         <input
           type="text"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
           v-model="userCredentials.newEmail"
         />
       </div>
@@ -220,7 +221,7 @@ const errorDialog = reactive({
         <div>Password:</div>
         <input
           type="password"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
           v-model="userCredentials.password"
         />
       </div>
@@ -229,14 +230,14 @@ const errorDialog = reactive({
       <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="isEmailDialogVisible = false"
         >
           Cancel
         </button>
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="onChangeEmail()"
         >
           Save
@@ -252,7 +253,7 @@ const errorDialog = reactive({
         <div>Name:</div>
         <input
           type="text"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
           v-model="userCredentials.fullName"
         />
       </div>
@@ -261,14 +262,14 @@ const errorDialog = reactive({
       <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="isNameDialogVisible = false"
         >
           Cancel
         </button>
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="onChangeName()"
         >
           Save
@@ -284,7 +285,7 @@ const errorDialog = reactive({
         <div>Old Password:</div>
         <input
           type="password"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
           v-model="userCredentials.password"
         />
       </div>
@@ -292,7 +293,7 @@ const errorDialog = reactive({
         <div>New Password:</div>
         <input
           type="password"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full"
+          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
           v-model="userCredentials.newPassword"
         />
       </div>
@@ -301,14 +302,14 @@ const errorDialog = reactive({
       <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="isPasswordlDialogVisible = false"
         >
           Cancel
         </button>
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="onChangePassword()"
         >
           Update
@@ -350,7 +351,7 @@ const errorDialog = reactive({
       <div class="flex flex-col xs:flex-row justify-between gap-4">
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="onRemoveProfilePicture()"
           v-if="userInfo.profilePictureURL"
         >
@@ -358,14 +359,14 @@ const errorDialog = reactive({
         </button>
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="onChangeProfilePicture()"
         >
           Update
         </button>
         <button
           type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200"
+          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
           @click="isProfilePicturelDialogVisible = false"
         >
           Close
