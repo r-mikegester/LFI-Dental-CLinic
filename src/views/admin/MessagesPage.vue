@@ -70,7 +70,34 @@ const queryClient = useQueryClient();
 
 const mutation = useMutation({
   mutationFn: toggleMessageArchiveStatus,
-  onSuccess: () => {
+  onMutate: async (uid) => {
+    // Cancel any outgoing refetches, so they don't overwrite
+    // our optimistic update.
+    await queryClient.cancelQueries({ queryKey: ["messagesList"] });
+
+    // Snapshot the previous value
+    const messagesList = queryClient.getQueryData(["messagesList"]);
+
+    // Optimistically update to the new value
+    queryClient.setQueryData(["messagesList"], (old) => {
+      return old.map((message) => {
+        if (message.uid === uid)
+          return {
+            ...message,
+            isArchived: !message.isArchived,
+          };
+
+        return message;
+      });
+    });
+
+    // Return a context object with the snapshotted value
+    return { messagesList };
+  },
+  onError: (err, uid, context) => {
+    queryClient.setQueryData(["messagesList"], context.messagesList);
+  },
+  onSettled: () => {
     queryClient.invalidateQueries({
       queryKey: ["messagesList"],
     });
@@ -78,7 +105,7 @@ const mutation = useMutation({
 });
 
 const onItemArchived = (uid) => {
-  mutation.mutate(uid);
+  if (!mutation.isLoading.value) mutation.mutate(uid);
 };
 </script>
 
