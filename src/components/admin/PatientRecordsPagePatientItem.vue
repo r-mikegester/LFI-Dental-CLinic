@@ -3,7 +3,7 @@ defineProps({
   uid: String,
   email: String,
   fullName: String,
-});
+})
 </script>
 
 <template>

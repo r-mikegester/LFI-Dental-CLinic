@@ -1,56 +1,56 @@
 <script setup>
-import BaseLayout from "../../../components/admin/BaseLayout.vue";
-import { RouterLink, useRoute } from "vue-router";
-import { nextTick, onMounted, reactive, ref } from "vue";
-import getUserAppointmentProcedure from "../../../composables/api/procedures/getUserAppointmentProcedure";
-import setUserAppointmentProcedure from "../../../composables/api/procedures/setUserAppointmentProcedure";
-import setProcedureAccessAllowed from "../../../composables/firestore/setProcedureAccessAllowed";
-import setProcedureAccessDisallowed from "../../../composables/firestore/setProcedureAccessDisallowed";
+import BaseLayout from "../../../components/admin/BaseLayout.vue"
+import { RouterLink, useRoute } from "vue-router"
+import { nextTick, onMounted, reactive, ref } from "vue"
+import getUserAppointmentProcedure from "../../../composables/api/procedures/getUserAppointmentProcedure"
+import setUserAppointmentProcedure from "../../../composables/api/procedures/setUserAppointmentProcedure"
+import setProcedureAccessAllowed from "../../../composables/firestore/setProcedureAccessAllowed"
+import setProcedureAccessDisallowed from "../../../composables/firestore/setProcedureAccessDisallowed"
 
-const route = useRoute();
-const patientUid = route.params.uid;
-const slotSeconds = route.params.slotSeconds;
+const route = useRoute()
+const patientUid = route.params.uid
+const slotSeconds = route.params.slotSeconds
 const procedure = reactive({
   body: "",
   visible: null,
-});
+})
 
-const isFinishedLoading = ref(false);
+const isFinishedLoading = ref(false)
 onMounted(async () => {
   const appointmentProcedure = await getUserAppointmentProcedure(
     patientUid,
     slotSeconds
-  );
-  procedure.visible = appointmentProcedure.procedureVisible;
-  procedure.body = appointmentProcedure.procedure;
-  await nextTick();
+  )
+  procedure.visible = appointmentProcedure.procedureVisible
+  procedure.body = appointmentProcedure.procedure
+  await nextTick()
 
-  isFinishedLoading.value = true;
-});
+  isFinishedLoading.value = true
+})
 
-const isEditingMode = ref(false);
-const textarea = ref();
+const isEditingMode = ref(false)
+const textarea = ref()
 
 const onEdit = async () => {
-  isEditingMode.value = true;
-  await nextTick();
-  textarea.value.focus();
-};
+  isEditingMode.value = true
+  await nextTick()
+  textarea.value.focus()
+}
 
 const onSave = async () => {
-  isEditingMode.value = false;
-  await setUserAppointmentProcedure(patientUid, slotSeconds, procedure.body);
-};
+  isEditingMode.value = false
+  await setUserAppointmentProcedure(patientUid, slotSeconds, procedure.body)
+}
 
 const onAllowAccess = async () => {
-  await setProcedureAccessAllowed(patientUid, slotSeconds);
-  procedure.visible = true;
-};
+  await setProcedureAccessAllowed(patientUid, slotSeconds)
+  procedure.visible = true
+}
 
 const onDisallowAccess = async () => {
-  await setProcedureAccessDisallowed(patientUid, slotSeconds);
-  procedure.visible = false;
-};
+  await setProcedureAccessDisallowed(patientUid, slotSeconds)
+  procedure.visible = false
+}
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore } from "pinia"
 
 export const useAppointmentDetailsStore = defineStore({
   id: "appointmentDetails",
@@ -14,9 +14,9 @@ export const useAppointmentDetailsStore = defineStore({
   },
   actions: {
     setDetails(service, slotSeconds) {
-      this.chosenService = service;
-      this.slotSeconds = slotSeconds;
-      this.isInitialized = true;
+      this.chosenService = service
+      this.slotSeconds = slotSeconds
+      this.isInitialized = true
     },
   },
-});
+})

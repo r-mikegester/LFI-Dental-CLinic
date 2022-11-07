@@ -1,8 +1,8 @@
 <script setup>
-import { ref, watchEffect } from "vue";
-import getMonthIndex from "../../composables/calendar/getMonthIndex";
-import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject";
-import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
+import { ref, watchEffect } from "vue"
+import getMonthIndex from "../../composables/calendar/getMonthIndex"
+import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject"
+import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
 
 const props = defineProps({
   date: Number,
@@ -10,11 +10,11 @@ const props = defineProps({
   year: String,
   hours: String,
   minutes: String,
-});
+})
 
-const scheduleCalendar = useScheduleCalendarStore();
-const status = ref(null);
-const timeInUnixSecs = ref(0);
+const scheduleCalendar = useScheduleCalendarStore()
+const status = ref(null)
+const timeInUnixSecs = ref(0)
 
 watchEffect(() => {
   // Determine the unix timestamp for this time slot,
@@ -25,10 +25,10 @@ watchEffect(() => {
     parseInt(props.year),
     parseInt(props.hours),
     parseInt(props.minutes)
-  );
+  )
 
   // Assume that we are not in the list of closed slots.
-  status.value = null;
+  status.value = null
 
   // Check each timestamp in the list of closed slots.
   scheduleCalendar.getUnavailableSlots.forEach((unavailableSlot) => {
@@ -37,25 +37,25 @@ watchEffect(() => {
       unavailableSlot.timeslot === timeInUnixSecs.value.toString() &&
       unavailableSlot.status
     ) {
-      status.value = unavailableSlot.status;
+      status.value = unavailableSlot.status
     }
-  });
-});
+  })
+})
 
 const onClick = async () => {
   // Disable click event if slot is taken.
-  if (status.value === "taken") return;
+  if (status.value === "taken") return
 
   if (status.value === "closed") {
     // Toggle closed date in the database, then synchronize
     // the state with our store.
-    await scheduleCalendar.removeClosedSlot(timeInUnixSecs.value.toString());
-    status.value = null;
+    await scheduleCalendar.removeClosedSlot(timeInUnixSecs.value.toString())
+    status.value = null
   } else {
-    await scheduleCalendar.pushClosedSlot(timeInUnixSecs.value.toString());
-    status.value = "closed";
+    await scheduleCalendar.pushClosedSlot(timeInUnixSecs.value.toString())
+    status.value = "closed"
   }
-};
+}
 </script>
 
 <template>

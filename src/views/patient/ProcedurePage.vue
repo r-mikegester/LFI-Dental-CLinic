@@ -1,33 +1,33 @@
 <script setup>
-import BaseLayout from "../../components/patient/BaseLayout.vue";
-import HeroSection from "../../components/patient/HeroSection.vue";
-import { useRoute } from "vue-router";
-import { getAuth } from "firebase/auth";
-import { nextTick, onMounted, reactive, ref } from "vue";
-import getUserAppointmentProcedure from "../../composables/api/procedures/getUserAppointmentProcedure";
+import BaseLayout from "../../components/patient/BaseLayout.vue"
+import HeroSection from "../../components/patient/HeroSection.vue"
+import { useRoute } from "vue-router"
+import { getAuth } from "firebase/auth"
+import { nextTick, onMounted, reactive, ref } from "vue"
+import getUserAppointmentProcedure from "../../composables/api/procedures/getUserAppointmentProcedure"
 
-const route = useRoute();
-const timeslot = route.params.timeslot;
-const auth = getAuth();
-const patientUid = auth.currentUser.uid;
+const route = useRoute()
+const timeslot = route.params.timeslot
+const auth = getAuth()
+const patientUid = auth.currentUser.uid
 
-const isFinishedLoading = ref(false);
+const isFinishedLoading = ref(false)
 const procedure = reactive({
   body: "",
   visible: null,
-});
+})
 
 onMounted(async () => {
   const appointmentProcedure = await getUserAppointmentProcedure(
     patientUid,
     timeslot
-  );
-  procedure.visible = appointmentProcedure.procedureVisible;
-  procedure.body = appointmentProcedure.procedure;
-  await nextTick();
+  )
+  procedure.visible = appointmentProcedure.procedureVisible
+  procedure.body = appointmentProcedure.procedure
+  await nextTick()
 
-  isFinishedLoading.value = true;
-});
+  isFinishedLoading.value = true
+})
 </script>
 
 <template>

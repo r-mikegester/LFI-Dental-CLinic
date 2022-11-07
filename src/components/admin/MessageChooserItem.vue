@@ -1,13 +1,13 @@
 <script setup>
 const props = defineProps({
   message: Object,
-});
+})
 
-const emit = defineEmits(["itemClicked", "itemArchived"]);
+const emit = defineEmits(["itemClicked", "itemArchived"])
 
 const onArchive = () => {
-  emit("itemArchived", props.message.uid);
-};
+  emit("itemArchived", props.message.uid)
+}
 </script>
 
 <template>

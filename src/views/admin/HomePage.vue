@@ -1,34 +1,34 @@
 <script setup>
-import BaseLayout from "../../components/admin/BaseLayout.vue";
-import { RouterLink } from "vue-router";
-import { onMounted, reactive, ref } from "vue";
-import getReminders from "../../composables/firestore/reminders/getReminders";
-import setReminders from "../../composables/firestore/reminders/setReminders";
-import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue";
+import BaseLayout from "../../components/admin/BaseLayout.vue"
+import { RouterLink } from "vue-router"
+import { onMounted, reactive, ref } from "vue"
+import getReminders from "../../composables/firestore/reminders/getReminders"
+import setReminders from "../../composables/firestore/reminders/setReminders"
+import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue"
 
-const isEditing = ref(false);
+const isEditing = ref(false)
 const reminders = reactive({
   message: "",
-});
+})
 
-const showReminders = ref(false);
+const showReminders = ref(false)
 onMounted(async () => {
-  const { message } = await getReminders();
+  const { message } = await getReminders()
   if (message) {
-    reminders.message = message;
-    showReminders.value = true;
-    console.log(showReminders.value);
+    reminders.message = message
+    showReminders.value = true
+    console.log(showReminders.value)
   }
-});
+})
 
 const onEdit = () => {
-  isEditing.value = true;
-};
+  isEditing.value = true
+}
 
 const onSave = async () => {
-  await setReminders(reminders.message);
-  isEditing.value = false;
-};
+  await setReminders(reminders.message)
+  isEditing.value = false
+}
 </script>
 
 <template>

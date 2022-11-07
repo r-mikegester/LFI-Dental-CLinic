@@ -1,9 +1,9 @@
-import { doc, setDoc, getFirestore } from "@firebase/firestore";
-import "../../firebase";
-const db = getFirestore();
+import { doc, setDoc, getFirestore } from "@firebase/firestore"
+import "../../firebase"
+const db = getFirestore()
 
 export default async (patientUid) => {
-  const docRef = doc(db, `users/${patientUid}`);
+  const docRef = doc(db, `users/${patientUid}`)
   await setDoc(
     docRef,
     {
@@ -12,5 +12,5 @@ export default async (patientUid) => {
     {
       merge: true,
     }
-  );
-};
+  )
+}

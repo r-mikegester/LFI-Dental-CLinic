@@ -1,138 +1,138 @@
 <script setup>
-import BoxDialog from "../../components/dialogs/BoxDialog.vue";
-import { onMounted, reactive, ref } from "vue";
-import updateEmail from "../../composables/account/updateEmail";
-import { getAuth } from "firebase/auth";
-import updateFullName from "../../composables/account/updateFullName";
-import updatePassword from "../../composables/account/updatePassword";
-import uploadProfilePicture from "../../composables/account/uploadProfilePicture";
-import updateProfilePicture from "../../composables/account/updateProfilePicture";
-import deleteProfilePicture from "../../composables/account/deleteProfilePicture";
-import getDownloadURL from "../../composables/account/getDownloadURL";
-import { useProfilePictureStore } from "../../stores/profilePicture";
-import { useUserFullnameStore } from "../../stores/userFullname";
+import BoxDialog from "../../components/dialogs/BoxDialog.vue"
+import { onMounted, reactive, ref } from "vue"
+import updateEmail from "../../composables/account/updateEmail"
+import { getAuth } from "firebase/auth"
+import updateFullName from "../../composables/account/updateFullName"
+import updatePassword from "../../composables/account/updatePassword"
+import uploadProfilePicture from "../../composables/account/uploadProfilePicture"
+import updateProfilePicture from "../../composables/account/updateProfilePicture"
+import deleteProfilePicture from "../../composables/account/deleteProfilePicture"
+import getDownloadURL from "../../composables/account/getDownloadURL"
+import { useProfilePictureStore } from "../../stores/profilePicture"
+import { useUserFullnameStore } from "../../stores/userFullname"
 
 const userInfo = reactive({
   fullName: "",
   email: "",
   profilePictureURL: "",
   profilePictureDownloadURL: "",
-});
+})
 
-const auth = getAuth();
+const auth = getAuth()
 onMounted(async () => {
-  userInfo.fullName = auth.currentUser.displayName;
-  userInfo.email = auth.currentUser.email;
-  userInfo.profilePictureURL = auth.currentUser.photoURL;
+  userInfo.fullName = auth.currentUser.displayName
+  userInfo.email = auth.currentUser.email
+  userInfo.profilePictureURL = auth.currentUser.photoURL
   if (userInfo.profilePictureURL)
     userInfo.profilePictureDownloadURL = await getDownloadURL(
       userInfo.profilePictureURL
-    );
-});
+    )
+})
 
 const userCredentials = reactive({
   newEmail: "",
   newPassword: "",
   password: "",
   fullName: "",
-});
+})
 
 const clearUserCredentials = () => {
   Object.keys(userCredentials).forEach((property) => {
-    userCredentials[property] = "";
-  });
-};
+    userCredentials[property] = ""
+  })
+}
 
-const isEmailDialogVisible = ref(false);
+const isEmailDialogVisible = ref(false)
 const onChangeEmail = async () => {
   try {
-    await updateEmail(userCredentials.password, userCredentials.newEmail);
-    userInfo.email = userCredentials.newEmail;
-    isEmailDialogVisible.value = false;
+    await updateEmail(userCredentials.password, userCredentials.newEmail)
+    userInfo.email = userCredentials.newEmail
+    isEmailDialogVisible.value = false
   } catch (e) {
     switch (e.code) {
       case "auth/invalid-email":
-        isErrorDialogVisible.value = true;
-        errorDialog.header = "Invalid email";
-        errorDialog.body = "Please enter a valid email address.";
-        break;
+        isErrorDialogVisible.value = true
+        errorDialog.header = "Invalid email"
+        errorDialog.body = "Please enter a valid email address."
+        break
       case "auth/wrong-password":
-        isErrorDialogVisible.value = true;
-        errorDialog.header = "Wrong password";
-        errorDialog.body = "Please enter the correct password.";
-        break;
+        isErrorDialogVisible.value = true
+        errorDialog.header = "Wrong password"
+        errorDialog.body = "Please enter the correct password."
+        break
       default:
-        throw e;
+        throw e
     }
   } finally {
-    clearUserCredentials();
+    clearUserCredentials()
   }
-};
+}
 
-const userFullnameStore = useUserFullnameStore();
+const userFullnameStore = useUserFullnameStore()
 
-const isNameDialogVisible = ref(false);
+const isNameDialogVisible = ref(false)
 const onChangeName = async () => {
-  await updateFullName(userCredentials.fullName);
-  userInfo.fullName = userCredentials.fullName;
-  userFullnameStore.$reset();
-  await userFullnameStore.initialize();
-  isNameDialogVisible.value = false;
-  clearUserCredentials();
-};
+  await updateFullName(userCredentials.fullName)
+  userInfo.fullName = userCredentials.fullName
+  userFullnameStore.$reset()
+  await userFullnameStore.initialize()
+  isNameDialogVisible.value = false
+  clearUserCredentials()
+}
 
-const isPasswordlDialogVisible = ref(false);
+const isPasswordlDialogVisible = ref(false)
 const onChangePassword = async () => {
   try {
-    await updatePassword(userCredentials.newPassword, userCredentials.password);
-    isPasswordlDialogVisible.value = false;
+    await updatePassword(userCredentials.newPassword, userCredentials.password)
+    isPasswordlDialogVisible.value = false
   } catch (e) {
     switch (e.code) {
       case "auth/wrong-password":
-        isErrorDialogVisible.value = true;
-        errorDialog.header = "Wrong password";
-        errorDialog.body = "Please enter the correct password.";
-        break;
+        isErrorDialogVisible.value = true
+        errorDialog.header = "Wrong password"
+        errorDialog.body = "Please enter the correct password."
+        break
       default:
-        throw e;
+        throw e
     }
   } finally {
-    clearUserCredentials();
+    clearUserCredentials()
   }
-};
+}
 
-const isProfilePicturelDialogVisible = ref(false);
-const inputFile = ref();
+const isProfilePicturelDialogVisible = ref(false)
+const inputFile = ref()
 const onChangeProfilePicture = async () => {
   if (inputFile.value.files.length === 1) {
-    const imagePath = await uploadProfilePicture(inputFile.value.files[0]);
-    await updateProfilePicture(imagePath);
-    profilePictureStore.$reset();
-    await profilePictureStore.initialize();
-    userInfo.profilePictureURL = imagePath;
-    userInfo.profilePictureDownloadURL = await getDownloadURL(imagePath);
+    const imagePath = await uploadProfilePicture(inputFile.value.files[0])
+    await updateProfilePicture(imagePath)
+    profilePictureStore.$reset()
+    await profilePictureStore.initialize()
+    userInfo.profilePictureURL = imagePath
+    userInfo.profilePictureDownloadURL = await getDownloadURL(imagePath)
   }
-};
+}
 
-const profilePictureStore = useProfilePictureStore();
+const profilePictureStore = useProfilePictureStore()
 const onRemoveProfilePicture = async () => {
   if (userInfo.profilePictureURL) {
-    await deleteProfilePicture();
-    await updateProfilePicture("");
+    await deleteProfilePicture()
+    await updateProfilePicture("")
 
-    profilePictureStore.$reset();
-    await profilePictureStore.initialize();
+    profilePictureStore.$reset()
+    await profilePictureStore.initialize()
 
-    userInfo.profilePictureURL = "";
-    userInfo.profilePictureDownloadURL = "";
+    userInfo.profilePictureURL = ""
+    userInfo.profilePictureDownloadURL = ""
   }
-};
+}
 
-const isErrorDialogVisible = ref(false);
+const isErrorDialogVisible = ref(false)
 const errorDialog = reactive({
   header: "",
   body: "",
-});
+})
 </script>
 
 <template>

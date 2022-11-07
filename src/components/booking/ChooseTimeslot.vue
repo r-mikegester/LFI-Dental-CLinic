@@ -1,80 +1,80 @@
 <script setup>
-import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
-import CalendarWidget from "../../components/admin/CalendarWidget.vue";
-import SetAppointmentCalendarItem from "../../components/patient/SetAppointmentCalendarItem.vue";
-import { useSetAppointmentCalendarStore } from "../../stores/setAppointmentCalendar";
-import TimeslotsWidget from "../admin/TimeslotsWidget.vue";
-import SetAppointmentTimeslotsItem from "../patient/SetAppointmentTimeslotsItem.vue";
-import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot";
-import getTimeslots from "../../composables/calendar/getTimeslots";
-import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject";
-import getMonthIndex from "../../composables/calendar/getMonthIndex";
-import BoxDialog from "../../components/dialogs/BoxDialog.vue";
-import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
-import getDateTomorrow from "../../composables/calendar/getDateTomorrow";
-import getDate from "../../composables/calendar/getDate";
-import isSignedIn from "../../composables/auth/isSignedIn";
-import userIsPatient from "../../composables/auth/userIsPatient";
-import newAppointment from "../../composables/api/newAppointment";
-import { useRoute, useRouter, RouterLink } from "vue-router";
-import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart";
-import { getAuth } from "firebase/auth";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue"
+import CalendarWidget from "../../components/admin/CalendarWidget.vue"
+import SetAppointmentCalendarItem from "../../components/patient/SetAppointmentCalendarItem.vue"
+import { useSetAppointmentCalendarStore } from "../../stores/setAppointmentCalendar"
+import TimeslotsWidget from "../admin/TimeslotsWidget.vue"
+import SetAppointmentTimeslotsItem from "../patient/SetAppointmentTimeslotsItem.vue"
+import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot"
+import getTimeslots from "../../composables/calendar/getTimeslots"
+import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject"
+import getMonthIndex from "../../composables/calendar/getMonthIndex"
+import BoxDialog from "../../components/dialogs/BoxDialog.vue"
+import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
+import getDateTomorrow from "../../composables/calendar/getDateTomorrow"
+import getDate from "../../composables/calendar/getDate"
+import isSignedIn from "../../composables/auth/isSignedIn"
+import userIsPatient from "../../composables/auth/userIsPatient"
+import newAppointment from "../../composables/api/newAppointment"
+import { useRoute, useRouter, RouterLink } from "vue-router"
+import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart"
+import { getAuth } from "firebase/auth"
 
 /* Logic for reactive calendar items */
 const selected = reactive({
   month: "",
   year: "",
-});
+})
 
-const setAppointmentCalendarStore = useSetAppointmentCalendarStore();
-const calendarItems = ref([]);
-const isFinishLoading = ref(false);
+const setAppointmentCalendarStore = useSetAppointmentCalendarStore()
+const calendarItems = ref([])
+const isFinishLoading = ref(false)
 
 onMounted(async () => {
-  const currDate = new Date();
+  const currDate = new Date()
 
   // Make sure we are getting the current month
   // from UTC+8 (Asia/Manila).
   selected.month = currDate.toLocaleString("en-US", {
     timeZone: "Asia/Manila",
     month: "long",
-  });
+  })
 
   // Make sure we are getting the current year
   // from UTC+8 (Asia/Manila).
   selected.year = currDate.toLocaleString("en-US", {
     timeZone: "Asia/Manila",
     year: "numeric",
-  });
+  })
 
   await setAppointmentCalendarStore.setMonthAndYear(
     selected.month,
     selected.year
-  );
+  )
   for (const n of Array(setAppointmentCalendarStore.getDayCount).keys()) {
-    const currentDate = n + 1;
-    let closedSlotsOnGivenDate = 0;
-    let takenSlotsOnGivenDate = 0;
+    const currentDate = n + 1
+    let closedSlotsOnGivenDate = 0
+    let takenSlotsOnGivenDate = 0
 
     setAppointmentCalendarStore.getUnavailableSlots.map((unavailableSlot) => {
       if (getDateOfTimeslot(unavailableSlot.timeslot) === currentDate) {
-        if (unavailableSlot.status === "closed") closedSlotsOnGivenDate++;
-        else if (unavailableSlot.status === "taken") takenSlotsOnGivenDate++;
+        if (unavailableSlot.status === "closed") closedSlotsOnGivenDate++
+        else if (unavailableSlot.status === "taken") takenSlotsOnGivenDate++
       }
-    });
+    })
 
     calendarItems.value.push({
       date: n + 1,
       selected: false,
       closedSlotCount: closedSlotsOnGivenDate,
       takenSlotCount: takenSlotsOnGivenDate,
-    });
+    })
   }
 
   // Make sure setMonthAndYear is finished before we show the page.
-  await nextTick();
-  isFinishLoading.value = true;
-});
+  await nextTick()
+  isFinishLoading.value = true
+})
 
 const onCalendarItemClicked = (newSelectedItem) => {
   // Don't allow clicking if the slots are full.
@@ -82,110 +82,110 @@ const onCalendarItemClicked = (newSelectedItem) => {
     newSelectedItem.closedSlotCount + newSelectedItem.takenSlotCount ===
     getTimeslots().length
   )
-    return;
+    return
 
   // Don't allow clicking if the calendar item is today, or in the past.
   const date = getDate(
     parseInt(selected.year),
     getMonthIndex(selected.month) + 1,
     newSelectedItem.date
-  );
-  const dateTomorrow = getDateTomorrow();
-  if (date.getTime() < dateTomorrow.getTime()) return;
+  )
+  const dateTomorrow = getDateTomorrow()
+  if (date.getTime() < dateTomorrow.getTime()) return
 
   const currSelectedItem = calendarItems.value.find(
     (calendarItem) => calendarItem.selected === true
-  );
+  )
   if (currSelectedItem === newSelectedItem) {
     calendarItems.value = calendarItems.value.map((calendarItem) => ({
       ...calendarItem,
       selected: false,
-    }));
-    return;
+    }))
+    return
   }
 
   calendarItems.value = calendarItems.value.map((calendarItem) => ({
     ...calendarItem,
     selected: calendarItem === newSelectedItem ? true : false,
-  }));
-};
+  }))
+}
 
 // Monitor selected date, so we can conditionally show
 // the timeslots for a given date.
 const selectedDate = computed(() => {
   const selectedItem = calendarItems.value.find(
     (calendarItem) => calendarItem.selected === true
-  );
+  )
 
-  if (selectedItem) return selectedItem.date;
-  return "";
-});
+  if (selectedItem) return selectedItem.date
+  return ""
+})
 
 const onChangeMonthOrYear = async () => {
   // Hide the calendar temporarily.
-  isFinishLoading.value = false;
+  isFinishLoading.value = false
 
   // Set new month in the store.
   await setAppointmentCalendarStore.setMonthAndYear(
     selected.month,
     selected.year
-  );
+  )
 
   // Reset calendar items, then build
   // a new list of calendar items with all
   // items unselected.
-  calendarItems.value = [];
+  calendarItems.value = []
   for (const n of Array(setAppointmentCalendarStore.getDayCount).keys()) {
     calendarItems.value.push({
       date: n + 1,
       selected: false,
-    });
+    })
   }
 
   // Wait for all request to flush,
   // then show the calendar again.
-  await nextTick();
-  isFinishLoading.value = true;
-};
+  await nextTick()
+  isFinishLoading.value = true
+}
 
 /* Logic for reactive timeslot items */
-const timeslotItems = ref([]);
+const timeslotItems = ref([])
 
 // Load timeslot items.
-onMounted(() => {});
+onMounted(() => {})
 
 // Split timeslots to morning and afternoon slots for our template.
 const morningTimeslotItems = computed(() => {
-  return timeslotItems.value.filter((timeslotItem) => timeslotItem.hours < 12);
-});
+  return timeslotItems.value.filter((timeslotItem) => timeslotItem.hours < 12)
+})
 
 const afternoonTimeslotItems = computed(() => {
-  return timeslotItems.value.filter((timeslotItem) => timeslotItem.hours >= 12);
-});
+  return timeslotItems.value.filter((timeslotItem) => timeslotItem.hours >= 12)
+})
 
 const onTimeslotItemClicked = (newTimeslotItemClicked) => {
-  if (newTimeslotItemClicked.closed || newTimeslotItemClicked.taken) return;
+  if (newTimeslotItemClicked.closed || newTimeslotItemClicked.taken) return
 
   const lastTimeslotItemClicked = timeslotItems.value.find(
     (timeslotItem) => timeslotItem.selected === true
-  );
+  )
 
   if (lastTimeslotItemClicked === newTimeslotItemClicked) {
     timeslotItems.value = timeslotItems.value.map((timeslotItem) => ({
       ...timeslotItem,
       selected: false,
-    }));
+    }))
 
-    return;
+    return
   }
 
   timeslotItems.value = timeslotItems.value.map((timeslotItem) => {
     return {
       ...timeslotItem,
       selected: timeslotItem === newTimeslotItemClicked ? true : false,
-    };
-  });
-};
+    }
+  })
+}
 
 // Reset our timeslots whenever the date changes.
 watch(selectedDate, () => {
@@ -197,20 +197,20 @@ watch(selectedDate, () => {
         parseInt(selected.year),
         timeslot[0],
         timeslot[1]
-      );
+      )
 
-      let isClosed = false;
-      let isTaken = false;
+      let isClosed = false
+      let isTaken = false
 
       setAppointmentCalendarStore.getUnavailableSlots.forEach(
         (unavailableSlot) => {
           // If our timestamp is in the list, color our time slot.
           if (unavailableSlot.timeslot === timeInUnixSecs.toString()) {
-            if (unavailableSlot.status === "closed") isClosed = true;
-            else if (unavailableSlot.status === "taken") isTaken = true;
+            if (unavailableSlot.status === "closed") isClosed = true
+            else if (unavailableSlot.status === "taken") isTaken = true
           }
         }
-      );
+      )
 
       return {
         hours: timeslot[0],
@@ -219,64 +219,64 @@ watch(selectedDate, () => {
         closed: isClosed,
         taken: isTaken,
         timestamp: timeInUnixSecs,
-      };
-    });
-});
+      }
+    })
+})
 
 const selectedTimeslot = computed(() => {
   const timeslotItem = timeslotItems.value.find(
     (timeslotItem) => timeslotItem.selected === true
-  );
+  )
 
-  if (timeslotItem) return timeslotItem.timestamp;
-  else return "";
-});
+  if (timeslotItem) return timeslotItem.timestamp
+  else return ""
+})
 
 /* Logic for saving choices and Account Dialog */
-const appointmentDetailsStore = useAppointmentDetailsStore();
-const isAccountExistsDialogVisible = ref(false);
+const appointmentDetailsStore = useAppointmentDetailsStore()
+const isAccountExistsDialogVisible = ref(false)
 
-const router = useRouter();
-const auth = getAuth();
+const router = useRouter()
+const auth = getAuth()
 const onGoNext = async () => {
   appointmentDetailsStore.setDetails(
     selectedService.value,
     selectedTimeslot.value
-  );
+  )
   if (isSignedIn()) {
-    const isUserAPatient = await userIsPatient();
-    const patientUid = auth.currentUser.uid;
+    const isUserAPatient = await userIsPatient()
+    const patientUid = auth.currentUser.uid
 
     if (isUserAPatient) {
-      const isMedicalChartFilledIn = await isFilledInMedicalChart(patientUid);
+      const isMedicalChartFilledIn = await isFilledInMedicalChart(patientUid)
       if (isMedicalChartFilledIn) {
         await newAppointment(
           patientUid,
           appointmentDetailsStore.getSlotSeconds,
           appointmentDetailsStore.getService
-        );
+        )
 
-        appointmentDetailsStore.$reset();
-        isSuccessModalVisible.value = true;
+        appointmentDetailsStore.$reset()
+        isSuccessModalVisible.value = true
       } else
         router.push({
           name: "Appointments Page Medical Chart",
-        });
-    } else isAccountExistsDialogVisible.value = true;
-  } else isAccountExistsDialogVisible.value = true;
-};
+        })
+    } else isAccountExistsDialogVisible.value = true
+  } else isAccountExistsDialogVisible.value = true
+}
 
-const selectedService = ref("");
+const selectedService = ref("")
 
-const route = useRoute();
+const route = useRoute()
 onMounted(() => {
-  const preselectedService = route.query.service;
-  if (preselectedService) selectedService.value = preselectedService;
-});
+  const preselectedService = route.query.service
+  if (preselectedService) selectedService.value = preselectedService
+})
 
-const isErrorDialogVisible = ref(false);
-const errorDialogBody = ref("");
-const isSuccessModalVisible = ref(false);
+const isErrorDialogVisible = ref(false)
+const errorDialogBody = ref("")
+const isSuccessModalVisible = ref(false)
 </script>
 
 <template>

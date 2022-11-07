@@ -1,15 +1,15 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot";
-import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
-const scheduleCalendar = useScheduleCalendarStore();
+import { onMounted, ref } from "vue"
+import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot"
+import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
+const scheduleCalendar = useScheduleCalendarStore()
 
 const props = defineProps({
   date: Number,
   isSelected: Boolean,
-});
+})
 
-const isColored = ref(false);
+const isColored = ref(false)
 
 // Color our item when it is displayed, if applicable.
 onMounted(() => {
@@ -20,26 +20,26 @@ onMounted(() => {
       getDateOfTimeslot(unavailableSlot.timeslot) === props.date &&
       unavailableSlot.status === "closed"
     )
-      isColored.value = true;
-  });
-});
+      isColored.value = true
+  })
+})
 
 // Listen for changes to the closed slots in the store.
 // If our item, is added to list of closed slots, this
 // will add color to our item.
 scheduleCalendar.$subscribe((mutation, state) => {
   // Reset colored state value.
-  isColored.value = false;
+  isColored.value = false
 
   // Check if our state is ni the list of closed slots.
   state.unavailableSlots.forEach((unavailableSlot) => {
-    const date = new Date(parseInt(unavailableSlot.timeslot) * 1000).getDate();
+    const date = new Date(parseInt(unavailableSlot.timeslot) * 1000).getDate()
     // If it is, add fill color to our item.
     if (date === props.date && unavailableSlot.status === "closed") {
-      isColored.value = true;
+      isColored.value = true
     }
-  });
-});
+  })
+})
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script setup>
-import BaseLayout from "../../components/admin/BaseLayout.vue";
-import listenToAllUserAppointments from "../../composables/firestore/listeners/listenToAllUserAppointments";
-import NotificationsPageNotificationItem from "../../components/admin/NotificationsPageNotificationItem.vue";
+import BaseLayout from "../../components/admin/BaseLayout.vue"
+import listenToAllUserAppointments from "../../composables/firestore/listeners/listenToAllUserAppointments"
+import NotificationsPageNotificationItem from "../../components/admin/NotificationsPageNotificationItem.vue"
 
-const userAppointments = listenToAllUserAppointments();
+const userAppointments = listenToAllUserAppointments()
 </script>
 <template>
   <BaseLayout>

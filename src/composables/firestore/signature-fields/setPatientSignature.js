@@ -1,10 +1,10 @@
-import { doc, getFirestore, setDoc } from "@firebase/firestore";
+import { doc, getFirestore, setDoc } from "@firebase/firestore"
 
-const db = getFirestore();
+const db = getFirestore()
 
 export default async (patientUid, dataUrl) => {
-  const docRef = doc(db, `users/${patientUid}/patientRecords/patientSignature`);
+  const docRef = doc(db, `users/${patientUid}/patientRecords/patientSignature`)
   await setDoc(docRef, {
     dataUrl,
-  });
-};
+  })
+}

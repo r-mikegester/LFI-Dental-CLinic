@@ -1,58 +1,58 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot";
-import getUserProfile from "../../composables/api/getUserProfile";
-import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot";
-import setUserAppointmentAttended from "../../composables/api/user-appointment-attended/setUserAppointmentAttended";
-import setUserAppointmentNotAttended from "../../composables/api/user-appointment-attended/setUserAppointmentNotAttended";
-import setUserAppointmentPending from "../../composables/api/user-appointment-attended/setUserAppointmentPending";
+import { onMounted, ref } from "vue"
+import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
+import getUserProfile from "../../composables/api/getUserProfile"
+import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
+import setUserAppointmentAttended from "../../composables/api/user-appointment-attended/setUserAppointmentAttended"
+import setUserAppointmentNotAttended from "../../composables/api/user-appointment-attended/setUserAppointmentNotAttended"
+import setUserAppointmentPending from "../../composables/api/user-appointment-attended/setUserAppointmentPending"
 
 const props = defineProps({
   timeslot: String,
   service: String,
   patientUid: String,
   attended: [Boolean, String],
-});
+})
 
-const userProfile = ref(null);
-const attended = ref(null);
+const userProfile = ref(null)
+const attended = ref(null)
 onMounted(async () => {
-  attended.value = props.attended;
+  attended.value = props.attended
   switch (props.attended) {
     case true:
-      attended.value = "Yes";
-      break;
+      attended.value = "Yes"
+      break
     case false:
-      attended.value = "No";
-      break;
+      attended.value = "No"
+      break
     case "pending":
-      attended.value = "pending";
-      break;
+      attended.value = "pending"
+      break
   }
-  userProfile.value = await getUserProfile(props.patientUid);
-});
+  userProfile.value = await getUserProfile(props.patientUid)
+})
 
-const emit = defineEmits(["attended-changed"]);
+const emit = defineEmits(["attended-changed"])
 
 const onInput = async (e) => {
   switch (e.target.value) {
     case "Yes":
-      attended.value = e.target.value;
-      await setUserAppointmentAttended(props.patientUid, props.timeslot);
-      emit("attended-changed", attended.value, props.timeslot);
-      break;
+      attended.value = e.target.value
+      await setUserAppointmentAttended(props.patientUid, props.timeslot)
+      emit("attended-changed", attended.value, props.timeslot)
+      break
     case "No":
-      attended.value = e.target.value;
-      await setUserAppointmentNotAttended(props.patientUid, props.timeslot);
-      emit("attended-changed", attended.value, props.timeslot);
-      break;
+      attended.value = e.target.value
+      await setUserAppointmentNotAttended(props.patientUid, props.timeslot)
+      emit("attended-changed", attended.value, props.timeslot)
+      break
     case "pending":
-      attended.value = e.target.value;
-      await setUserAppointmentPending(props.patientUid, props.timeslot);
-      emit("attended-changed", attended.value, props.timeslot);
-      break;
+      attended.value = e.target.value
+      await setUserAppointmentPending(props.patientUid, props.timeslot)
+      emit("attended-changed", attended.value, props.timeslot)
+      break
   }
-};
+}
 </script>
 
 <template>

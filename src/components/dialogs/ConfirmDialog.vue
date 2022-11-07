@@ -1,5 +1,5 @@
 <script setup>
-import SimpleModalDialog from "../admin/SimpleModalDialog.vue";
+import SimpleModalDialog from "../admin/SimpleModalDialog.vue"
 </script>
 
 <template>

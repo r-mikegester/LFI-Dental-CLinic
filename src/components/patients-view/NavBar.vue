@@ -1,40 +1,40 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import isSignedIn from "../../composables/auth/isSignedIn";
-import signOut from "../../composables/auth/signOut";
-import userIsPatient from "../../composables/auth/userIsPatient";
-import { useProfilePictureStore } from "../../stores/profilePicture";
-const showMenu = ref(false);
-const showSettings = ref(false);
-const show = ref(false);
-const skrr = ref(false);
+import { onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
+import isSignedIn from "../../composables/auth/isSignedIn"
+import signOut from "../../composables/auth/signOut"
+import userIsPatient from "../../composables/auth/userIsPatient"
+import { useProfilePictureStore } from "../../stores/profilePicture"
+const showMenu = ref(false)
+const showSettings = ref(false)
+const show = ref(false)
+const skrr = ref(false)
 const toggleNav = () => {
-  showMenu.value = !showMenu.value;
-  showSettings.value = !showSettings.value;
-};
+  showMenu.value = !showMenu.value
+  showSettings.value = !showSettings.value
+}
 
-const userIsLoggedIn = ref(false);
+const userIsLoggedIn = ref(false)
 onMounted(async () => {
-  if (isSignedIn() && (await userIsPatient())) userIsLoggedIn.value = true;
-});
+  if (isSignedIn() && (await userIsPatient())) userIsLoggedIn.value = true
+})
 
-const router = useRouter();
+const router = useRouter()
 const onToggleAccountButton = async () => {
-  if (isSignedIn() && (await userIsPatient())) skrr.value = !skrr.value;
-  else router.push({ name: "Patient Login Page" });
-};
+  if (isSignedIn() && (await userIsPatient())) skrr.value = !skrr.value
+  else router.push({ name: "Patient Login Page" })
+}
 
 const onLogout = async () => {
-  await signOut();
-  router.push({ name: "Patient Login Page" });
-};
+  await signOut()
+  router.push({ name: "Patient Login Page" })
+}
 
-const profilePictureStore = useProfilePictureStore();
+const profilePictureStore = useProfilePictureStore()
 onMounted(async () => {
   if (isSignedIn() && !profilePictureStore.isInitialized)
-    await profilePictureStore.initialize();
-});
+    await profilePictureStore.initialize()
+})
 </script>
 
 <template>

@@ -1,96 +1,96 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import getPatientSignature from "../../composables/firestore/signature-fields/getPatientSignature";
-import setPatientSignature from "../../composables/firestore/signature-fields/setPatientSignature";
+import { onMounted, reactive, ref } from "vue"
+import getPatientSignature from "../../composables/firestore/signature-fields/getPatientSignature"
+import setPatientSignature from "../../composables/firestore/signature-fields/setPatientSignature"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,
-});
+})
 
-const originalDataUrl = ref(null);
+const originalDataUrl = ref(null)
 
 // create canvas element and append it to document body
-const canvas = ref();
-const ctx = ref(null);
+const canvas = ref()
+const ctx = ref(null)
 const lastKnownPos = reactive({
   x: 0,
   y: 0,
-});
+})
 
 onMounted(async () => {
-  originalDataUrl.value = await getPatientSignature(props.patientUid);
-  ctx.value = canvas.value.getContext("2d");
-  resize();
+  originalDataUrl.value = await getPatientSignature(props.patientUid)
+  ctx.value = canvas.value.getContext("2d")
+  resize()
 
   if (originalDataUrl.value) {
-    const img = new Image();
-    img.src = originalDataUrl.value;
+    const img = new Image()
+    img.src = originalDataUrl.value
     img.onload = () => {
-      ctx.value.drawImage(img, 0, 0);
-    };
+      ctx.value.drawImage(img, 0, 0)
+    }
   }
-});
+})
 
 // new position from mouse event
 function setPosition(e) {
-  var rect = canvas.value.getBoundingClientRect();
-  lastKnownPos.x = e.clientX - rect.left;
-  lastKnownPos.y = e.clientY - rect.top;
+  var rect = canvas.value.getBoundingClientRect()
+  lastKnownPos.x = e.clientX - rect.left
+  lastKnownPos.y = e.clientY - rect.top
 }
 
 function resize() {
-  const rect = canvas.value.getBoundingClientRect();
-  ctx.value.canvas.width = rect.width;
-  ctx.value.canvas.height = rect.height;
+  const rect = canvas.value.getBoundingClientRect()
+  ctx.value.canvas.width = rect.width
+  ctx.value.canvas.height = rect.height
 }
 
 function draw(e) {
   // mouse left button must be pressed
-  if (e.buttons !== 1) return;
+  if (e.buttons !== 1) return
 
-  ctx.value.beginPath(); // begin
+  ctx.value.beginPath() // begin
 
-  ctx.value.lineWidth = 5;
-  ctx.value.lineCap = "round";
-  ctx.value.strokeStyle = props.strokeColor;
+  ctx.value.lineWidth = 5
+  ctx.value.lineCap = "round"
+  ctx.value.strokeStyle = props.strokeColor
 
-  ctx.value.moveTo(lastKnownPos.x, lastKnownPos.y); // from
-  setPosition(e);
-  ctx.value.lineTo(lastKnownPos.x, lastKnownPos.y); // to
+  ctx.value.moveTo(lastKnownPos.x, lastKnownPos.y) // from
+  setPosition(e)
+  ctx.value.lineTo(lastKnownPos.x, lastKnownPos.y) // to
 
-  ctx.value.stroke(); // draw it!
+  ctx.value.stroke() // draw it!
 }
 
 const setPositionThenDraw = (e) => {
-  setPosition(e);
-  draw(e);
-};
+  setPosition(e)
+  draw(e)
+}
 
 const onClearCanvas = () => {
-  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
-};
+  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height)
+}
 
 const onResetCanvas = () => {
-  onClearCanvas();
+  onClearCanvas()
   if (originalDataUrl.value) {
-    const img = new Image();
-    img.src = originalDataUrl.value;
+    const img = new Image()
+    img.src = originalDataUrl.value
     img.onload = () => {
-      ctx.value.drawImage(img, 0, 0);
-    };
+      ctx.value.drawImage(img, 0, 0)
+    }
   }
-};
+}
 
-const isSaveInProgress = ref(false);
+const isSaveInProgress = ref(false)
 const onSaveCanvas = async () => {
   if (!isSaveInProgress.value) {
-    isSaveInProgress.value = true;
-    const dataURL = canvas.value.toDataURL();
-    await setPatientSignature(props.patientUid, dataURL);
-    originalDataUrl.value = dataURL;
-    isSaveInProgress.value = false;
+    isSaveInProgress.value = true
+    const dataURL = canvas.value.toDataURL()
+    await setPatientSignature(props.patientUid, dataURL)
+    originalDataUrl.value = dataURL
+    isSaveInProgress.value = false
   }
-};
+}
 </script>
 
 <template>

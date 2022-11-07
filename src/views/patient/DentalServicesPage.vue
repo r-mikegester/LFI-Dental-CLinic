@@ -1,5 +1,5 @@
 <script setup>
-import BaseLayout from "../../components/patient/BaseLayout.vue";
+import BaseLayout from "../../components/patient/BaseLayout.vue"
 </script>
 <template>
   <BaseLayout>

@@ -1,34 +1,34 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
-import newMessage from "../composables/api/newMessage";
-import BaseLayout from "../components/patient/BaseLayout.vue";
-import HeroSection from "../components/patient/HeroSection.vue";
+import { computed, reactive, ref } from "vue"
+import newMessage from "../composables/api/newMessage"
+import BaseLayout from "../components/patient/BaseLayout.vue"
+import HeroSection from "../components/patient/HeroSection.vue"
 
 const message = reactive({
   senderName: "",
   subject: "",
   body: "",
-});
+})
 
-const messageIsSending = ref(false);
+const messageIsSending = ref(false)
 const isSendButtonDisabled = computed(() => {
-  if (messageIsSending.value) return true;
-  if (message.senderName === "") return true;
-  if (message.subject === "") return true;
-  if (message.body === "") return true;
-  return false;
-});
+  if (messageIsSending.value) return true
+  if (message.senderName === "") return true
+  if (message.subject === "") return true
+  if (message.body === "") return true
+  return false
+})
 
 const onSendButton = async () => {
   if (!isSendButtonDisabled.value) {
-    messageIsSending.value = true;
-    await newMessage(message);
-    messageIsSending.value = false;
-    message.senderName = "";
-    message.subject = "";
-    message.body = "";
+    messageIsSending.value = true
+    await newMessage(message)
+    messageIsSending.value = false
+    message.senderName = ""
+    message.subject = ""
+    message.body = ""
   }
-};
+}
 </script>
 <template>
   <BaseLayout>

@@ -1,23 +1,23 @@
 <script setup>
-import BaseLayout from "../../../components/admin//BaseLayout.vue";
-import { RouterLink, useRoute } from "vue-router";
-import { computed, onMounted, ref } from "vue";
-import getUserAppointments from "../../../composables/api/getUserAppointments";
-import DentalTreatmentsPageAppointmentItem from "../../../components/admin/DentalTreatmentsPageAppointmentItem.vue";
+import BaseLayout from "../../../components/admin//BaseLayout.vue"
+import { RouterLink, useRoute } from "vue-router"
+import { computed, onMounted, ref } from "vue"
+import getUserAppointments from "../../../composables/api/getUserAppointments"
+import DentalTreatmentsPageAppointmentItem from "../../../components/admin/DentalTreatmentsPageAppointmentItem.vue"
 
-const route = useRoute();
-const patientUid = route.params.uid;
+const route = useRoute()
+const patientUid = route.params.uid
 
-const appointments = ref([]);
+const appointments = ref([])
 onMounted(async () => {
-  appointments.value = await getUserAppointments(patientUid);
-});
+  appointments.value = await getUserAppointments(patientUid)
+})
 
 const attendedAppointments = computed(() => {
   return appointments.value.filter(
     (appointment) => appointment.attended === true
-  );
-});
+  )
+})
 </script>
 <template>
   <BaseLayout>

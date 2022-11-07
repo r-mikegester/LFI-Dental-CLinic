@@ -1,7 +1,7 @@
 <script setup>
-import BaseLayout from "../../components/patient/BaseLayout.vue";
-import LoginAccount from "../../components/booking/LoginAccount.vue";
-import HeroSection from "../../components/patient/HeroSection.vue";
+import BaseLayout from "../../components/patient/BaseLayout.vue"
+import LoginAccount from "../../components/booking/LoginAccount.vue"
+import HeroSection from "../../components/patient/HeroSection.vue"
 </script>
 
 <template>

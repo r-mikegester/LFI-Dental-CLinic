@@ -1,47 +1,47 @@
 <script setup>
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot";
-import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot";
-import { RouterLink } from "vue-router";
-import requestProcedureAccess from "../../composables/api/access-procedure/requestProcedureAccess";
-import cancelRequestProcedureAccess from "../../composables/api/access-procedure/cancelRequestProcedureAccess";
-import { getAuth } from "firebase/auth";
-import cancelAppointment from "../../composables/api/cancelAppointment";
-import SimpleModalDialog from "../admin/SimpleModalDialog.vue";
-import { onMounted, ref } from "vue";
-import getDateTwoDaysBeforeTimeslot from "../../composables/calendar/getDateTwoDaysBeforeTimeslot";
+import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
+import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
+import { RouterLink } from "vue-router"
+import requestProcedureAccess from "../../composables/api/access-procedure/requestProcedureAccess"
+import cancelRequestProcedureAccess from "../../composables/api/access-procedure/cancelRequestProcedureAccess"
+import { getAuth } from "firebase/auth"
+import cancelAppointment from "../../composables/api/cancelAppointment"
+import SimpleModalDialog from "../admin/SimpleModalDialog.vue"
+import { onMounted, ref } from "vue"
+import getDateTwoDaysBeforeTimeslot from "../../composables/calendar/getDateTwoDaysBeforeTimeslot"
 
 const props = defineProps({
   appointment: Object,
-});
+})
 
-const auth = getAuth();
-const patientUid = auth.currentUser.uid;
+const auth = getAuth()
+const patientUid = auth.currentUser.uid
 
 const onRequestAccess = async () => {
-  await requestProcedureAccess(patientUid, props.appointment.uid);
-};
+  await requestProcedureAccess(patientUid, props.appointment.uid)
+}
 
 const onCancelRequestAccess = async () => {
-  await cancelRequestProcedureAccess(patientUid, props.appointment.uid);
-};
+  await cancelRequestProcedureAccess(patientUid, props.appointment.uid)
+}
 
-const isCancelDialogVisible = ref(false);
+const isCancelDialogVisible = ref(false)
 const onShowCancelDialog = () => {
   if (Date.now() < cancelDeadline.value.getTime())
-    isCancelDialogVisible.value = true;
-};
+    isCancelDialogVisible.value = true
+}
 
 const onCancelAppointment = async () => {
-  await cancelAppointment(patientUid, props.appointment.uid);
-};
+  await cancelAppointment(patientUid, props.appointment.uid)
+}
 
-const cancelDeadline = ref(null);
+const cancelDeadline = ref(null)
 
 onMounted(() => {
   cancelDeadline.value = getDateTwoDaysBeforeTimeslot(
     parseInt(props.appointment.uid)
-  );
-});
+  )
+})
 </script>
 
 <template>

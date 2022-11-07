@@ -3,27 +3,27 @@ import {
   getFirestore,
   onSnapshot,
   query,
-} from "@firebase/firestore";
-import { onUnmounted, ref } from "vue";
+} from "@firebase/firestore"
+import { onUnmounted, ref } from "vue"
 
-const db = getFirestore();
+const db = getFirestore()
 export default (patientUid) => {
-  const userAppointments = ref([]);
+  const userAppointments = ref([])
 
-  const q = query(collection(db, `users/${patientUid}/appointments`));
+  const q = query(collection(db, `users/${patientUid}/appointments`))
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    userAppointments.value = [];
+    userAppointments.value = []
     querySnapshot.forEach((doc) => {
       userAppointments.value.push({
         uid: doc.id,
         ...doc.data(),
-      });
-    });
-  });
+      })
+    })
+  })
 
   onUnmounted(() => {
-    unsubscribe();
-  });
+    unsubscribe()
+  })
 
-  return userAppointments;
-};
+  return userAppointments
+}

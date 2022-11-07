@@ -1,40 +1,40 @@
 <script setup>
-import { useQueryClient, useMutation, useQuery } from "@tanstack/vue-query";
-import { ref, computed } from "vue";
-import BaseLayout from "../../components/admin/BaseLayout.vue";
-import MessageChooserItem from "../../components/admin/MessageChooserItem.vue";
-import getAllMessages from "../../composables/api/getAllMessages";
-import { toggleMessageArchiveStatus } from "../../composables/api/Messages";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/vue-query"
+import { ref, computed } from "vue"
+import BaseLayout from "../../components/admin/BaseLayout.vue"
+import MessageChooserItem from "../../components/admin/MessageChooserItem.vue"
+import getAllMessages from "../../composables/api/getAllMessages"
+import { toggleMessageArchiveStatus } from "../../composables/api/Messages"
 
 const { data, isLoading } = useQuery({
   queryKey: ["messagesList"],
   queryFn: getAllMessages,
-});
+})
 
-const selectedTab = ref("inbox");
-const selectedItemUid = ref(null);
+const selectedTab = ref("inbox")
+const selectedItemUid = ref(null)
 
 const onSelectTab = (tab) => {
-  selectedItemUid.value = null;
-  selectedTab.value = tab;
-};
+  selectedItemUid.value = null
+  selectedTab.value = tab
+}
 
 const selectedItem = computed(() => {
   const itemFound = data.value.find(
     (message) => selectedItemUid.value === message.uid
-  );
+  )
 
   if (!itemFound)
     return {
       body: "",
       subject: "",
-    };
+    }
 
-  return itemFound;
-});
+  return itemFound
+})
 
 const messageItems = computed(() => {
-  if (!data.value) return [];
+  if (!data.value) return []
 
   const messages = data.value.map(
     ({ uid, senderName, subject, body, createdAt, isArchived }) => {
@@ -46,37 +46,37 @@ const messageItems = computed(() => {
         createdAtUnixSecs: createdAt._seconds,
         isArchived,
         clicked: selectedItemUid.value === uid ? true : false,
-      };
+      }
     }
-  );
+  )
 
   const filteredMessages =
     selectedTab.value === "archived"
       ? messages.filter(({ isArchived }) => isArchived)
-      : messages.filter(({ isArchived }) => !isArchived);
+      : messages.filter(({ isArchived }) => !isArchived)
 
   return filteredMessages.sort((a, b) => {
-    if (a.createdAtUnixSecs < b.createdAtUnixSecs) return 1;
-    if (a.createdAtUnixSecs > b.createdAtUnixSecs) return -1;
-    return 0;
-  });
-});
+    if (a.createdAtUnixSecs < b.createdAtUnixSecs) return 1
+    if (a.createdAtUnixSecs > b.createdAtUnixSecs) return -1
+    return 0
+  })
+})
 
 const onItemClicked = (uid) => {
-  selectedItemUid.value = uid;
-};
+  selectedItemUid.value = uid
+}
 
-const queryClient = useQueryClient();
+const queryClient = useQueryClient()
 
 const mutation = useMutation({
   mutationFn: toggleMessageArchiveStatus,
   onMutate: async (uid) => {
     // Cancel any outgoing refetches, so they don't overwrite
     // our optimistic update.
-    await queryClient.cancelQueries({ queryKey: ["messagesList"] });
+    await queryClient.cancelQueries({ queryKey: ["messagesList"] })
 
     // Snapshot the previous value
-    const messagesList = queryClient.getQueryData(["messagesList"]);
+    const messagesList = queryClient.getQueryData(["messagesList"])
 
     // Optimistically update to the new value
     queryClient.setQueryData(["messagesList"], (old) => {
@@ -85,28 +85,28 @@ const mutation = useMutation({
           return {
             ...message,
             isArchived: !message.isArchived,
-          };
+          }
 
-        return message;
-      });
-    });
+        return message
+      })
+    })
 
     // Return a context object with the snapshotted value
-    return { messagesList };
+    return { messagesList }
   },
   onError: (err, uid, context) => {
-    queryClient.setQueryData(["messagesList"], context.messagesList);
+    queryClient.setQueryData(["messagesList"], context.messagesList)
   },
   onSettled: () => {
     queryClient.invalidateQueries({
       queryKey: ["messagesList"],
-    });
+    })
   },
-});
+})
 
 const onItemArchived = (uid) => {
-  if (!mutation.isLoading.value) mutation.mutate(uid);
-};
+  if (!mutation.isLoading.value) mutation.mutate(uid)
+}
 </script>
 
 <template>

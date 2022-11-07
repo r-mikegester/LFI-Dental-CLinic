@@ -1,41 +1,41 @@
 <script setup>
-import { getAuth } from "firebase/auth";
-import { computed, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import newAppointment from "../../composables/api/newAppointment";
-import signIn from "../../composables/auth/signIn";
-import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart";
-import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
-import BoxDialog from "../dialogs/BoxDialog.vue";
+import { getAuth } from "firebase/auth"
+import { computed, reactive, ref } from "vue"
+import { useRouter } from "vue-router"
+import newAppointment from "../../composables/api/newAppointment"
+import signIn from "../../composables/auth/signIn"
+import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart"
+import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
+import BoxDialog from "../dialogs/BoxDialog.vue"
 
-const isSuccessModalVisible = ref(false);
+const isSuccessModalVisible = ref(false)
 
 const accountCredentials = reactive({
   email: "",
   password: "",
-});
+})
 
 // validation for above information.
 const isAccountCredentialsValid = computed(() => {
-  if (accountCredentials.email === "") return false;
-  if (accountCredentials.password === "") return false;
+  if (accountCredentials.email === "") return false
+  if (accountCredentials.password === "") return false
   if (accountCredentials.password && accountCredentials.password.length < 8) {
-    return false;
+    return false
   }
 
-  return true;
-});
+  return true
+})
 
-const appointmentDetailsStore = useAppointmentDetailsStore();
+const appointmentDetailsStore = useAppointmentDetailsStore()
 
-const router = useRouter();
-const auth = getAuth();
+const router = useRouter()
+const auth = getAuth()
 const onSignIn = async () => {
   try {
     if (isAccountCredentialsValid.value) {
-      await signIn(accountCredentials.email, accountCredentials.password);
-      const patientUid = auth.currentUser.uid;
-      const medicalChartIsFilled = await isFilledInMedicalChart(patientUid);
+      await signIn(accountCredentials.email, accountCredentials.password)
+      const patientUid = auth.currentUser.uid
+      const medicalChartIsFilled = await isFilledInMedicalChart(patientUid)
 
       if (appointmentDetailsStore.isInitialized) {
         if (medicalChartIsFilled) {
@@ -45,20 +45,20 @@ const onSignIn = async () => {
             patientUid,
             appointmentDetailsStore.getSlotSeconds,
             appointmentDetailsStore.getService
-          );
+          )
 
-          appointmentDetailsStore.$reset();
-          isSuccessModalVisible.value = true;
+          appointmentDetailsStore.$reset()
+          isSuccessModalVisible.value = true
         } else {
           /* Redirect users to medical chart if not filled in.  */
           router.push({
             name: "Appointments Page Medical Chart",
-          });
+          })
         }
       } else
         router.push({
           name: "Patient Appointment History Page",
-        });
+        })
     }
   } catch (e) {
     switch (e.code) {
@@ -66,19 +66,19 @@ const onSignIn = async () => {
       case "auth/wrong-password":
       case "auth/user-not-found":
         errorDialogBody.value =
-          "You have entered an incorrect email or password.";
-        isErrorDialogVisible.value = true;
-        break;
+          "You have entered an incorrect email or password."
+        isErrorDialogVisible.value = true
+        break
       default:
-        errorDialogBody.value = `An unknown error occured. Code: ${e.code}`;
-        isErrorDialogVisible.value = true;
-        throw e;
+        errorDialogBody.value = `An unknown error occured. Code: ${e.code}`
+        isErrorDialogVisible.value = true
+        throw e
     }
   }
-};
+}
 
-const isErrorDialogVisible = ref(false);
-const errorDialogBody = ref("");
+const isErrorDialogVisible = ref(false)
+const errorDialogBody = ref("")
 </script>
 
 <template>

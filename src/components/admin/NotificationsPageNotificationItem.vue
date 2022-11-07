@@ -1,34 +1,34 @@
 <script setup>
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot";
-import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot";
-import { onMounted, ref } from "vue";
-import getUserProfile from "../../composables/api/getUserProfile";
-import setProcedureAccessAllowed from "../../composables/firestore/setProcedureAccessAllowed";
-import setProcedureAccessDisallowed from "../../composables/firestore/setProcedureAccessDisallowed";
+import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
+import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
+import { onMounted, ref } from "vue"
+import getUserProfile from "../../composables/api/getUserProfile"
+import setProcedureAccessAllowed from "../../composables/firestore/setProcedureAccessAllowed"
+import setProcedureAccessDisallowed from "../../composables/firestore/setProcedureAccessDisallowed"
 
 const props = defineProps({
   appointment: Object,
-});
+})
 
-const patientName = ref(null);
+const patientName = ref(null)
 
 onMounted(async () => {
-  patientName.value = await getUserProfile(props.appointment.patientUid);
-});
+  patientName.value = await getUserProfile(props.appointment.patientUid)
+})
 
 const onAllowAccess = async () => {
   await setProcedureAccessAllowed(
     props.appointment.patientUid,
     props.appointment.uid
-  );
-};
+  )
+}
 
 const onDisallowAccess = async () => {
   await setProcedureAccessDisallowed(
     props.appointment.patientUid,
     props.appointment.uid
-  );
-};
+  )
+}
 </script>
 
 <template>

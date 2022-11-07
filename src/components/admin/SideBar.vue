@@ -1,23 +1,22 @@
 <script setup>
-import { onMounted } from "vue";
-import { RouterLink, useRouter } from "vue-router";
-import signOut from "../../composables/auth/signOut";
-import { useProfilePictureStore } from "../../stores/profilePicture";
-import { useUserFullnameStore } from "../../stores/userFullname";
+import { onMounted } from "vue"
+import { RouterLink, useRouter } from "vue-router"
+import signOut from "../../composables/auth/signOut"
+import { useProfilePictureStore } from "../../stores/profilePicture"
+import { useUserFullnameStore } from "../../stores/userFullname"
 
-const router = useRouter();
+const router = useRouter()
 const onLogout = async () => {
-  await signOut();
-  router.push({ name: "Admin Login Page" });
-};
+  await signOut()
+  router.push({ name: "Admin Login Page" })
+}
 
-const profilePictureStore = useProfilePictureStore();
-const userFullnameStore = useUserFullnameStore();
+const profilePictureStore = useProfilePictureStore()
+const userFullnameStore = useUserFullnameStore()
 onMounted(async () => {
-  if (!profilePictureStore.isInitialized)
-    await profilePictureStore.initialize();
-  if (!userFullnameStore.isInitialized) await userFullnameStore.initialize();
-});
+  if (!profilePictureStore.isInitialized) await profilePictureStore.initialize()
+  if (!userFullnameStore.isInitialized) await userFullnameStore.initialize()
+})
 </script>
 
 <template>

@@ -1,56 +1,54 @@
 <script setup>
-import BaseLayout from "../../../components/admin//BaseLayout.vue";
-import { computed, onMounted, ref } from "vue";
-import listUserProfiles from "../../../composables/api/listUserProfiles";
-import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue";
-import listUserProfilesStartingWith from "../../../composables/api/users-list/listUserProfilesStartingWith";
+import BaseLayout from "../../../components/admin//BaseLayout.vue"
+import { computed, onMounted, ref } from "vue"
+import listUserProfiles from "../../../composables/api/listUserProfiles"
+import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue"
+import listUserProfilesStartingWith from "../../../composables/api/users-list/listUserProfilesStartingWith"
 
-const patientsList = ref([]);
+const patientsList = ref([])
 
-const patientsListIsLoaded = ref(false);
-const nextPageStartsAtUid = ref(null);
-const pageNumber = ref(1);
-const pageSize = 5;
+const patientsListIsLoaded = ref(false)
+const nextPageStartsAtUid = ref(null)
+const pageNumber = ref(1)
+const pageSize = 5
 
 onMounted(async () => {
-  patientsList.value = await listUserProfiles();
+  patientsList.value = await listUserProfiles()
 
   if (patientsList.value.nextValueUid)
-    nextPageStartsAtUid.value = patientsList.value.nextValueUid;
+    nextPageStartsAtUid.value = patientsList.value.nextValueUid
 
-  patientsListIsLoaded.value = true;
-});
+  patientsListIsLoaded.value = true
+})
 
 const visiblePatientsList = computed(() => {
   const result = patientsList.value.users.slice(
     (pageNumber.value - 1) * pageSize,
     (pageNumber.value - 1) * pageSize + pageSize
-  );
-  return result;
-});
+  )
+  return result
+})
 
 const onNextPage = async () => {
   patientsList.value.users = patientsList.value.users.slice(
     0,
     (pageNumber.value - 1) * pageSize + pageSize
-  );
+  )
 
-  const newItems = await listUserProfilesStartingWith(
-    nextPageStartsAtUid.value
-  );
-  patientsList.value.users = [...patientsList.value.users, ...newItems.users];
+  const newItems = await listUserProfilesStartingWith(nextPageStartsAtUid.value)
+  patientsList.value.users = [...patientsList.value.users, ...newItems.users]
 
   if (newItems.nextValueUid) {
-    nextPageStartsAtUid.value = newItems.nextValueUid;
-  } else nextPageStartsAtUid.value = null;
+    nextPageStartsAtUid.value = newItems.nextValueUid
+  } else nextPageStartsAtUid.value = null
 
-  pageNumber.value++;
-};
+  pageNumber.value++
+}
 
 const onPrevPage = async () => {
-  nextPageStartsAtUid.value = visiblePatientsList.value[0].uid;
-  pageNumber.value--;
-};
+  nextPageStartsAtUid.value = visiblePatientsList.value[0].uid
+  pageNumber.value--
+}
 </script>
 
 <template>

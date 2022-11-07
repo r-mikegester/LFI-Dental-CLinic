@@ -11,8 +11,8 @@ const monthNames = [
   "October",
   "November",
   "December",
-];
+]
 
 export default (monthIndex) => {
-  return monthNames[monthIndex];
-};
+  return monthNames[monthIndex]
+}

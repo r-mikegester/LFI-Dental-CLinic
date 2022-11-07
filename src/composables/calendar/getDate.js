@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime } from "luxon"
 
 export default (year, month, date) => {
   const isoDateStr = DateTime.fromObject(
@@ -10,6 +10,6 @@ export default (year, month, date) => {
     {
       timezone: "Asia/Manila",
     }
-  ).toISO();
-  return new Date(isoDateStr);
-};
+  ).toISO()
+  return new Date(isoDateStr)
+}

@@ -1,13 +1,13 @@
-import "../../firebase";
-import { getAuth } from "firebase/auth";
+import "../../firebase"
+import { getAuth } from "firebase/auth"
 
-const auth = getAuth();
+const auth = getAuth()
 
 export default async () => {
-  const currentUser = auth.currentUser;
+  const currentUser = auth.currentUser
   if (!currentUser) {
     return {
       name: "Patient Login Page",
-    };
+    }
   }
-};
+}

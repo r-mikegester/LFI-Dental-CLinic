@@ -1,7 +1,7 @@
-import { DateTime } from "luxon";
+import { DateTime } from "luxon"
 
 export default () => {
-  const date = new Date();
+  const date = new Date()
   const isoDateStrTomorrow = DateTime.fromObject({
     year: parseInt(
       date.toLocaleString("en-us", {
@@ -22,6 +22,6 @@ export default () => {
           day: "numeric",
         })
       ) + 1,
-  }).toISO();
-  return new Date(isoDateStrTomorrow);
-};
+  }).toISO()
+  return new Date(isoDateStrTomorrow)
+}

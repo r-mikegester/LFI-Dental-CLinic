@@ -1,6 +1,6 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue";
-import { DateTime } from "luxon";
+import { computed, onMounted, reactive, ref } from "vue"
+import { DateTime } from "luxon"
 
 const props = defineProps({
   patientUid: {
@@ -10,41 +10,41 @@ const props = defineProps({
   personalInformation: Object,
   medicalHistory: Object,
   dentalHistory: Object,
-});
+})
 
 onMounted(() => {
   if (props.personalInformation) {
     Object.keys(personalInformation).forEach((property) => {
-      personalInformation[property] = props.personalInformation[property];
-    });
+      personalInformation[property] = props.personalInformation[property]
+    })
   }
 
   if (props.medicalHistory) {
     Object.keys(medicalHistory).forEach((property) => {
-      medicalHistory[property] = props.medicalHistory[property];
-    });
+      medicalHistory[property] = props.medicalHistory[property]
+    })
 
     if (medicalHistory.heartAilmentDisease !== "")
-      heartAilmentDiseaseIsEnabled.value = true;
+      heartAilmentDiseaseIsEnabled.value = true
     if (medicalHistory.hospitalAdmission !== "")
-      hospitalAdmissionIsEnabled.value = true;
+      hospitalAdmissionIsEnabled.value = true
     if (medicalHistory.selfMedication !== "")
-      selfMedicationIsEnabled.value = true;
-    if (medicalHistory.allergies !== "") allergiesIsEnabled.value = true;
-    if (medicalHistory.operation !== "") operationIsEnabled.value = true;
-    if (medicalHistory.tumors !== "") tumorsGrowthIsEnabled.value = true;
-    if (medicalHistory.pregnant !== "") pregnantIsEnabled.value = true;
+      selfMedicationIsEnabled.value = true
+    if (medicalHistory.allergies !== "") allergiesIsEnabled.value = true
+    if (medicalHistory.operation !== "") operationIsEnabled.value = true
+    if (medicalHistory.tumors !== "") tumorsGrowthIsEnabled.value = true
+    if (medicalHistory.pregnant !== "") pregnantIsEnabled.value = true
   }
 
   if (props.dentalHistory) {
     Object.keys(dentalHistory).forEach((property) => {
-      dentalHistory[property] = props.dentalHistory[property];
-    });
+      dentalHistory[property] = props.dentalHistory[property]
+    })
 
     if (dentalHistory.pastDentalCare !== "")
-      pastDentalCareIsEnabled.value = true;
+      pastDentalCareIsEnabled.value = true
   }
-});
+})
 
 const personalInformation = reactive({
   fullName: "",
@@ -53,9 +53,9 @@ const personalInformation = reactive({
   maritalStatus: "",
   mobileNo: "",
   telephoneNo: "",
-});
+})
 const getAgeFromBirthdate = computed(() => {
-  if (!personalInformation.birthDate) return "N/A";
+  if (!personalInformation.birthDate) return "N/A"
 
   const duration = DateTime.fromFormat(
     personalInformation.birthDate,
@@ -63,11 +63,11 @@ const getAgeFromBirthdate = computed(() => {
     {
       zone: "Asia/Manila",
     }
-  ).diffNow("years").years;
-  const dropSign = Math.abs(duration);
-  const dropDecimals = Math.trunc(dropSign);
-  return dropDecimals;
-});
+  ).diffNow("years").years
+  const dropSign = Math.abs(duration)
+  const dropDecimals = Math.trunc(dropSign)
+  return dropDecimals
+})
 
 const medicalHistory = reactive({
   heartAilmentDisease: "",
@@ -88,75 +88,75 @@ const medicalHistory = reactive({
   kidneyDisease: false,
   pregnant: "",
   familyHistory: "",
-});
+})
 
-const medicalHistoryIsDisabled = ref(false);
+const medicalHistoryIsDisabled = ref(false)
 const onClearMedicalHistory = () => {
   if (medicalHistoryIsDisabled.value) {
-    medicalHistory.heartAilmentDisease = "";
-    medicalHistory.hospitalAdmission = "";
-    medicalHistory.selfMedication = "";
-    medicalHistory.allergies = "";
-    medicalHistory.operation = "";
-    medicalHistory.tumors = "";
-    medicalHistory.diabetes = false;
-    medicalHistory.sinusitis = false;
-    medicalHistory.bleedingGums = false;
-    medicalHistory.hypertension = false;
-    medicalHistory.stomachDisease = false;
-    medicalHistory.bloodDisease = false;
-    medicalHistory.headache = false;
-    medicalHistory.liverDisease = false;
-    medicalHistory.cold = false;
-    medicalHistory.kidneyDisease = false;
-    medicalHistory.pregnant = "";
-    medicalHistory.familyHistory = "";
+    medicalHistory.heartAilmentDisease = ""
+    medicalHistory.hospitalAdmission = ""
+    medicalHistory.selfMedication = ""
+    medicalHistory.allergies = ""
+    medicalHistory.operation = ""
+    medicalHistory.tumors = ""
+    medicalHistory.diabetes = false
+    medicalHistory.sinusitis = false
+    medicalHistory.bleedingGums = false
+    medicalHistory.hypertension = false
+    medicalHistory.stomachDisease = false
+    medicalHistory.bloodDisease = false
+    medicalHistory.headache = false
+    medicalHistory.liverDisease = false
+    medicalHistory.cold = false
+    medicalHistory.kidneyDisease = false
+    medicalHistory.pregnant = ""
+    medicalHistory.familyHistory = ""
 
-    heartAilmentDiseaseIsEnabled.value = false;
-    hospitalAdmissionIsEnabled.value = false;
-    selfMedicationIsEnabled.value = false;
-    allergiesIsEnabled.value = false;
-    operationIsEnabled.value = false;
-    tumorsGrowthIsEnabled.value = false;
-    pregnantIsEnabled.value = false;
+    heartAilmentDiseaseIsEnabled.value = false
+    hospitalAdmissionIsEnabled.value = false
+    selfMedicationIsEnabled.value = false
+    allergiesIsEnabled.value = false
+    operationIsEnabled.value = false
+    tumorsGrowthIsEnabled.value = false
+    pregnantIsEnabled.value = false
   }
-};
+}
 
-const heartAilmentDiseaseIsEnabled = ref(false);
+const heartAilmentDiseaseIsEnabled = ref(false)
 const onChangeHeartAilmentDisease = () => {
   if (!heartAilmentDiseaseIsEnabled.value)
-    medicalHistory.heartAilmentDisease = "";
-};
+    medicalHistory.heartAilmentDisease = ""
+}
 
-const hospitalAdmissionIsEnabled = ref(false);
+const hospitalAdmissionIsEnabled = ref(false)
 const onChangeHospitalAdmission = () => {
-  if (!hospitalAdmissionIsEnabled.value) medicalHistory.hospitalAdmission = "";
-};
+  if (!hospitalAdmissionIsEnabled.value) medicalHistory.hospitalAdmission = ""
+}
 
-const selfMedicationIsEnabled = ref(false);
+const selfMedicationIsEnabled = ref(false)
 const onChangeSelfMedication = () => {
-  if (!selfMedicationIsEnabled.value) medicalHistory.selfMedication = "";
-};
+  if (!selfMedicationIsEnabled.value) medicalHistory.selfMedication = ""
+}
 
-const allergiesIsEnabled = ref(false);
+const allergiesIsEnabled = ref(false)
 const onChangeAllergies = () => {
-  if (!allergiesIsEnabled.value) medicalHistory.allergies = "";
-};
+  if (!allergiesIsEnabled.value) medicalHistory.allergies = ""
+}
 
-const operationIsEnabled = ref(false);
+const operationIsEnabled = ref(false)
 const onChangeOperation = () => {
-  if (!operationIsEnabled.value) medicalHistory.operation = "";
-};
+  if (!operationIsEnabled.value) medicalHistory.operation = ""
+}
 
-const tumorsGrowthIsEnabled = ref(false);
+const tumorsGrowthIsEnabled = ref(false)
 const onChangeTumorsGrowth = () => {
-  if (!tumorsGrowthIsEnabled.value) medicalHistory.tumors = "";
-};
+  if (!tumorsGrowthIsEnabled.value) medicalHistory.tumors = ""
+}
 
-const pregnantIsEnabled = ref(false);
+const pregnantIsEnabled = ref(false)
 const onChangePregnant = () => {
-  if (!pregnantIsEnabled.value) medicalHistory.pregnant = "";
-};
+  if (!pregnantIsEnabled.value) medicalHistory.pregnant = ""
+}
 
 const dentalHistory = reactive({
   bleedingInMouth: false,
@@ -168,29 +168,29 @@ const dentalHistory = reactive({
   lumpsInMouth: false,
   clickingSoundInMouth: false,
   pastDentalCare: "",
-});
+})
 
-const dentalHistoryIsDisabled = ref(false);
+const dentalHistoryIsDisabled = ref(false)
 const onClearDentalHistory = () => {
   if (dentalHistoryIsDisabled.value) {
-    dentalHistory.bleedingInMouth = false;
-    dentalHistory.gumsChangeColor = false;
-    dentalHistory.sensitiveTeeth = false;
-    dentalHistory.badBreath = false;
-    dentalHistory.palate = false;
-    dentalHistory.teethChangeColor = false;
-    dentalHistory.lumpsInMouth = false;
-    dentalHistory.clickingSoundInMouth = false;
-    dentalHistory.pastDentalCare = "";
+    dentalHistory.bleedingInMouth = false
+    dentalHistory.gumsChangeColor = false
+    dentalHistory.sensitiveTeeth = false
+    dentalHistory.badBreath = false
+    dentalHistory.palate = false
+    dentalHistory.teethChangeColor = false
+    dentalHistory.lumpsInMouth = false
+    dentalHistory.clickingSoundInMouth = false
+    dentalHistory.pastDentalCare = ""
 
-    pastDentalCareIsEnabled.value = false;
-  } else dentalHistoryIsDisabled.value = false;
-};
+    pastDentalCareIsEnabled.value = false
+  } else dentalHistoryIsDisabled.value = false
+}
 
-const pastDentalCareIsEnabled = ref(false);
+const pastDentalCareIsEnabled = ref(false)
 const onChangePastDentalCare = () => {
-  if (!pastDentalCareIsEnabled.value) dentalHistory.pastDentalCare = "";
-};
+  if (!pastDentalCareIsEnabled.value) dentalHistory.pastDentalCare = ""
+}
 </script>
 
 <template>

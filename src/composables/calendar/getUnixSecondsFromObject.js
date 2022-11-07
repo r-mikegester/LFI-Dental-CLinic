@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime } from "luxon"
 
 export default (day, month, year, hours, minutes) => {
   const dateStringISO = DateTime.fromObject(
@@ -15,7 +15,7 @@ export default (day, month, year, hours, minutes) => {
       // system supports UTC+8 only
       zone: "Asia/Manila",
     }
-  ).toISO();
+  ).toISO()
 
-  return new Date(dateStringISO).getTime() / 1000;
-};
+  return new Date(dateStringISO).getTime() / 1000
+}

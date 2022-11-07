@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import getUnavailableSlots from "../composables/api/getUnavailableSlots";
-import getMonthIndex from "../composables/calendar/getMonthIndex";
-import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth";
-import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth";
+import { defineStore } from "pinia"
+import getUnavailableSlots from "../composables/api/getUnavailableSlots"
+import getMonthIndex from "../composables/calendar/getMonthIndex"
+import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth"
+import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth"
 
 export const useSetAppointmentCalendarStore = defineStore({
   id: "setAppointmentCalendar",
@@ -20,34 +20,34 @@ export const useSetAppointmentCalendarStore = defineStore({
   },
   actions: {
     async loadCurrentMonth() {
-      const currDate = new Date();
+      const currDate = new Date()
 
       // Make sure we are getting the current month
       // from UTC+8 (Asia/Manila).
       const monthName = currDate.toLocaleString("en-US", {
         timeZone: "Asia/Manila",
         month: "long",
-      });
+      })
 
       // Make sure we are getting the current year
       // from UTC+8 (Asia/Manila).
       const year = currDate.toLocaleString("en-US", {
         timeZone: "Asia/Manila",
         year: "numeric",
-      });
+      })
 
-      await this.setMonthAndYear(monthName, year);
+      await this.setMonthAndYear(monthName, year)
     },
     async setMonthAndYear(monthName, year) {
-      this.month = monthName;
-      this.year = year;
-      this.dayCount = getNumOfDaysInMonth(monthName, year);
-      this.offset = getOffsetFromFirstDayOfMonth(monthName, year);
+      this.month = monthName
+      this.year = year
+      this.dayCount = getNumOfDaysInMonth(monthName, year)
+      this.offset = getOffsetFromFirstDayOfMonth(monthName, year)
 
       this.unavailableSlots = await getUnavailableSlots(
         year,
         getMonthIndex(monthName) + 1
-      );
+      )
     },
   },
-});
+})

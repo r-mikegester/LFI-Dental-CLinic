@@ -1,34 +1,34 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import { useRoute } from "vue-router";
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot";
-import setAppointmentPayment from "../../composables/firestore/setAppointmentPayment";
-import CheckIcon from "../icons/CheckIcon.vue";
-import PencilIcon from "../icons/PencilIcon.vue";
+import { onMounted, reactive, ref } from "vue"
+import { useRoute } from "vue-router"
+import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
+import setAppointmentPayment from "../../composables/firestore/setAppointmentPayment"
+import CheckIcon from "../icons/CheckIcon.vue"
+import PencilIcon from "../icons/PencilIcon.vue"
 
-const route = useRoute();
-const patientUid = route.params.uid;
+const route = useRoute()
+const patientUid = route.params.uid
 const props = defineProps({
   appointment: Object,
-});
+})
 
-const isEditing = ref(false);
+const isEditing = ref(false)
 
 const appointmentPayment = reactive({
   price: 0,
   balance: 0,
   status: null,
-});
+})
 
 onMounted(async () => {
-  appointmentPayment.price = props.appointment.price;
-  appointmentPayment.balance = props.appointment.balance;
-  appointmentPayment.status = props.appointment.status;
-});
+  appointmentPayment.price = props.appointment.price
+  appointmentPayment.balance = props.appointment.balance
+  appointmentPayment.status = props.appointment.status
+})
 
 const onEdit = () => {
-  isEditing.value = true;
-};
+  isEditing.value = true
+}
 
 const onSave = async () => {
   await setAppointmentPayment(
@@ -37,9 +37,9 @@ const onSave = async () => {
     appointmentPayment.price,
     appointmentPayment.balance,
     appointmentPayment.status
-  );
-  isEditing.value = false;
-};
+  )
+  isEditing.value = false
+}
 </script>
 
 <template>

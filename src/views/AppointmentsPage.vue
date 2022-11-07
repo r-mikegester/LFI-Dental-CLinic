@@ -1,7 +1,7 @@
 <script setup>
-import BaseLayout from "../components/patient/BaseLayout.vue";
-import HeroSection from "../components/patient/HeroSection.vue";
-import { RouterView } from "vue-router";
+import BaseLayout from "../components/patient/BaseLayout.vue"
+import HeroSection from "../components/patient/HeroSection.vue"
+import { RouterView } from "vue-router"
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 <script setup>
-import { getAuth } from "firebase/auth";
-import BaseLayout from "../../components/patient/BaseLayout.vue";
-import HeroSection from "../../components/patient/HeroSection.vue";
-import getUserAppointments from "../../composables/firestore/listeners/listenToUserAppointments";
-import MyHistoryPageAppointmentItem from "../../components/patient/MyHistoryPageAppointmentItem.vue";
+import { getAuth } from "firebase/auth"
+import BaseLayout from "../../components/patient/BaseLayout.vue"
+import HeroSection from "../../components/patient/HeroSection.vue"
+import getUserAppointments from "../../composables/firestore/listeners/listenToUserAppointments"
+import MyHistoryPageAppointmentItem from "../../components/patient/MyHistoryPageAppointmentItem.vue"
 
-const auth = getAuth();
-const patientUid = auth.currentUser.uid;
-const userAppointments = getUserAppointments(patientUid);
+const auth = getAuth()
+const patientUid = auth.currentUser.uid
+const userAppointments = getUserAppointments(patientUid)
 </script>
 <template>
   <BaseLayout>

@@ -4,5 +4,5 @@ export default (timeslot) => {
     day: "numeric",
     year: "numeric",
     timeZone: "Asia/Manila",
-  });
-};
+  })
+}

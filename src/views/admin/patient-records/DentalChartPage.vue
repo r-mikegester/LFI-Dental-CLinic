@@ -1,48 +1,48 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue";
-import { RouterLink, useRoute } from "vue-router";
-import BaseLayout from "../../../components/admin/BaseLayout.vue";
-import DentalChart from "../../../components/admin/DentalChart.vue";
-import DeciduousChart from "../../../components/admin/DeciduousChart.vue";
-import getAssessmentForm from "../../../composables/firestore/assessment-form/getAssessmentForm";
-import setAssessmentForm from "../../../composables/firestore/assessment-form/setAssessmentForm";
-import getConsentForm from "../../../composables/firestore/consent-form/getConsentForm";
-import setConsentForm from "../../../composables/firestore/consent-form/setConsentForm";
-import getMonthName from "../../../composables/calendar/getMonthName";
-import PatientSignatureField from "../../../components/admin/PatientSignatureField.vue";
-import GuardianSignatureField from "../../../components/admin/GuardianSignatureField.vue";
+import { computed, onMounted, reactive, ref } from "vue"
+import { RouterLink, useRoute } from "vue-router"
+import BaseLayout from "../../../components/admin/BaseLayout.vue"
+import DentalChart from "../../../components/admin/DentalChart.vue"
+import DeciduousChart from "../../../components/admin/DeciduousChart.vue"
+import getAssessmentForm from "../../../composables/firestore/assessment-form/getAssessmentForm"
+import setAssessmentForm from "../../../composables/firestore/assessment-form/setAssessmentForm"
+import getConsentForm from "../../../composables/firestore/consent-form/getConsentForm"
+import setConsentForm from "../../../composables/firestore/consent-form/setConsentForm"
+import getMonthName from "../../../composables/calendar/getMonthName"
+import PatientSignatureField from "../../../components/admin/PatientSignatureField.vue"
+import GuardianSignatureField from "../../../components/admin/GuardianSignatureField.vue"
 
-const route = useRoute();
-const patientUid = route.params.uid;
+const route = useRoute()
+const patientUid = route.params.uid
 
-const strokeColor = ref("#EF4444");
+const strokeColor = ref("#EF4444")
 const setStrokeColor = (selected) => {
   switch (selected) {
     case "restoration":
-      strokeColor.value = "#3B82F6";
-      break;
+      strokeColor.value = "#3B82F6"
+      break
     case "rootCanal":
-      strokeColor.value = "#22C55E";
-      break;
+      strokeColor.value = "#22C55E"
+      break
     case "extraction":
-      strokeColor.value = "#EF4444";
-      break;
+      strokeColor.value = "#EF4444"
+      break
     case "missing":
-      strokeColor.value = "#9CA3AF";
-      break;
+      strokeColor.value = "#9CA3AF"
+      break
     case "jacket":
-      strokeColor.value = "#FDE047";
-      break;
+      strokeColor.value = "#FDE047"
+      break
     case "pontic":
-      strokeColor.value = "#FB923C";
-      break;
+      strokeColor.value = "#FB923C"
+      break
   }
 
   Object.keys(isSelected).forEach((property) => {
-    isSelected[property] = false;
-  });
-  isSelected[selected] = true;
-};
+    isSelected[property] = false
+  })
+  isSelected[selected] = true
+}
 
 const isSelected = reactive({
   restoration: false,
@@ -51,31 +51,31 @@ const isSelected = reactive({
   missing: false,
   jacket: false,
   pontic: false,
-});
+})
 
 const assessmentForm = reactive({
   patientsComplaint: "",
   diagnosis: "",
   treatmentPlan: "",
-});
+})
 
 onMounted(async () => {
-  const retrievedAssessmentForm = await getAssessmentForm(patientUid);
+  const retrievedAssessmentForm = await getAssessmentForm(patientUid)
   if (retrievedAssessmentForm) {
     const { patientsComplaint, diagnosis, treatmentPlan } =
-      retrievedAssessmentForm;
+      retrievedAssessmentForm
 
-    assessmentForm.patientsComplaint = patientsComplaint ?? "";
-    assessmentForm.diagnosis = diagnosis ?? "";
-    assessmentForm.treatmentPlan = treatmentPlan ?? "";
+    assessmentForm.patientsComplaint = patientsComplaint ?? ""
+    assessmentForm.diagnosis = diagnosis ?? ""
+    assessmentForm.treatmentPlan = treatmentPlan ?? ""
   }
-});
+})
 
-const isEditingAssessmentForm = ref(false);
+const isEditingAssessmentForm = ref(false)
 const onSaveAssessmentForm = async () => {
-  await setAssessmentForm(patientUid, assessmentForm);
-  isEditingAssessmentForm.value = false;
-};
+  await setAssessmentForm(patientUid, assessmentForm)
+  isEditingAssessmentForm.value = false
+}
 
 const consentForm = reactive({
   patientName: "",
@@ -87,38 +87,38 @@ const consentForm = reactive({
   },
   dentistName: "",
   dateSigned: "",
-});
+})
 
 onMounted(async () => {
-  const retrievedConsentForm = await getConsentForm(patientUid);
+  const retrievedConsentForm = await getConsentForm(patientUid)
   if (retrievedConsentForm) {
     const { patientName, checked, dentistName, dateSigned } =
-      retrievedConsentForm;
+      retrievedConsentForm
 
-    consentForm.patientName = patientName ?? "";
-    consentForm.checked.myself = checked.myself ?? false;
-    consentForm.checked.son = checked.son ?? false;
-    consentForm.checked.daughter = checked.daughter ?? false;
-    consentForm.checked.relative = checked.relative ?? false;
-    consentForm.dentistName = dentistName ?? "";
-    consentForm.dateSigned = dateSigned ?? "";
+    consentForm.patientName = patientName ?? ""
+    consentForm.checked.myself = checked.myself ?? false
+    consentForm.checked.son = checked.son ?? false
+    consentForm.checked.daughter = checked.daughter ?? false
+    consentForm.checked.relative = checked.relative ?? false
+    consentForm.dentistName = dentistName ?? ""
+    consentForm.dateSigned = dateSigned ?? ""
   }
-});
+})
 
-const isEditingConsentForm = ref(false);
+const isEditingConsentForm = ref(false)
 const onSaveConsentForm = async () => {
-  await setConsentForm(patientUid, consentForm);
-  isEditingConsentForm.value = false;
-};
+  await setConsentForm(patientUid, consentForm)
+  isEditingConsentForm.value = false
+}
 
 const formattedDate = computed(() => {
   if (consentForm.dateSigned) {
-    const [year, month, day] = consentForm.dateSigned.split("-");
-    const monthName = getMonthName(parseInt(month) - 1);
-    return `${monthName} ${day}, ${year}`;
+    const [year, month, day] = consentForm.dateSigned.split("-")
+    const monthName = getMonthName(parseInt(month) - 1)
+    return `${monthName} ${day}, ${year}`
   }
-  return "";
-});
+  return ""
+})
 </script>
 
 <template>

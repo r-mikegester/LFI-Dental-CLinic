@@ -1,29 +1,29 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import Footer from "../../components/admin/PageFooter.vue";
-import signIn from "../../composables/auth/signIn";
-import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue";
+import { computed, reactive, ref } from "vue"
+import { useRouter } from "vue-router"
+import Footer from "../../components/admin/PageFooter.vue"
+import signIn from "../../composables/auth/signIn"
+import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue"
 
 const userCredentials = reactive({
   email: "",
   password: "",
-});
+})
 
 const isLoginButtonDisabled = computed(() => {
-  if (userCredentials.email === "") return true;
-  if (userCredentials.password === "") return true;
+  if (userCredentials.email === "") return true
+  if (userCredentials.password === "") return true
   if (userCredentials.password && userCredentials.password.length < 8)
-    return true;
-  return false;
-});
+    return true
+  return false
+})
 
-const router = useRouter();
+const router = useRouter()
 const onLogin = async () => {
   try {
     if (!isLoginButtonDisabled.value) {
-      await signIn(userCredentials.email, userCredentials.password);
-      router.push({ name: "Admin Home Page" });
+      await signIn(userCredentials.email, userCredentials.password)
+      router.push({ name: "Admin Home Page" })
     }
   } catch (e) {
     switch (e.code) {
@@ -31,18 +31,18 @@ const onLogin = async () => {
       case "auth/wrong-password":
       case "auth/user-not-found":
         errorDialogBody.value =
-          "You have entered an incorrect email or password.";
-        isErrorDialogVisible.value = true;
-        break;
+          "You have entered an incorrect email or password."
+        isErrorDialogVisible.value = true
+        break
       default:
-        errorDialogBody.value = `An unknown error occured. Code: ${e.code}`;
-        isErrorDialogVisible.value = true;
+        errorDialogBody.value = `An unknown error occured. Code: ${e.code}`
+        isErrorDialogVisible.value = true
     }
   }
-};
+}
 
-const isErrorDialogVisible = ref(false);
-const errorDialogBody = ref("");
+const isErrorDialogVisible = ref(false)
+const errorDialogBody = ref("")
 </script>
 
 <template>

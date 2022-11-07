@@ -1,91 +1,91 @@
 <script setup>
-import { nextTick, onMounted, reactive, ref } from "vue";
-import BaseLayout from "../../components/admin/BaseLayout.vue";
-import CalendarWidget from "../../components/admin/CalendarWidget.vue";
-import ScheduleCalendarItem from "../../components/admin/ScheduleCalendarItem.vue";
-import { useScheduleCalendarStore } from "../../stores/scheduleCalendar";
-import TimeslotsWidget from "../../components/admin/TimeslotsWidget.vue";
-import SchedulesPageTimeslotsItem from "../../components/admin/SchedulesPageTimeslotsItem.vue";
+import { nextTick, onMounted, reactive, ref } from "vue"
+import BaseLayout from "../../components/admin/BaseLayout.vue"
+import CalendarWidget from "../../components/admin/CalendarWidget.vue"
+import ScheduleCalendarItem from "../../components/admin/ScheduleCalendarItem.vue"
+import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
+import TimeslotsWidget from "../../components/admin/TimeslotsWidget.vue"
+import SchedulesPageTimeslotsItem from "../../components/admin/SchedulesPageTimeslotsItem.vue"
 
 const selected = reactive({
   month: "",
   year: "",
   date: "",
-});
+})
 
-const scheduleCalendar = useScheduleCalendarStore();
-const isFinishLoading = ref(false);
+const scheduleCalendar = useScheduleCalendarStore()
+const isFinishLoading = ref(false)
 
 onMounted(async () => {
-  const currDate = new Date();
+  const currDate = new Date()
 
   // Make sure we are getting the current month
   // from UTC+8 (Asia/Manila).
   selected.month = currDate.toLocaleString("en-US", {
     timeZone: "Asia/Manila",
     month: "long",
-  });
+  })
 
   // Make sure we are getting the current year
   // from UTC+8 (Asia/Manila).
   selected.year = currDate.toLocaleString("en-US", {
     timeZone: "Asia/Manila",
     year: "numeric",
-  });
+  })
 
   // Set new month and year in the store,
   // then build the list of calendar items
   // with everything unselected.
-  await scheduleCalendar.setMonthAndYear(selected.month, selected.year);
+  await scheduleCalendar.setMonthAndYear(selected.month, selected.year)
   for (const n of Array(scheduleCalendar.getDayCount).keys()) {
     calendarItems.value.push({
       date: n + 1,
       selected: false,
-    });
+    })
   }
 
   // Make sure setMonthAndYear is finished before we show the page.
-  await nextTick();
-  isFinishLoading.value = true;
-});
+  await nextTick()
+  isFinishLoading.value = true
+})
 
 const onChangeMonthOrYear = async () => {
   // Hide the calendar temporarily.
-  isFinishLoading.value = false;
+  isFinishLoading.value = false
 
   // Set new month in the store.
-  await scheduleCalendar.setMonthAndYear(selected.month, selected.year);
+  await scheduleCalendar.setMonthAndYear(selected.month, selected.year)
 
   // Reset calendar items, then build
   // a new list of calendar items with all
   // items unselected.
-  calendarItems.value = [];
+  calendarItems.value = []
   for (const n of Array(scheduleCalendar.getDayCount).keys()) {
     calendarItems.value.push({
       date: n + 1,
       selected: false,
-    });
+    })
   }
 
   // Wait for all request to flush,
   // then show the calendar again.
-  await nextTick();
-  isFinishLoading.value = true;
-};
+  await nextTick()
+  isFinishLoading.value = true
+}
 
 // Create list of calendar items, with click state managed by parent.
-const calendarItems = ref([]);
+const calendarItems = ref([])
 
 const onCalendarItemSelected = (selectedCalendarItem) => {
   // Iterate through the list of calendar items, and mark
   // the selected item as selected = true. Everything else
   // is marked selected = false.
-  selected.date = selectedCalendarItem.date;
+  selected.date = selectedCalendarItem.date
   calendarItems.value = calendarItems.value.map((calendarItem) => ({
     ...calendarItem,
     selected: calendarItem === selectedCalendarItem ? true : false,
-  }));
-};
+  }))
+}
 </script>
 
 <template>

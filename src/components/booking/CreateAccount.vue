@@ -1,34 +1,34 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
-import signIn from "../../composables/auth/signIn";
-import signUpWithEmailAndPassword from "../../composables/auth/signUpWithEmailAndPassword";
-import BoxDialog from "../dialogs/BoxDialog.vue";
+import { computed, reactive, ref } from "vue"
+import signIn from "../../composables/auth/signIn"
+import signUpWithEmailAndPassword from "../../composables/auth/signUpWithEmailAndPassword"
+import BoxDialog from "../dialogs/BoxDialog.vue"
 
-const isSuccessModalVisible = ref(false);
+const isSuccessModalVisible = ref(false)
 
 const accountInformation = reactive({
   fullName: "",
   email: "",
   password: "",
   retypePassword: "",
-});
+})
 
 // validation for above information.
 const isAccountInformationValid = computed(() => {
-  if (accountInformation.fullName === "") return false;
-  if (accountInformation.email === "") return false;
-  if (accountInformation.password === "") return false;
+  if (accountInformation.fullName === "") return false
+  if (accountInformation.email === "") return false
+  if (accountInformation.password === "") return false
   if (accountInformation.password && accountInformation.password.length < 8)
-    return false;
-  if (accountInformation.retypePassword === "") return false;
+    return false
+  if (accountInformation.retypePassword === "") return false
   if (
     accountInformation.retypePassword &&
     accountInformation.retypePassword !== accountInformation.password
   )
-    return false;
+    return false
 
-  return true;
-});
+  return true
+})
 
 const onCreate = async () => {
   try {
@@ -37,22 +37,22 @@ const onCreate = async () => {
         accountInformation.email,
         accountInformation.password,
         accountInformation.fullName
-      );
+      )
 
-      await signIn(accountInformation.email, accountInformation.password);
-      isSuccessModalVisible.value = true;
+      await signIn(accountInformation.email, accountInformation.password)
+      isSuccessModalVisible.value = true
     }
   } catch (e) {
-    const errorStr = e.message.split(": ")[e.message.split(": ").length - 1];
+    const errorStr = e.message.split(": ")[e.message.split(": ").length - 1]
     switch (errorStr) {
       case "Email already exists":
-        isErrorDialogVisible.value = true;
-        break;
+        isErrorDialogVisible.value = true
+        break
     }
   }
-};
+}
 
-const isErrorDialogVisible = ref(false);
+const isErrorDialogVisible = ref(false)
 </script>
 
 <template>

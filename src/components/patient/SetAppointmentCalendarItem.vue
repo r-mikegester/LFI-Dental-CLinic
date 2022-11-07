@@ -1,9 +1,9 @@
 <script setup>
-import { computed, ref, watchEffect } from "vue";
-import { DateTime } from "luxon";
-import getMonthIndex from "../../composables/calendar/getMonthIndex";
-import getTimeslots from "../../composables/calendar/getTimeslots";
-import getDateTomorrow from "../../composables/calendar/getDateTomorrow";
+import { computed, ref, watchEffect } from "vue"
+import { DateTime } from "luxon"
+import getMonthIndex from "../../composables/calendar/getMonthIndex"
+import getTimeslots from "../../composables/calendar/getTimeslots"
+import getDateTomorrow from "../../composables/calendar/getDateTomorrow"
 
 const props = defineProps({
   date: Number,
@@ -12,27 +12,27 @@ const props = defineProps({
   isSelected: Boolean,
   closedSlotCount: Number,
   takenSlotCount: Number,
-});
+})
 
-const isEntireDayClosed = ref(false);
+const isEntireDayClosed = ref(false)
 
 const reservableSlotCount = computed(() => {
-  if (!props.closedSlotCount) return 0;
+  if (!props.closedSlotCount) return 0
 
-  return getTimeslots().length - props.closedSlotCount;
-});
+  return getTimeslots().length - props.closedSlotCount
+})
 const availableSlotCount = computed(() => {
-  if (!props.closedSlotCount) return 0;
+  if (!props.closedSlotCount) return 0
 
-  return reservableSlotCount.value - props.takenSlotCount;
-});
-const isSlotFull = ref(false);
+  return reservableSlotCount.value - props.takenSlotCount
+})
+const isSlotFull = ref(false)
 
 watchEffect(() => {
-  isEntireDayClosed.value = false;
-  isSlotFull.value = false;
+  isEntireDayClosed.value = false
+  isSlotFull.value = false
 
-  const month = getMonthIndex(props.month) + 1;
+  const month = getMonthIndex(props.month) + 1
   const isoDateStrCurrent = DateTime.fromObject(
     {
       year: parseInt(props.year),
@@ -42,22 +42,22 @@ watchEffect(() => {
     {
       timezone: "Asia/Manila",
     }
-  ).toISO();
-  const dateCurrent = new Date(isoDateStrCurrent);
-  const dateTomorrow = getDateTomorrow();
+  ).toISO()
+  const dateCurrent = new Date(isoDateStrCurrent)
+  const dateTomorrow = getDateTomorrow()
   if (dateCurrent.getTime() < dateTomorrow.getTime()) {
-    isEntireDayClosed.value = true;
-    return;
+    isEntireDayClosed.value = true
+    return
   }
 
   if (props.closedSlotCount === getTimeslots().length) {
-    isEntireDayClosed.value = true;
-    return;
+    isEntireDayClosed.value = true
+    return
   }
 
   if (reservableSlotCount.value > 0 && availableSlotCount.value === 0)
-    isSlotFull.value = true;
-});
+    isSlotFull.value = true
+})
 </script>
 
 <template>

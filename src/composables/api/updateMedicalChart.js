@@ -1,7 +1,7 @@
-import getUserToken from "../auth/getUserToken";
-import backendBaseURL from "../api/backendBaseURL";
-import HttpError from "../helpers/HttpError";
-import ParameterError from "../helpers/ParameterError";
+import getUserToken from "../auth/getUserToken"
+import backendBaseURL from "../api/backendBaseURL"
+import HttpError from "../helpers/HttpError"
+import ParameterError from "../helpers/ParameterError"
 
 export default async (
   patientUid,
@@ -9,14 +9,14 @@ export default async (
   medicalHistory,
   dentalHistory
 ) => {
-  const idToken = await getUserToken();
+  const idToken = await getUserToken()
 
-  if (!patientUid) throw new ParameterError("patientUid");
-  if (!personalInformation) throw new ParameterError("personalInformation");
-  if (!medicalHistory) throw new ParameterError("medicalHistory");
-  if (!dentalHistory) throw new ParameterError("dentalHistory");
+  if (!patientUid) throw new ParameterError("patientUid")
+  if (!personalInformation) throw new ParameterError("personalInformation")
+  if (!medicalHistory) throw new ParameterError("medicalHistory")
+  if (!dentalHistory) throw new ParameterError("dentalHistory")
 
-  const link = `${backendBaseURL}/users/${patientUid}/charts/medical-chart`;
+  const link = `${backendBaseURL}/users/${patientUid}/charts/medical-chart`
   const response = await fetch(link, {
     method: "PATCH",
     headers: {
@@ -28,9 +28,9 @@ export default async (
       medicalHistory,
       dentalHistory,
     }),
-  });
-  const data = await response.json();
+  })
+  const data = await response.json()
 
-  if (!response.ok) throw new HttpError(response.status, data.message);
-  return data.payload;
-};
+  if (!response.ok) throw new HttpError(response.status, data.message)
+  return data.payload
+}

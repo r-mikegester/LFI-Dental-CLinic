@@ -1,10 +1,10 @@
 <script setup>
-import MenuIcon from "../icons/MenuIcon.vue";
-import { RouterLink } from "vue-router";
-import { ref } from "vue";
+import MenuIcon from "../icons/MenuIcon.vue"
+import { RouterLink } from "vue-router"
+import { ref } from "vue"
 
-const mobileNavbarIsVisible = ref(false);
-const dentalServicesMenuIsVisible = ref(false);
+const mobileNavbarIsVisible = ref(false)
+const dentalServicesMenuIsVisible = ref(false)
 </script>
 
 <template>

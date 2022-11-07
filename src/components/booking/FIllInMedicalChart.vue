@@ -1,51 +1,51 @@
 <script setup>
-import { ref } from "vue";
-import { useAppointmentDetailsStore } from "../../stores/appointmentDetails";
-import { getAuth } from "firebase/auth";
-import newAppointment from "../../composables/api/newAppointment";
-import MedicalChart from "../shared/MedicalChart.vue";
-import updateMedicalChart from "../../composables/api/updateMedicalChart";
-import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart";
-import BoxDialog from "../dialogs/BoxDialog.vue";
+import { ref } from "vue"
+import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
+import { getAuth } from "firebase/auth"
+import newAppointment from "../../composables/api/newAppointment"
+import MedicalChart from "../shared/MedicalChart.vue"
+import updateMedicalChart from "../../composables/api/updateMedicalChart"
+import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart"
+import BoxDialog from "../dialogs/BoxDialog.vue"
 
-const appointmentDetailsStore = useAppointmentDetailsStore();
-const auth = getAuth();
-const patientUid = auth.currentUser.uid;
+const appointmentDetailsStore = useAppointmentDetailsStore()
+const auth = getAuth()
+const patientUid = auth.currentUser.uid
 
 const isRequiredFieldsValid = (personalInformation) => {
-  if (personalInformation.fullName === "") return false;
-  if (personalInformation.gender === "") return false;
-  if (personalInformation.birthDate === "") return false;
-  if (personalInformation.maritalStatus === "") return false;
-  return true;
-};
+  if (personalInformation.fullName === "") return false
+  if (personalInformation.gender === "") return false
+  if (personalInformation.birthDate === "") return false
+  if (personalInformation.maritalStatus === "") return false
+  return true
+}
 
-const isSubmitDisabled = ref(false);
+const isSubmitDisabled = ref(false)
 
 const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
   if (isRequiredFieldsValid(personalInformation)) {
-    isSubmitDisabled.value = true;
+    isSubmitDisabled.value = true
     await updateMedicalChart(
       patientUid,
       personalInformation,
       medicalHistory,
       dentalHistory
-    );
+    )
 
-    await setFilledInMedicalChart(patientUid);
+    await setFilledInMedicalChart(patientUid)
 
     await newAppointment(
       patientUid,
       appointmentDetailsStore.getSlotSeconds,
       appointmentDetailsStore.getService
-    );
+    )
 
-    appointmentDetailsStore.$reset();
-    isSuccessModalVisible.value = true;
+    appointmentDetailsStore.$reset()
+    isSuccessModalVisible.value = true
   }
-};
+}
 
-const isSuccessModalVisible = ref(false);
+const isSuccessModalVisible = ref(false)
 </script>
 
 <template>

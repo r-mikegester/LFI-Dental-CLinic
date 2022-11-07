@@ -1,8 +1,8 @@
-import { doc, setDoc, getFirestore } from "@firebase/firestore";
+import { doc, setDoc, getFirestore } from "@firebase/firestore"
 
-const db = getFirestore();
+const db = getFirestore()
 export default async (message) => {
-  const docRef = doc(db, `reminders/reminders`);
+  const docRef = doc(db, `reminders/reminders`)
   await setDoc(
     docRef,
     {
@@ -11,5 +11,5 @@ export default async (message) => {
     {
       merge: true,
     }
-  );
-};
+  )
+}

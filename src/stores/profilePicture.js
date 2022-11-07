@@ -1,8 +1,8 @@
-import "../firebase";
-import { getAuth } from "@firebase/auth";
-import { defineStore } from "pinia";
-import getDownloadURL from "../composables/account/getDownloadURL";
-const auth = getAuth();
+import "../firebase"
+import { getAuth } from "@firebase/auth"
+import { defineStore } from "pinia"
+import getDownloadURL from "../composables/account/getDownloadURL"
+const auth = getAuth()
 
 export const useProfilePictureStore = defineStore({
   id: "profilePicture",
@@ -18,14 +18,12 @@ export const useProfilePictureStore = defineStore({
   },
   actions: {
     async initialize() {
-      const profilePictureURL = auth.currentUser.photoURL;
+      const profilePictureURL = auth.currentUser.photoURL
       if (profilePictureURL)
-        this.profilePictureDownloadURL = await getDownloadURL(
-          profilePictureURL
-        );
-      else this.profilePictureDownloadURL = "";
-      this.profilePictureURL = profilePictureURL;
-      this.initialized = true;
+        this.profilePictureDownloadURL = await getDownloadURL(profilePictureURL)
+      else this.profilePictureDownloadURL = ""
+      this.profilePictureURL = profilePictureURL
+      this.initialized = true
     },
   },
-});
+})

@@ -1,55 +1,55 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import { useRoute } from "vue-router";
-import BaseLayout from "../../../components/admin/BaseLayout.vue";
-import MedicalChart from "../../../components/shared/MedicalChart.vue";
-import getMedicalChart from "../../../composables/api/medical-chart/getMedicalChart";
-import updateMedicalChart from "../../../composables/api/updateMedicalChart";
+import { onMounted, reactive, ref } from "vue"
+import { useRoute } from "vue-router"
+import BaseLayout from "../../../components/admin/BaseLayout.vue"
+import MedicalChart from "../../../components/shared/MedicalChart.vue"
+import getMedicalChart from "../../../composables/api/medical-chart/getMedicalChart"
+import updateMedicalChart from "../../../composables/api/updateMedicalChart"
 
-const route = useRoute();
-const patientUid = route.params.uid;
+const route = useRoute()
+const patientUid = route.params.uid
 
-const medicalChartIsLoading = ref(false);
+const medicalChartIsLoading = ref(false)
 const medicalChart = reactive({
   personalInformation: null,
   medicalHistory: null,
   dentalHistory: null,
-});
+})
 
 onMounted(async () => {
   const { personalInformation, medicalHistory, dentalHistory } =
-    await getMedicalChart(patientUid);
+    await getMedicalChart(patientUid)
 
   if (personalInformation)
-    medicalChart.personalInformation = personalInformation;
-  if (medicalHistory) medicalChart.medicalHistory = medicalHistory;
-  if (dentalHistory) medicalChart.dentalHistory = dentalHistory;
-  medicalChartIsLoading.value = true;
-});
+    medicalChart.personalInformation = personalInformation
+  if (medicalHistory) medicalChart.medicalHistory = medicalHistory
+  if (dentalHistory) medicalChart.dentalHistory = dentalHistory
+  medicalChartIsLoading.value = true
+})
 
 /* Validation and submission */
 const isRequiredFieldsValid = (personalInformation) => {
-  if (personalInformation.fullName === "") return false;
-  if (personalInformation.gender === "") return false;
-  if (personalInformation.birthDate === "") return false;
-  if (personalInformation.maritalStatus === "") return false;
-  return true;
-};
+  if (personalInformation.fullName === "") return false
+  if (personalInformation.gender === "") return false
+  if (personalInformation.birthDate === "") return false
+  if (personalInformation.maritalStatus === "") return false
+  return true
+}
 
-const isSubmitDisabled = ref(false);
+const isSubmitDisabled = ref(false)
 
 const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
   if (isRequiredFieldsValid(personalInformation)) {
-    isSubmitDisabled.value = true;
+    isSubmitDisabled.value = true
     await updateMedicalChart(
       patientUid,
       personalInformation,
       medicalHistory,
       dentalHistory
-    );
-    isSubmitDisabled.value = false;
+    )
+    isSubmitDisabled.value = false
   }
-};
+}
 </script>
 <template>
   <BaseLayout>

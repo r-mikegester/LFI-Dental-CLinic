@@ -1,6 +1,6 @@
-import getMonthIndex from "./getMonthIndex";
+import getMonthIndex from "./getMonthIndex"
 
 export default (monthName, year) => {
-  const month = getMonthIndex(monthName);
-  return new Date(year, month + 1, 1);
-};
+  const month = getMonthIndex(monthName)
+  return new Date(year, month + 1, 1)
+}

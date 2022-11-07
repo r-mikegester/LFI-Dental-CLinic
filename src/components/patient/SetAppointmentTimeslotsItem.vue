@@ -5,7 +5,7 @@ defineProps({
   isSelected: Boolean,
   isClosed: Boolean,
   isTaken: Boolean,
-});
+})
 </script>
 
 <template>

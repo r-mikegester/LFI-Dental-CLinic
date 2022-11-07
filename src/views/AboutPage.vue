@@ -1,6 +1,6 @@
 <script setup>
-import BaseLayout from "../components/patient/BaseLayout.vue";
-import heroImage from "../assets/img/about/bg-about.png";
+import BaseLayout from "../components/patient/BaseLayout.vue"
+import heroImage from "../assets/img/about/bg-about.png"
 </script>
 <template>
   <BaseLayout>
