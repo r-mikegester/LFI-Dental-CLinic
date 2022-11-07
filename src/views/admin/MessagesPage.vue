@@ -106,7 +106,7 @@ const onItemArchived = (uid) => {
           </button>
         </div>
       </h1>
-      <div v-if="isLoading || isRefetchingDueToMutation">
+      <div v-if="isLoading">
         <!-- Loading message -->
         <div class="text-2xl font-bold text-center">Loading messages ...</div>
       </div>
