@@ -4,6 +4,7 @@ import { computed, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import newAppointment from "../../composables/api/newAppointment"
 import signIn from "../../composables/auth/signIn"
+import userIsAdmin from "../../composables/auth/userIsAdmin"
 import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
 import BoxDialog from "../dialogs/BoxDialog.vue"
@@ -34,6 +35,17 @@ const onSignIn = async () => {
   try {
     if (isAccountCredentialsValid.value) {
       await signIn(accountCredentials.email, accountCredentials.password)
+
+      // If the user is an Admin, go to the Admin Homepage and
+      // return immediately.
+      if (await userIsAdmin()) {
+        router.push({ name: "Admin Home Page" })
+        return
+      }
+
+      // If we reach here, assume that the user is a patient.
+      //
+      // FIXME: We should handle the "never" case here.
       const patientUid = auth.currentUser.uid
       const medicalChartIsFilled = await isFilledInMedicalChart(patientUid)
 
