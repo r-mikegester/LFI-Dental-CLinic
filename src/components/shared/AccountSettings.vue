@@ -1,16 +1,14 @@
 <script setup>
-import BoxDialog from "../../components/dialogs/BoxDialog.vue"
 import { onMounted, reactive, ref } from "vue"
-import updateEmail from "../../composables/account/updateEmail"
 import { getAuth } from "firebase/auth"
+import BoxDialog from "../dialogs/BoxDialog.vue"
+import PasswordDialog from "./PasswordDialog.vue"
+import updateEmail from "../../composables/account/updateEmail"
 import updateFullName from "../../composables/account/updateFullName"
-import updatePassword from "../../composables/account/updatePassword"
-import uploadProfilePicture from "../../composables/account/uploadProfilePicture"
-import updateProfilePicture from "../../composables/account/updateProfilePicture"
-import deleteProfilePicture from "../../composables/account/deleteProfilePicture"
+
 import getDownloadURL from "../../composables/account/getDownloadURL"
-import { useProfilePictureStore } from "../../stores/profilePicture"
 import { useUserFullnameStore } from "../../stores/userFullname"
+import ProfilePictureDialog from "./ProfilePictureDialog.vue"
 
 const userInfo = reactive({
   fullName: "",
@@ -82,50 +80,11 @@ const onChangeName = async () => {
 }
 
 const isPasswordlDialogVisible = ref(false)
-const onChangePassword = async () => {
-  try {
-    await updatePassword(userCredentials.newPassword, userCredentials.password)
-    isPasswordlDialogVisible.value = false
-  } catch (e) {
-    switch (e.code) {
-      case "auth/wrong-password":
-        isErrorDialogVisible.value = true
-        errorDialog.header = "Wrong password"
-        errorDialog.body = "Please enter the correct password."
-        break
-      default:
-        throw e
-    }
-  } finally {
-    clearUserCredentials()
-  }
-}
-
 const isProfilePicturelDialogVisible = ref(false)
-const inputFile = ref()
-const onChangeProfilePicture = async () => {
-  if (inputFile.value.files.length === 1) {
-    const imagePath = await uploadProfilePicture(inputFile.value.files[0])
-    await updateProfilePicture(imagePath)
-    profilePictureStore.$reset()
-    await profilePictureStore.initialize()
-    userInfo.profilePictureURL = imagePath
-    userInfo.profilePictureDownloadURL = await getDownloadURL(imagePath)
-  }
-}
 
-const profilePictureStore = useProfilePictureStore()
-const onRemoveProfilePicture = async () => {
-  if (userInfo.profilePictureURL) {
-    await deleteProfilePicture()
-    await updateProfilePicture("")
-
-    profilePictureStore.$reset()
-    await profilePictureStore.initialize()
-
-    userInfo.profilePictureURL = ""
-    userInfo.profilePictureDownloadURL = ""
-  }
+function updateProfilePicture(url, downloadUrl) {
+  userInfo.profilePictureURL = url
+  userInfo.profilePictureDownloadURL = downloadUrl
 }
 
 const isErrorDialogVisible = ref(false)
@@ -279,101 +238,18 @@ const errorDialog = reactive({
   </BoxDialog>
 
   <!-- Password dialog -->
-  <BoxDialog v-if="isPasswordlDialogVisible">
-    <template #body>
-      <div class="mb-3">
-        <div>Old Password:</div>
-        <input
-          type="password"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
-          v-model="userCredentials.password"
-        />
-      </div>
-      <div class="mb-5">
-        <div>New Password:</div>
-        <input
-          type="password"
-          class="border border-sky-600 px-2 py-1 min-w-0 w-full rounded-md"
-          v-model="userCredentials.newPassword"
-        />
-      </div>
-    </template>
-    <template #actions>
-      <div class="flex gap-2 flex-col xs:flex-row xs:gap-0 justify-between">
-        <button
-          type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
-          @click="isPasswordlDialogVisible = false"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
-          @click="onChangePassword()"
-        >
-          Update
-        </button>
-      </div>
-    </template>
-  </BoxDialog>
+  <PasswordDialog
+    v-if="isPasswordlDialogVisible"
+    @closeDialog="isPasswordlDialogVisible = false"
+  />
 
   <!-- Profile Picture dialog -->
-  <BoxDialog v-if="isProfilePicturelDialogVisible">
-    <template #body>
-      <div class="mb-5 text-center">
-        <div class="mb-3" v-if="userInfo.profilePictureURL">
-          <img
-            :src="userInfo.profilePictureDownloadURL"
-            alt="Profile picture"
-            class="h-36 w-36 rounded-full object-cover mx-auto"
-          />
-        </div>
-        <div v-else>
-          <img
-            src="../../assets/img/nav-person.png"
-            alt="Person icon"
-            class="h-36 w-36 object-cover mx-auto"
-          />
-        </div>
-        <div class="mb-3">Change Profile Picture</div>
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            class="text-sm min-w-0 w-[min(100%,_12rem)]"
-            ref="inputFile"
-          />
-        </div>
-      </div>
-    </template>
-    <template #actions>
-      <div class="flex flex-col xs:flex-row justify-between gap-4">
-        <button
-          type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
-          @click="onRemoveProfilePicture()"
-          v-if="userInfo.profilePictureURL"
-        >
-          Remove
-        </button>
-        <button
-          type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
-          @click="onChangeProfilePicture()"
-        >
-          Update
-        </button>
-        <button
-          type="button"
-          class="font-semibold border border-sky-600 px-2 py-1 text-sm hover:bg-sky-600 hover:text-white transition duration-200 rounded-md"
-          @click="isProfilePicturelDialogVisible = false"
-        >
-          Close
-        </button>
-      </div>
-    </template>
-  </BoxDialog>
+  <ProfilePictureDialog
+    v-if="isProfilePicturelDialogVisible"
+    :userInfo="userInfo"
+    @closeDialog="isProfilePicturelDialogVisible = false"
+    @updateProfilePicture="updateProfilePicture"
+  />
 
   <BoxDialog v-if="isErrorDialogVisible">
     <template #header>
