@@ -8,7 +8,7 @@ import { useUserFullnameStore } from "../../stores/userFullname"
 const router = useRouter()
 const onLogout = async () => {
   await signOut()
-  router.push({ name: "Admin Login Page" })
+  router.push({ name: "Patient Login Page" })
 }
 
 const profilePictureStore = useProfilePictureStore()
