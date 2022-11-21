@@ -126,12 +126,6 @@ const router = createRouter({
       ],
     },
     {
-      path: "/admin/login",
-      name: "Admin Login Page",
-      component: () => import("../views/admin/LoginPage.vue"),
-      beforeEnter: [redirectToAdminHomePageIfAdminUser],
-    },
-    {
       path: "/admin/schedules",
       name: "Admin Schedules Page",
       component: () => import("../views/admin/SchedulesPage.vue"),

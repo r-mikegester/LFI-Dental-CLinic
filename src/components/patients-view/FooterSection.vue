@@ -110,14 +110,6 @@
                 FAQs
               </RouterLink>
             </li>
-            <li>
-              <RouterLink
-                :to="{ name: 'Admin Login Page' }"
-                class="font-semibold hover:underline text-sky-700"
-              >
-                Admin Portal
-              </RouterLink>
-            </li>
           </ul>
         </div>
       </div>
