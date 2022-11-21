@@ -215,11 +215,14 @@ const onChangePastDentalCare = () => {
         <!-- Gender -->
         <div class="grid grid-cols-[auto_1fr] items-center gap-4">
           <label class="font-semibold">Gender*</label>
-          <input
-            type="text"
-            class="rounded-full px-4 py-2 border border-teal-500 w-full"
+          <select
+            class="rounded-full px-4 py-2 border border-teal-500 w-full bg-white"
             v-model="personalInformation.gender"
-          />
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
         </div>
       </div>
       <!-- Birthdate, Age, Marital Status -->
@@ -252,11 +255,14 @@ const onChangePastDentalCare = () => {
           <!-- Marital Status -->
           <div class="grid sm:grid-cols-[auto_1fr] items-center gap-2 sm:gap-4">
             <label class="font-semibold">Marital Status*</label>
-            <input
-              type="text"
-              class="rounded-full px-4 py-2 border border-teal-500 w-full"
+            <select
               v-model="personalInformation.maritalStatus"
-            />
+              class="rounded-full px-4 py-2 border border-teal-500 w-full bg-white"
+            >
+              <option value="single">Single</option>
+              <option value="married">Married</option>
+              <option value="widowed">Widowed</option>
+            </select>
           </div>
         </div>
       </div>
