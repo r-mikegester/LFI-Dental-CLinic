@@ -273,7 +273,10 @@ const router = createRouter({
       path: "/patient/login",
       name: "Patient Login Page",
       component: () => import("../views/patient/LoginPage.vue"),
-      beforeEnter: [redirectToPatientAppointmentHistoryPageIfPatientUser],
+      beforeEnter: [
+        redirectToPatientAppointmentHistoryPageIfPatientUser,
+        redirectToAdminHomePageIfAdminUser,
+      ],
     },
     {
       path: "/:pathMatch(.*)*",
