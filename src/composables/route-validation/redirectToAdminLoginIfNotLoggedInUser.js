@@ -7,7 +7,8 @@ export default async () => {
   const currentUser = auth.currentUser
   if (!currentUser) {
     return {
-      name: "Admin Login Page",
+      // Use single login for both Admin and Patient.
+      name: "Patient Login Page",
     }
   }
 }

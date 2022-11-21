@@ -3,7 +3,8 @@ import userIsAdmin from "../auth/userIsAdmin"
 export default async () => {
   if (!(await userIsAdmin())) {
     return {
-      name: "Admin Login Page",
+      // Use single login for both Admin and Patient.
+      name: "Patient Login Page",
     }
   }
 }
