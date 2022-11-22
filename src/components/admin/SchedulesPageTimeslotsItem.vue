@@ -61,12 +61,10 @@ const onClick = async () => {
 <template>
   <div
     class="border border-teal-500 text-center py-1 flex items-center justify-center"
-    :class="{
-      'bg-teal-500': status === 'closed',
-      'border-sky-600': status === 'taken',
-      'bg-sky-600': status === 'taken',
-      'text-white': status === 'closed' || status === 'taken',
-    }"
+    :class="[
+      status === 'closed' ? 'border-gray-600 bg-gray-300' : '',
+      status === 'taken' ? 'bg-sky-600 text-white' : '',
+    ]"
     @click="onClick()"
   >
     <div>

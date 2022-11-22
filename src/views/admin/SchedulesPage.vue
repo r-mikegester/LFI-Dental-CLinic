@@ -93,44 +93,68 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
     <div class="lg:px-6">
       <h1 class="text-2xl font-semibold mb-3">Schedules</h1>
       <div
-        class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto"
+        class="grid justify-center xl:grid-cols-[auto_1fr] gap-4 mx-auto"
         v-if="isFinishLoading"
       >
         <div>
-          <div class="border border-teal-500 px-2 py-1 rounded-full mb-3">
-            <select
-              class="w-full bg-transparent"
-              v-model="selected.month"
-              @change="onChangeMonthOrYear()"
+          <div class="sm:flex sm:gap-4 sm:h-14">
+            <div class="mb-3 sm:hidden">
+              <div class="lg:mb-3">
+                <span class="text-gray-300">&#x2B24;</span> Closed
+              </div>
+              <div class="lg:mb-3">
+                <span class="text-sky-700">&#x2B24;</span> Reserved
+              </div>
+            </div>
+            <!-- Month -->
+            <div
+              class="h-fit border border-teal-600 px-4 py-2 rounded-full mb-3"
             >
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-          </div>
-          <div class="border border-teal-500 px-2 py-1 rounded-full">
-            <select
-              class="w-full bg-transparent"
-              v-model="selected.year"
-              @change="onChangeMonthOrYear()"
+              <select
+                class="w-full bg-transparent"
+                v-model="selected.month"
+                @change="onChangeMonthOrYear()"
+              >
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
+            <!-- Year -->
+            <div
+              class="h-fit border border-teal-600 px-4 py-2 rounded-full mb-3"
             >
-              <option>2022</option>
-              <option>2023</option>
-              <option>2024</option>
-              <option>2025</option>
-            </select>
+              <select
+                class="w-full bg-transparent"
+                v-model="selected.year"
+                @change="onChangeMonthOrYear()"
+              >
+                <option>2022</option>
+                <option>2023</option>
+                <option>2024</option>
+                <option>2025</option>
+              </select>
+            </div>
+            <div
+              class="hidden sm:grid ml-auto sm:grid-cols-2 items-center pr-4"
+            >
+              <div class="sm:mb-3">
+                <span class="text-gray-300">&#x2B24;</span> Closed
+              </div>
+              <div class="sm:mb-3">
+                <span class="text-sky-700">&#x2B24;</span> Reserved
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
           <!-- Calendar -->
           <CalendarWidget>
             <div
@@ -147,6 +171,8 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
               @click="onCalendarItemSelected(calendarItem)"
             />
           </CalendarWidget>
+        </div>
+        <div class="pt-14">
           <TimeslotsWidget v-if="selected.date !== ''">
             <template #morning-slots>
               <SchedulesPageTimeslotsItem

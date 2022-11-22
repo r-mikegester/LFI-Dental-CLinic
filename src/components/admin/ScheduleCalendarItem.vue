@@ -45,11 +45,10 @@ scheduleCalendar.$subscribe((mutation, state) => {
 <template>
   <div
     class="border border-teal-500 text-right px-2"
-    :class="{
-      'bg-teal-500': isColored && !isSelected,
-      'text-white': isColored && !isSelected,
-      'bg-teal-500/50': isSelected,
-    }"
+    :class="[
+      isColored ? 'border-gray-600 bg-gray-300' : '',
+      isSelected ? 'bg-teal-500/50' : '',
+    ]"
   >
     {{ date }}
   </div>
