@@ -84,9 +84,9 @@ const onPrevPage = async () => {
             >
               <div>Name</div>
               <div>Email</div>
-              <div>Medical Chart</div>
-              <div>Dental Chart</div>
-              <div>Dental Treatment</div>
+              <div class="truncate">Medical Chart</div>
+              <div class="truncate">Dental Chart</div>
+              <div class="truncate">Dental Treatment</div>
             </div>
           </div>
           <div v-if="visiblePatientsList.length > 0">
@@ -102,7 +102,7 @@ const onPrevPage = async () => {
             <button
               v-if="pageNumber > 1"
               type="button"
-              class="px-3 py-1 mt-3 font-medium border border-teal-500 hover:bg-teal-500 hover:text-white transition duration-200"
+              class="px-3 py-1 mt-3 font-medium border border-teal-500 hover:bg-teal-500 hover:text-white transition duration-200]"
               @click="onPrevPage()"
             >
               Previous

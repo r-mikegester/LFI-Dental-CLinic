@@ -10,10 +10,10 @@ defineProps({
   <div
     class="border-b border-teal-500 p-4 gap-4 grid grid-cols-[minmax(0,_1fr)_minmax(0,_2fr)_repeat(3,_minmax(0,_1fr))]"
   >
-    <div class="overflow-hidden text-ellipsis">
+    <div class="truncate">
       {{ fullName }}
     </div>
-    <div class="overflow-hidden text-ellipsis">
+    <div class="truncate">
       {{ email }}
     </div>
     <div>
