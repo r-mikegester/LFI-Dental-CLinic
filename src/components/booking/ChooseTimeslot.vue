@@ -47,6 +47,16 @@ onMounted(async () => {
     year: "numeric",
   })
 
+  // Set the date tomorrow in UTC+8 (Asia/Manila) time
+  // as the initial selected date.
+  const initialSelectedDate =
+    parseInt(
+      currDate.toLocaleString("en-US", {
+        timeZone: "Asia/Manila",
+        day: "numeric",
+      })
+    ) + 1
+
   await setAppointmentCalendarStore.setMonthAndYear(
     selected.month,
     selected.year
@@ -63,12 +73,20 @@ onMounted(async () => {
       }
     })
 
-    calendarItems.value.push({
-      date: n + 1,
-      selected: false,
-      closedSlotCount: closedSlotsOnGivenDate,
-      takenSlotCount: takenSlotsOnGivenDate,
-    })
+    if (currentDate === initialSelectedDate)
+      calendarItems.value.push({
+        date: currentDate,
+        selected: true,
+        closedSlotCount: closedSlotsOnGivenDate,
+        takenSlotCount: takenSlotsOnGivenDate,
+      })
+    else
+      calendarItems.value.push({
+        date: currentDate,
+        selected: false,
+        closedSlotCount: closedSlotsOnGivenDate,
+        takenSlotCount: takenSlotsOnGivenDate,
+      })
   }
 
   // Make sure setMonthAndYear is finished before we show the page.
@@ -93,17 +111,8 @@ const onCalendarItemClicked = (newSelectedItem) => {
   const dateTomorrow = getDateTomorrow()
   if (date.getTime() < dateTomorrow.getTime()) return
 
-  const currSelectedItem = calendarItems.value.find(
-    (calendarItem) => calendarItem.selected === true
-  )
-  if (currSelectedItem === newSelectedItem) {
-    calendarItems.value = calendarItems.value.map((calendarItem) => ({
-      ...calendarItem,
-      selected: false,
-    }))
-    return
-  }
-
+  // Set the selected status of the clicked item to true,
+  // everything else is false.
   calendarItems.value = calendarItems.value.map((calendarItem) => ({
     ...calendarItem,
     selected: calendarItem === newSelectedItem ? true : false,
@@ -280,69 +289,78 @@ const isSuccessModalVisible = ref(false)
 </script>
 
 <template>
-  <div
-    class="max-w-5xl mx-auto px-6 md:grid md:grid-cols-[auto_1fr] gap-12 mt-14 mb-20"
-  >
-    <!-- Legends column -->
-    <div>
-      <div
-        class="border border-sky-700 pl-4 pr-12 py-2 mb-3 md:mb-0 max-w-fit md:max-w-none rounded-md"
-      >
-        <div class="mb-3">Legends:</div>
-        <div class="mb-3">
-          <span class="text-gray-300">&#x2B24;</span> Close
-        </div>
-        <div class="mb-3">
-          <span class="text-sky-700">&#x2B24;</span> Reserved
-        </div>
-      </div>
+  <div class="max-w-5xl mx-auto px-6 mt-14 mb-20">
+    <!-- Month chooser -->
+    <div class="mb-10">
+      <h3 class="font-bold text-3xl mb-1">Select a Date and Time *</h3>
+      <p class="max-w-prose">
+        Same day appointments are
+        <span class="font-semibold">not allowed</span>. You may cancel your
+        appointment up to
+        <span class="font-semibold">three (3) days</span> prior to the scheduled
+        date and time.
+      </p>
     </div>
-    <!-- Calendar column -->
-    <div>
-      <!-- Month chooser -->
+    <!-- Date chooser -->
+    <div
+      v-if="isFinishLoading"
+      class="grid justify-center lg:grid-cols-[auto_1fr] gap-6"
+    >
+      <!-- Calendar -->
       <div>
-        <h3 class="font-bold text-3xl mb-3">Date *</h3>
-      </div>
-      <!-- Month & Year chooser -->
-      <div class="flex gap-4 mb-3">
-        <!-- Month -->
-        <div class="mb-3 border border-teal-600 px-4 py-2 rounded-full md:w-72">
-          <select
-            class="w-full bg-transparent"
-            v-model="selected.month"
-            @change="onChangeMonthOrYear()"
-          >
-            <option>January</option>
-            <option>February</option>
-            <option>March</option>
-            <option>April</option>
-            <option>May</option>
-            <option>June</option>
-            <option>July</option>
-            <option>August</option>
-            <option>September</option>
-            <option>October</option>
-            <option>November</option>
-            <option>December</option>
-          </select>
+        <!-- Month & Year chooser -->
+        <div class="sm:flex sm:gap-4 sm:h-14">
+          <div class="mb-3 sm:hidden">
+            <div class="lg:mb-3">
+              <span class="text-gray-300">&#x2B24;</span> Close
+            </div>
+            <div class="lg:mb-3">
+              <span class="text-sky-700">&#x2B24;</span> Reserved
+            </div>
+          </div>
+          <!-- Month -->
+          <div class="h-fit border border-teal-600 px-4 py-2 rounded-full mb-3">
+            <select
+              class="w-full bg-transparent"
+              v-model="selected.month"
+              @change="onChangeMonthOrYear()"
+            >
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+          </div>
+          <!-- Year -->
+          <div class="h-fit border border-teal-600 px-4 py-2 rounded-full mb-3">
+            <select
+              class="w-full bg-transparent"
+              v-model="selected.year"
+              @change="onChangeMonthOrYear()"
+            >
+              <option>2022</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+            </select>
+          </div>
+          <div class="hidden sm:grid ml-auto sm:grid-cols-2 items-center pr-4">
+            <div class="sm:mb-3">
+              <span class="text-gray-300">&#x2B24;</span> Close
+            </div>
+            <div class="sm:mb-3">
+              <span class="text-sky-700">&#x2B24;</span> Reserved
+            </div>
+          </div>
         </div>
-        <!-- Year -->
-        <div class="mb-3 border border-teal-600 px-4 py-2 rounded-full md:w-52">
-          <select
-            class="w-full bg-transparent"
-            v-model="selected.year"
-            @change="onChangeMonthOrYear()"
-          >
-            <option>2022</option>
-            <option>2023</option>
-            <option>2024</option>
-            <option>2025</option>
-          </select>
-        </div>
-      </div>
-      <!-- Date chooser -->
-      <div v-if="isFinishLoading">
-        <!-- Calendar -->
         <CalendarWidget>
           <!-- Offset -->
           <div
@@ -363,7 +381,9 @@ const isSuccessModalVisible = ref(false)
             @click="onCalendarItemClicked(calendarItem)"
           />
         </CalendarWidget>
-        <!-- Time chooser -->
+      </div>
+      <!-- Time chooser -->
+      <div class="pt-14">
         <TimeslotsWidget v-if="selectedDate !== ''">
           <template #morning-slots>
             <SetAppointmentTimeslotsItem
@@ -390,89 +410,88 @@ const isSuccessModalVisible = ref(false)
             />
           </template>
         </TimeslotsWidget>
-        <div v-if="selectedTimeslot" class="pt-6 pb-3">
-          <div class="mb-3">
-            Not sure what you're looking for? See some our
-            <RouterLink
-              :to="{ name: 'Home', hash: '#services' }"
-              class="hover:underline underline-offset-4 font-medium"
-            >
-              services</RouterLink
-            >.
+        <div class="">
+          <div class="px-6 py-4" v-if="selectedTimeslot">
+            <div class="text-sm mb-3">
+              Not sure what you're looking for? See some our
+              <RouterLink
+                :to="{ name: 'Home', hash: '#services' }"
+                class="hover:underline underline-offset-4 font-medium"
+              >
+                services</RouterLink
+              >.
+            </div>
+            <div class="border border-teal-600 px-4 py-1 rounded-full">
+              <select class="w-full bg-transparent" v-model="selectedService">
+                <option value="" selected>Choose a service ...</option>
+                <option>Check up</option>
+                <option
+                  title="A thorough examination of your oral health combined with a scale and clean."
+                >
+                  Oral Prophylaxis
+                </option>
+                <option
+                  title="This can help you get your teeth back to their original function while also preventing further decay."
+                >
+                  Tooth Restoration
+                </option>
+                <option
+                  title="Also known as tooth bleaching. It is a process of lightening the color of human teeth."
+                >
+                  Tooth Whitening
+                </option>
+                <option title="Removal of teeth">Tooth Extraction</option>
+                <option
+                  title="Devices used in orthodontics that align and straighten teeth and help position them with regard to a person's bite, while also aiming to improve dental health. "
+                >
+                  Orthodontic Braces
+                </option>
+                <option
+                  title="It can strengthen enamel and protect teeth against damage from plaque. Along with possibly making dietary changes, using these fluoride treatments can help the teeth repair any minor damage from tooth decay. "
+                >
+                  Fluoride Treatment
+                </option>
+                <option
+                  title="This denture is an oral prosthetic device that replaces some of missing teeth. This is also removable denture."
+                >
+                  Partial Denture
+                </option>
+                <option
+                  title="A full-coverage oral prosthetic devices that replaces a complete arch of missing teeth. It is a removable appliance used when all teeth within a jaw have been lost and need to be prosthetically replaced."
+                >
+                  Complete Denture
+                </option>
+                <option
+                  title="A full porcelain ceramic covered crown which is used to protect the entire surface of a tooth. Crowns are an ideal way to rebuild teeth which have been broken or weakened by decay or large fillings."
+                >
+                  Jacket Crown
+                </option>
+                <option
+                  title="A partial denture that is secured permanently in the mouth by being cemented to the adjacent teeth or roots."
+                >
+                  Fixed Bridge
+                </option>
+              </select>
+            </div>
           </div>
           <div
-            class="flex justify-end border border-teal-600 px-4 py-2 rounded-full md:w-72"
+            v-if="selectedTimeslot && selectedService"
+            class="flex justify-end"
           >
-            <select class="w-full bg-transparent" v-model="selectedService">
-              <option value="" selected>Choose a service ...</option>
-              <option>Check up</option>
-              <option
-                title="A thorough examination of your oral health combined with a scale and clean."
-              >
-                Oral Prophylaxis
-              </option>
-              <option
-                title="This can help you get your teeth back to their original function while also preventing further decay."
-              >
-                Tooth Restoration
-              </option>
-              <option
-                title="Also known as tooth bleaching. It is a process of lightening the color of human teeth."
-              >
-                Tooth Whitening
-              </option>
-              <option title="Removal of teeth">Tooth Extraction</option>
-              <option
-                title="Devices used in orthodontics that align and straighten teeth and help position them with regard to a person's bite, while also aiming to improve dental health. "
-              >
-                Orthodontic Braces
-              </option>
-              <option
-                title="It can strengthen enamel and protect teeth against damage from plaque. Along with possibly making dietary changes, using these fluoride treatments can help the teeth repair any minor damage from tooth decay. "
-              >
-                Fluoride Treatment
-              </option>
-              <option
-                title="This denture is an oral prosthetic device that replaces some of missing teeth. This is also removable denture."
-              >
-                Partial Denture
-              </option>
-              <option
-                title="A full-coverage oral prosthetic devices that replaces a complete arch of missing teeth. It is a removable appliance used when all teeth within a jaw have been lost and need to be prosthetically replaced."
-              >
-                Complete Denture
-              </option>
-              <option
-                title="A full porcelain ceramic covered crown which is used to protect the entire surface of a tooth. Crowns are an ideal way to rebuild teeth which have been broken or weakened by decay or large fillings."
-              >
-                Jacket Crown
-              </option>
-              <option
-                title="A partial denture that is secured permanently in the mouth by being cemented to the adjacent teeth or roots."
-              >
-                Fixed Bridge
-              </option>
-            </select>
+            <button
+              type="button"
+              class="px-8 py-1 rounded-full text-white bg-teal-500 hover:bg-teal-400 transition duration-200"
+              @click="onGoNext()"
+            >
+              NEXT
+            </button>
           </div>
         </div>
-        <div
-          v-if="selectedTimeslot && selectedService"
-          class="flex justify-end mt-6"
-        >
-          <button
-            type="button"
-            class="px-8 py-2 rounded-full text-white bg-teal-500 hover:bg-teal-400 transition duration-200"
-            @click="onGoNext()"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-      <div class="text-2xl font-bold text-center" v-else>
-        Loading calendar...
       </div>
     </div>
+    <div class="text-2xl font-bold text-center" v-else>Loading calendar...</div>
   </div>
+
   <BoxDialog v-if="isAccountExistsDialogVisible">
     <template #header>
       <div class="mb-3 mt-1 text-2xl font-semibold">Login Required</div>

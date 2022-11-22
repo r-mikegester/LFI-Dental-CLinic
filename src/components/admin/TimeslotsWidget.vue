@@ -1,13 +1,13 @@
 <template>
-  <div class="grid grid-cols-2 border border-teal-500 p-6 mt-6 rounded-xl">
-    <div class="border-r border-teal-500 pr-4 pb-8">
-      <div class="text-center text-xl mb-3">Morning</div>
+  <div class="grid gap-3 border border-teal-500 px-6 pt-3 pb-5 rounded-xl">
+    <div>
+      <div class="text-center mb-3">MORNING</div>
       <div class="grid grid-cols-2 sm:gap-4">
         <slot name="morning-slots"></slot>
       </div>
     </div>
-    <div class="border-l border-teal-500 pl-4">
-      <div class="text-center text-xl mb-3">Afternoon</div>
+    <div>
+      <div class="text-center mb-3">AFTERNOON</div>
       <div class="grid grid-cols-2 sm:gap-4">
         <slot name="afternoon-slots"></slot>
       </div>
