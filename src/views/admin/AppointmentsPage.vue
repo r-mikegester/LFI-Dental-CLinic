@@ -166,7 +166,7 @@ const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
     <div class="lg:px-6">
       <h1 class="text-2xl font-semibold mb-3">Appointments</h1>
       <div v-if="isFinishLoading">
-        <div class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto">
+        <div class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto max-w-fit">
           <div>
             <div class="border border-teal-500 px-2 py-1 rounded-full mb-3">
               <select
