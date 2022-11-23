@@ -1,83 +1,110 @@
 <script setup>
 import BaseLayout from "../../../components/admin//BaseLayout.vue"
-import { computed, onMounted, ref } from "vue"
+import { computed, nextTick, onMounted, ref } from "vue"
 import listUserProfiles from "../../../composables/api/listUserProfiles"
+import searchUserProfiles from "../../../composables/api/searchUserProfiles"
 import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue"
-import listUserProfilesStartingWith from "../../../composables/api/users-list/listUserProfilesStartingWith"
 
+const searchFilter = ref("")
 const patientsList = ref([])
-
 const patientsListIsLoaded = ref(false)
-const nextPageStartsAtUid = ref(null)
-const pageNumber = ref(1)
-const pageSize = 5
+const isShowingSearchResults = ref(false)
+const pageSize = ref(10)
+const pageNumber = ref(0)
+const maxPageNumber = computed(() => {
+  return Math.ceil(patientsList.value.length / pageSize.value) - 1
+})
 
 onMounted(async () => {
-  patientsList.value = await listUserProfiles()
-
-  if (patientsList.value.nextValueUid)
-    nextPageStartsAtUid.value = patientsList.value.nextValueUid
-
+  const { users } = await listUserProfiles()
+  patientsList.value = users
   patientsListIsLoaded.value = true
 })
 
 const visiblePatientsList = computed(() => {
-  const result = patientsList.value.users.slice(
-    (pageNumber.value - 1) * pageSize,
-    (pageNumber.value - 1) * pageSize + pageSize
+  return patientsList.value.slice(
+    pageNumber.value * pageSize.value,
+    pageNumber.value * pageSize.value + pageSize.value
   )
-  return result
 })
 
-const onNextPage = async () => {
-  patientsList.value.users = patientsList.value.users.slice(
-    0,
-    (pageNumber.value - 1) * pageSize + pageSize
-  )
+async function onClearSearch() {
+  patientsListIsLoaded.value = false
+  await nextTick()
 
-  const newItems = await listUserProfilesStartingWith(nextPageStartsAtUid.value)
-  patientsList.value.users = [...patientsList.value.users, ...newItems.users]
+  const { users } = await listUserProfiles(searchFilter.value)
+  patientsList.value = users
 
-  if (newItems.nextValueUid) {
-    nextPageStartsAtUid.value = newItems.nextValueUid
-  } else nextPageStartsAtUid.value = null
-
-  pageNumber.value++
+  searchFilter.value = ""
+  isShowingSearchResults.value = false
+  patientsListIsLoaded.value = true
 }
 
-const onPrevPage = async () => {
-  nextPageStartsAtUid.value = visiblePatientsList.value[0].uid
-  pageNumber.value--
+async function onSearch() {
+  if (searchFilter.value === "") return
+
+  patientsListIsLoaded.value = false
+  await nextTick()
+
+  const { users } = await searchUserProfiles(searchFilter.value)
+  patientsList.value = users
+
+  isShowingSearchResults.value = true
+  patientsListIsLoaded.value = true
 }
 </script>
 
 <template>
   <BaseLayout>
     <div class="lg:px-6">
-      <div class="grid grid-cols-[auto_1fr]">
+      <div class="flex justify-between">
         <!-- Page title -->
         <h1 class="text-2xl font-semibold mb-3">Patient Records</h1>
         <!-- Search box -->
         <div
           v-if="patientsListIsLoaded && patientsList.length > 0"
-          class="pb-6"
+          class="pb-6 flex gap-3"
         >
-          <label class="relative block float-right">
-            <span class="absolute inset-y-0 right-2 flex items-center pl-2">
-              <img src="../../../assets/img/search-icon.png" />
-            </span>
+          <select
+            v-if="isShowingSearchResults"
+            v-model="pageSize"
+            class="px-3 h-full bg-white border border-gray-300"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <div class="flex">
             <input
               class="w-full placeholder:normal placeholder:text-slate-400 block bg-white border-2 border-sky-400/60 border-3px py-2 pl-2 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
               placeholder="Search names ..."
               type="text"
               name="search"
-              v-model="nameFilter"
+              v-model="searchFilter"
             />
-          </label>
+            <button
+              type="button"
+              class="border border-gray-300 px-3"
+              @click="onSearch"
+            >
+              <img src="../../../assets/img/search-icon.png" />
+            </button>
+            <button
+              v-if="isShowingSearchResults"
+              type="button"
+              class="border border-gray-300 px-3"
+              @click="onClearSearch"
+            >
+              Clear
+            </button>
+          </div>
         </div>
       </div>
       <div v-if="patientsListIsLoaded">
-        <div v-if="patientsList.users.length > 0">
+        <div v-if="patientsList.length > 0">
           <div class="bg-teal-500/40">
             <div
               class="p-4 gap-4 grid grid-cols-[minmax(0,_1fr)_minmax(0,_2fr)_repeat(3,_minmax(0,_1fr))] font-semibold"
@@ -100,18 +127,18 @@ const onPrevPage = async () => {
           </div>
           <div class="flex justify-end gap-3">
             <button
-              v-if="pageNumber > 1"
+              v-if="pageNumber > 0"
               type="button"
               class="px-3 py-1 mt-3 font-medium border border-teal-500 hover:bg-teal-500 hover:text-white transition duration-200]"
-              @click="onPrevPage()"
+              @click="pageNumber--"
             >
               Previous
             </button>
             <button
-              v-if="nextPageStartsAtUid"
+              v-if="pageNumber < maxPageNumber"
               type="button"
               class="px-3 py-1 mt-3 font-medium border border-teal-500 hover:bg-teal-500 hover:text-white transition duration-200"
-              @click="onNextPage()"
+              @click="pageNumber++"
             >
               Next
             </button>
