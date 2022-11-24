@@ -36,6 +36,7 @@ async function onClearSearch() {
   patientsList.value = users
 
   searchFilter.value = ""
+  pageSize.value = 10
   isShowingSearchResults.value = false
   patientsListIsLoaded.value = true
 }
