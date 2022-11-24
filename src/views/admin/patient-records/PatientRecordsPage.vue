@@ -61,10 +61,7 @@ async function onSearch() {
         <!-- Page title -->
         <h1 class="text-2xl font-semibold mb-3">Patient Records</h1>
         <!-- Search box -->
-        <div
-          v-if="patientsListIsLoaded && patientsList.length > 0"
-          class="pb-6 flex gap-3"
-        >
+        <div v-if="patientsListIsLoaded" class="pb-6 flex gap-3">
           <select
             v-if="isShowingSearchResults"
             v-model="pageSize"
