@@ -233,7 +233,7 @@ const onChangePastDentalCare = () => {
             class="rounded-full px-4 py-2 border border-teal-500 w-full bg-white"
             v-model="personalInformation.gender"
           >
-            <option value="" disabled>Choose ...</option>
+            <option value="" disabled hidden>Choose ...</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -274,7 +274,7 @@ const onChangePastDentalCare = () => {
               v-model="personalInformation.maritalStatus"
               class="rounded-full px-4 py-2 border border-teal-500 w-full bg-white"
             >
-              <option value="" disabled>Choose ...</option>
+              <option value="" disabled hidden>Choose ...</option>
               <option value="single">Single</option>
               <option value="married">Married</option>
               <option value="widowed">Widowed</option>
