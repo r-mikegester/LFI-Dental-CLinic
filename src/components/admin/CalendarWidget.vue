@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-teal-500 rounded-xl max-w-fit">
+  <div class="border border-teal-500 rounded-xl">
     <!-- Days -->
     <div class="grid grid-cols-[repeat(7,_minmax(0,_5rem))] md:gap-2 pt-4 px-4">
       <div
