@@ -224,7 +224,7 @@ const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
         </div>
         <div v-if="selectedDate && appointmentItemsOnSelectedDate.length > 0">
           <div
-            class="grid grid-cols-5 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700 max-w-sm"
+            class="grid grid-cols-5 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700"
           >
             <div>Date</div>
             <div>Full name</div>
