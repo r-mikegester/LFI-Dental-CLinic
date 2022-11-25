@@ -166,7 +166,7 @@ const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
     <div class="lg:px-6">
       <h1 class="text-2xl font-semibold mb-3">Appointments</h1>
       <div v-if="isFinishLoading">
-        <div class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto max-w-fit">
+        <div class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto">
           <div>
             <div class="border border-teal-500 px-2 py-1 rounded-full mb-3">
               <select
@@ -224,7 +224,7 @@ const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
         </div>
         <div v-if="selectedDate && appointmentItemsOnSelectedDate.length > 0">
           <div
-            class="grid grid-cols-5 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700"
+            class="grid grid-cols-5 gap-4 py-4 px-6 bg-teal-500/40 mt-8 font-semibold text-sky-700 max-w-sm"
           >
             <div>Date</div>
             <div>Full name</div>
