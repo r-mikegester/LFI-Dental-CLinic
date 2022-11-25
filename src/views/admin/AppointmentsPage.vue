@@ -201,7 +201,7 @@ const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
               </select>
             </div>
           </div>
-          <div>
+          <div class="max-w-fit">
             <!-- Calendar -->
             <CalendarWidget>
               <div
