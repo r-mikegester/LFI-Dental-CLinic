@@ -1,1 +1,1 @@
-export default "https://lfidentalclinic.onrender.com"
+export default "https://lfidentalclinicapi.vercel.app"
