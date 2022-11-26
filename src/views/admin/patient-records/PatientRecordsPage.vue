@@ -53,6 +53,10 @@ async function onSearch() {
   isShowingSearchResults.value = true
   patientsListIsLoaded.value = true
 }
+
+function onPageSizeChanged() {
+  pageNumber.value = 0
+}
 </script>
 
 <template>
@@ -67,6 +71,7 @@ async function onSearch() {
             v-if="isShowingSearchResults"
             v-model="pageSize"
             class="px-3 h-full bg-white border border-gray-300"
+            @change="onPageSizeChanged"
           >
             <option :value="5">5</option>
             <option :value="10">10</option>
