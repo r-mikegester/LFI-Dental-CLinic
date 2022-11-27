@@ -1,5 +1,5 @@
 <script setup>
-import Footer from "./PageFooter.vue"
+import Footer from "../patients-view/FooterSection.vue"
 import SideBar from "./SideBar.vue"
 </script>
 
@@ -12,6 +12,7 @@ import SideBar from "./SideBar.vue"
       <main class="p-6 text-sky-600 font-[Poppins]">
         <slot></slot>
       </main>
+
     </div>
     <Footer />
   </div>
