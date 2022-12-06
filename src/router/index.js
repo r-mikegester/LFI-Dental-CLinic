@@ -154,6 +154,16 @@ const router = createRouter({
       ],
     },
     {
+      path: "/admin/patient-records/admin",
+      name: "Admin Archived Patient Records Page",
+      component: () =>
+        import("../views/admin/patient-records/ArchivedPatientRecordsPage.vue"),
+      beforeEnter: [
+        redirectToAdminLoginIfNotLoggedInUser,
+        redirectToAdminLoginIfNotAdminUser,
+      ],
+    },
+    {
       path: "/admin/notifications",
       name: "Admin Notifications Page",
       component: () => import("../views/admin/NotificationsPage.vue"),

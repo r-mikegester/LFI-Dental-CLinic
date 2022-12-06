@@ -1,8 +1,8 @@
 <script setup>
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import { computed, nextTick, onMounted, ref } from "vue"
-import listUserProfiles from "../../../composables/api/listUserProfiles"
-import searchUserProfiles from "../../../composables/api/searchUserProfiles"
+import listUserProfiles from "../../../composables/api/archiving/listArchivedUserProfiles"
+import searchUserProfiles from "../../../composables/api/archiving/searchArchivedUserProfiles"
 import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue"
 
 const searchFilter = ref("")
@@ -77,13 +77,13 @@ async function reloadUsers() {
       <div class="flex justify-between mb-3">
         <!-- Page title -->
         <div>
-          <h1 class="text-2xl font-semibold">Patient Records</h1>
+          <h1 class="text-2xl font-semibold">Archived Patient Records</h1>
           <RouterLink
             :to="{
-              name: 'Admin Archived Patient Records Page',
+              name: 'Admin Patient Records Page',
             }"
           >
-            » Browse archive
+            « Back to current
           </RouterLink>
         </div>
         <!-- Search box -->
@@ -148,7 +148,7 @@ async function reloadUsers() {
               :uid="user.uid"
               :email="user.email"
               :fullName="user.displayName"
-              :patientIsArchived="false"
+              :patientIsArchived="true"
               @reload="reloadUsers"
             />
           </div>
