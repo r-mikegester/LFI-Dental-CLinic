@@ -12,7 +12,6 @@ import SideBar from "./SideBar.vue"
       <main class="p-6 text-sky-600 font-[Poppins]">
         <slot></slot>
       </main>
-
     </div>
     <Footer />
   </div>
