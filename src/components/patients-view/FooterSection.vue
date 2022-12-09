@@ -1,5 +1,5 @@
 <script setup>
-import BackToTop from "vue-backtotop/src/BackToTop.vue"
+import BackToTop from "../shared/BackToTop.vue"
 </script>
 <template>
   <!-- Footer -->
@@ -188,7 +188,7 @@ import BackToTop from "vue-backtotop/src/BackToTop.vue"
         <div>All Rights Reserved.</div>
       </span>
       <span class="sticky right-0 bottom-64 lg:right-10 md:right-10">
-        <BackToTop @scrolled="myFunction" class="flex bottom-64">
+        <BackToTop class="flex bottom-64">
           <button
             type="button"
             class="text-sky-700 border z-10 sticky bottom-64 mb-8 -mr-5 justify-end border-sky-700 hover:bg-gradient-to-br from-sky-700 to-teal-500 hover:text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center items-center md:-mb-4 md:mr-2"
