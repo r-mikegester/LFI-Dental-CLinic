@@ -18,7 +18,7 @@ import userIsPatient from "../../composables/auth/userIsPatient"
 import newAppointment from "../../composables/api/newAppointment"
 import { useRoute, useRouter, RouterLink } from "vue-router"
 import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart"
-import { getAuth } from "firebase/auth"
+import { getAuth, sendEmailVerification } from "firebase/auth"
 
 /* Logic for reactive calendar items */
 const selected = reactive({
@@ -245,47 +245,85 @@ const selectedTimeslot = computed(() => {
 const appointmentDetailsStore = useAppointmentDetailsStore()
 const isAccountExistsDialogVisible = ref(false)
 
+const route = useRoute()
 const router = useRouter()
 const auth = getAuth()
+
+const selectedService = ref("")
+const errorDialogBody = ref("")
+const isErrorDialogVisible = ref(false)
+const isSuccessModalVisible = ref(false)
+const isEmailNeedsVerificationVisible = ref(false)
+const isEmailNotActuallyVerifiedDialogVisible = ref(false)
+
 const onGoNext = async () => {
   appointmentDetailsStore.setDetails(
     selectedService.value,
     selectedTimeslot.value
   )
-  if (isSignedIn()) {
-    const isUserAPatient = await userIsPatient()
-    const patientUid = auth.currentUser.uid
 
-    if (isUserAPatient) {
-      const isMedicalChartFilledIn = await isFilledInMedicalChart(patientUid)
-      if (isMedicalChartFilledIn) {
-        await newAppointment(
-          patientUid,
-          appointmentDetailsStore.getSlotSeconds,
-          appointmentDetailsStore.getService
-        )
+  if (!isSignedIn()) {
+    isAccountExistsDialogVisible.value = true
+    return
+  }
 
-        appointmentDetailsStore.$reset()
-        isSuccessModalVisible.value = true
-      } else
-        router.push({
-          name: "Appointments Page Medical Chart",
-        })
-    } else isAccountExistsDialogVisible.value = true
-  } else isAccountExistsDialogVisible.value = true
+  if (!(await userIsPatient())) {
+    isAccountExistsDialogVisible.value = true
+    return
+  }
+
+  const isEmailVerified = auth.currentUser.emailVerified
+  if (!isEmailVerified) {
+    isEmailNeedsVerificationVisible.value = true
+    return
+  }
+
+  const patientUid = auth.currentUser.uid
+  const isMedicalChartFilledIn = await isFilledInMedicalChart(patientUid)
+
+  if (!isMedicalChartFilledIn) {
+    router.push({
+      name: "Appointments Page Medical Chart",
+    })
+    return
+  }
+
+  await newAppointment(
+    patientUid,
+    appointmentDetailsStore.getSlotSeconds,
+    appointmentDetailsStore.getService
+  )
+
+  appointmentDetailsStore.$reset()
+  isSuccessModalVisible.value = true
 }
 
-const selectedService = ref("")
-
-const route = useRoute()
 onMounted(() => {
   const preselectedService = route.query.service
   if (preselectedService) selectedService.value = preselectedService
 })
 
-const isErrorDialogVisible = ref(false)
-const errorDialogBody = ref("")
-const isSuccessModalVisible = ref(false)
+async function onSendEmailVerification() {
+  try {
+    await sendEmailVerification(auth.currentUser)
+  } catch (e) {
+    console.log("Error occured while sending email verification:", e)
+  }
+}
+
+async function onConfirmEmailVerified() {
+  await auth.currentUser.reload()
+
+  const isUserVerified = auth.currentUser.emailVerified
+  if (!isUserVerified) {
+    isEmailNotActuallyVerifiedDialogVisible.value = true
+    return
+  }
+
+  // Email is now verified, continue whatever you were trying to do
+  // when clicking Next.
+  await onGoNext()
+}
 </script>
 
 <template>
@@ -553,6 +591,72 @@ const isSuccessModalVisible = ref(false)
         >
           Done
         </RouterLink>
+      </div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isEmailNeedsVerificationVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-1">Email is not yet Verified</div>
+    </template>
+    <template #body>
+      <div class="max-w-[32rem] text-justify mb-3">
+        <p class="mb-3">
+          We have detected that your account is not yet verified. To continue,
+          we will need you to verify your account.
+        </p>
+        <p>
+          Click
+          <span class="font-semibold">Send Verification Email</span>
+          below to verify your email, and click the
+          <span class="font-semibold">Continue</span> button once your account
+          has been verified.
+        </p>
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-between gap-4">
+        <button
+          type="button"
+          class="border border-sky-600 bg-sky-600 hover:border-sky-500 hover:bg-sky-500 text-white transition duration-200 font-medium px-6 py-1"
+          @click="onSendEmailVerification"
+        >
+          Send Verification Email
+        </button>
+        <button
+          type="button"
+          class="border border-sky-600 hover:border-sky-500 hover:bg-sky-500 hover:text-white transition duration-200 font-medium px-6 py-1"
+          @click="onConfirmEmailVerified"
+        >
+          Continue
+        </button>
+      </div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isEmailNotActuallyVerifiedDialogVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-2">
+        Your account is not yet Verified
+      </div>
+    </template>
+    <template #body>
+      <div class="max-w-[30rem] text-justify mb-3">
+        We have detected that your account is not yet verified. Please check
+        your email's <span class="font-bold">Inbox</span> and/or
+        <span class="font-bold">Spam</span> folder, and click the link to
+        verify.
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="border border-sky-600 px-6 py-1 font-medium hover:bg-sky-600 hover:text-white transition duration-200"
+          @click="isEmailNotActuallyVerifiedDialogVisible = false"
+        >
+          OK
+        </button>
       </div>
     </template>
   </BoxDialog>

@@ -1,5 +1,5 @@
 <script setup>
-import { getAuth } from "firebase/auth"
+import { getAuth, sendEmailVerification } from "firebase/auth"
 import { computed, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import newAppointment from "../../composables/api/newAppointment"
@@ -28,50 +28,40 @@ const isAccountCredentialsValid = computed(() => {
 })
 
 const appointmentDetailsStore = useAppointmentDetailsStore()
-
 const router = useRouter()
 const auth = getAuth()
+
 const onSignIn = async () => {
   try {
-    if (isAccountCredentialsValid.value) {
-      await signIn(accountCredentials.email, accountCredentials.password)
+    if (!isAccountCredentialsValid.value) return
 
-      // If the user is an Admin, go to the Admin Homepage and
-      // return immediately.
-      if (await userIsAdmin()) {
-        router.push({ name: "Admin Home Page" })
-        return
-      }
+    await signIn(accountCredentials.email, accountCredentials.password)
 
-      // If we reach here, assume that the user is a patient.
-      //
-      // FIXME: We should handle the "never" case here.
-      const patientUid = auth.currentUser.uid
-      const medicalChartIsFilled = await isFilledInMedicalChart(patientUid)
-
-      if (appointmentDetailsStore.isInitialized) {
-        if (medicalChartIsFilled) {
-          /* Set appointment if there is a queued appointment,
-             and the medical chart is already filled in. */
-          await newAppointment(
-            patientUid,
-            appointmentDetailsStore.getSlotSeconds,
-            appointmentDetailsStore.getService
-          )
-
-          appointmentDetailsStore.$reset()
-          isSuccessModalVisible.value = true
-        } else {
-          /* Redirect users to medical chart if not filled in.  */
-          router.push({
-            name: "Appointments Page Medical Chart",
-          })
-        }
-      } else
-        router.push({
-          name: "Patient Appointment History Page",
-        })
+    // If the user is an Admin, go to the Admin Homepage and
+    // return immediately.
+    if (await userIsAdmin()) {
+      router.push({ name: "Admin Home Page" })
+      return
     }
+
+    // If we reach here, assume that the user is a patient.
+    //
+    // FIXME: We should handle the "never" case here.
+    if (!appointmentDetailsStore.isInitialized) {
+      router.push({
+        name: "Patient Appointment History Page",
+      })
+      return
+    }
+
+    const isEmailVerified = auth.currentUser.emailVerified
+    if (!isEmailVerified) {
+      isEmailNeedsVerificationVisible.value = true
+      return
+    }
+
+    const patientUid = auth.currentUser.uid
+    await schedulePendingAppointment(patientUid)
   } catch (e) {
     switch (e.code) {
       case "auth/invalid-email":
@@ -89,8 +79,56 @@ const onSignIn = async () => {
   }
 }
 
-const isErrorDialogVisible = ref(false)
 const errorDialogBody = ref("")
+const isErrorDialogVisible = ref(false)
+const isEmailNeedsVerificationVisible = ref(false)
+const isEmailNotActuallyVerifiedDialogVisible = ref(false)
+
+async function onSendEmailVerification() {
+  try {
+    await sendEmailVerification(auth.currentUser)
+  } catch (e) {
+    console.log("Error occured while sending email verification:", e)
+  }
+}
+
+async function onConfirmEmailVerified() {
+  await auth.currentUser.reload()
+
+  const isUserVerified = auth.currentUser.emailVerified
+  if (!isUserVerified) {
+    isEmailNotActuallyVerifiedDialogVisible.value = true
+    return
+  }
+
+  // Email is now verified, schedule pending appointment
+  // if there are any.
+  const patientUid = auth.currentUser.uid
+  await schedulePendingAppointment(patientUid)
+}
+
+async function schedulePendingAppointment(patientUid) {
+  const medicalChartIsFilled = await isFilledInMedicalChart(patientUid)
+
+  if (!medicalChartIsFilled) {
+    // Redirect users to medical chart if not filled in.
+    router.push({
+      name: "Appointments Page Medical Chart",
+    })
+    return
+  }
+
+  // Set appointment if there is a queued appointment,
+  // and the medical chart is already filled in.
+  await newAppointment(
+    patientUid,
+    appointmentDetailsStore.getSlotSeconds,
+    appointmentDetailsStore.getService
+  )
+
+  appointmentDetailsStore.$reset()
+  isSuccessModalVisible.value = true
+}
 </script>
 
 <template>
@@ -159,6 +197,72 @@ const errorDialogBody = ref("")
         >
           Done
         </RouterLink>
+      </div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isEmailNeedsVerificationVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-1">Email is not yet Verified</div>
+    </template>
+    <template #body>
+      <div class="max-w-[32rem] text-justify mb-3">
+        <p class="mb-3">
+          We have detected that your account is not yet verified. To continue,
+          we will need you to verify your account.
+        </p>
+        <p>
+          Click
+          <span class="font-semibold">Send Verification Email</span>
+          below to verify your email, and click the
+          <span class="font-semibold">Continue</span> button once your account
+          has been verified.
+        </p>
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-between gap-4">
+        <button
+          type="button"
+          class="border border-sky-600 bg-sky-600 hover:border-sky-500 hover:bg-sky-500 text-white transition duration-200 font-medium px-6 py-1"
+          @click="onSendEmailVerification"
+        >
+          Send Verification Email
+        </button>
+        <button
+          type="button"
+          class="border border-sky-600 hover:border-sky-500 hover:bg-sky-500 hover:text-white transition duration-200 font-medium px-6 py-1"
+          @click="onConfirmEmailVerified"
+        >
+          Continue
+        </button>
+      </div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isEmailNotActuallyVerifiedDialogVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-2">
+        Your account is not yet Verified
+      </div>
+    </template>
+    <template #body>
+      <div class="max-w-[30rem] text-justify mb-3">
+        We have detected that your account is not yet verified. Please check
+        your email's <span class="font-bold">Inbox</span> and/or
+        <span class="font-bold">Spam</span> folder, and click the link to
+        verify.
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="border border-sky-600 px-6 py-1 font-medium hover:bg-sky-600 hover:text-white transition duration-200"
+          @click="isEmailNotActuallyVerifiedDialogVisible = false"
+        >
+          OK
+        </button>
       </div>
     </template>
   </BoxDialog>

@@ -21,8 +21,14 @@ onMounted(async () => {
 
 const router = useRouter()
 const onToggleAccountButton = async () => {
-  if (isSignedIn() && (await userIsPatient())) skrr.value = !skrr.value
-  else router.push({ name: "Patient Login Page" })
+  const isPatient = await userIsPatient()
+  if (isSignedIn() && isPatient) {
+    userIsLoggedIn.value = true
+    skrr.value = !skrr.value
+  } else {
+    userIsLoggedIn.value = false
+    router.push({ name: "Patient Login Page" })
+  }
 }
 
 const onLogout = async () => {

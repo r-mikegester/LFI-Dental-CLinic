@@ -1,5 +1,7 @@
 <script setup>
+import { getAuth, sendEmailVerification } from "@firebase/auth"
 import { computed, reactive, ref } from "vue"
+import { useRouter } from "vue-router"
 import signIn from "../../composables/auth/signIn"
 import signUpWithEmailAndPassword from "../../composables/auth/signUpWithEmailAndPassword"
 import BoxDialog from "../dialogs/BoxDialog.vue"
@@ -53,6 +55,35 @@ const onCreate = async () => {
 }
 
 const isErrorDialogVisible = ref(false)
+
+const auth = getAuth()
+
+async function onSendEmailVerification() {
+  try {
+    await sendEmailVerification(auth.currentUser)
+  } catch (e) {
+    console.log("Error occured while sending email verification:", e)
+  }
+}
+
+const router = useRouter()
+const isEmailNotValidDialogVisible = ref(false)
+
+async function onContinue() {
+  try {
+    await auth.currentUser.reload()
+    const isUserVerified = auth.currentUser.emailVerified
+    if (isUserVerified) {
+      router.push({
+        name: "Appointments Page Medical Chart",
+      })
+    } else {
+      isEmailNotValidDialogVisible.value = true
+    }
+  } catch (e) {
+    console.log("Error occured while trying to continue:", e)
+  }
+}
 </script>
 
 <template>
@@ -113,24 +144,69 @@ const isErrorDialogVisible = ref(false)
       </div>
     </div>
   </div>
+
   <BoxDialog v-if="isSuccessModalVisible">
     <template #header>
-      <div class="font-semibold text-2xl mb-1">Success</div>
+      <div class="font-semibold text-2xl mb-1">Account Created</div>
     </template>
     <template #body>
       <div class="max-w-[32rem] text-justify mb-3">
-        Your account has been created. Some additional information will be asked
-        in order to complete your appointment.
+        <p class="mb-3">
+          Your account has been created. To continue, we will need you to verify
+          your account and fill in some information.
+        </p>
+        <p>
+          Click
+          <span class="font-semibold">Send Verification Email</span>
+          below to verify your email, and click the
+          <span class="font-semibold">Continue</span> button once your account
+          has been verified.
+        </p>
+      </div>
+    </template>
+    <template #actions>
+      <div class="flex justify-between gap-4">
+        <button
+          type="button"
+          class="border border-sky-600 bg-sky-600 hover:border-sky-500 hover:bg-sky-500 text-white transition duration-200 font-medium px-6 py-1"
+          @click="onSendEmailVerification"
+        >
+          Send Verification Email
+        </button>
+        <button
+          type="button"
+          class="border border-sky-600 hover:border-sky-500 hover:bg-sky-500 hover:text-white transition duration-200 font-medium px-6 py-1"
+          @click="onContinue"
+        >
+          Continue
+        </button>
+      </div>
+    </template>
+  </BoxDialog>
+
+  <BoxDialog v-if="isEmailNotValidDialogVisible">
+    <template #header>
+      <div class="font-semibold text-2xl mb-2">
+        Your account is not yet Verified
+      </div>
+    </template>
+    <template #body>
+      <div class="max-w-[30rem] text-justify mb-3">
+        We have detected that your account is not yet verified. Please check
+        your email's <span class="font-bold">Inbox</span> and/or
+        <span class="font-bold">Spam</span> folder, and click the link to
+        verify.
       </div>
     </template>
     <template #actions>
       <div class="flex justify-end">
-        <RouterLink
-          class="border border-sky-600 px-6 py-1"
-          :to="{ name: 'Appointments Page Medical Chart' }"
+        <button
+          type="button"
+          class="border border-sky-600 px-6 py-1 font-medium hover:bg-sky-600 hover:text-white transition duration-200"
+          @click="isEmailNotValidDialogVisible = false"
         >
-          Continue
-        </RouterLink>
+          OK
+        </button>
       </div>
     </template>
   </BoxDialog>
