@@ -27,7 +27,7 @@ const userAppointments = getUserAppointments(patientUid)
           <div class="overflow-hidden text-ellipsis">PROCEDURE</div>
           <div class="overflow-hidden text-ellipsis">PRICE</div>
           <div class="overflow-hidden text-ellipsis">BALANCE</div>
-          <div class="overflow-hidden text-ellipsis">STATUS</div>
+          <div class="overflow-hidden text-ellipsis">ATTENDED</div>
           <div class="overflow-hidden text-ellipsis text-center">Actions</div>
         </div>
         <!-- Body -->

@@ -92,12 +92,18 @@ onMounted(() => {
     </div>
     <div class="overflow-hidden text-ellipsis">{{ appointment.balance }}</div>
     <div class="overflow-hidden text-ellipsis">
-      <span v-if="appointment.attended === 'pending'">
-        Pending appointment
-      </span>
+      <span v-if="appointment.attended === 'pending'">Not Yet Attended</span>
       <span v-else-if="appointment.attended === true">
-        <span v-if="null === appointment.status">Pending status</span>
-        <span v-else>{{ appointment.status }}</span>
+        Did Attended
+        <span v-if="null !== appointment.status">
+          ({{ appointment.status }})
+        </span>
+      </span>
+      <span v-else-if="appointment.attended === false">
+        Did Not Attended
+        <span v-if="null !== appointment.status">
+          ({{ appointment.status }})
+        </span>
       </span>
     </div>
     <div class="text-center">
