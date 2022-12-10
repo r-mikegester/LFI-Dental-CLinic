@@ -283,6 +283,15 @@ const router = createRouter({
       ],
     },
     {
+      path: "/password-reset",
+      name: "Password Reset Page",
+      component: () => import("../views/PasswordReset.vue"),
+      beforeEnter: [
+        redirectToPatientAppointmentHistoryPageIfPatientUser,
+        redirectToAdminHomePageIfAdminUser,
+      ],
+    },
+    {
       path: "/:pathMatch(.*)*",
       redirect: {
         name: "404 Not Found Page",

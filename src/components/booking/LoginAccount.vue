@@ -1,7 +1,7 @@
 <script setup>
 import { getAuth, sendEmailVerification } from "firebase/auth"
 import { computed, reactive, ref } from "vue"
-import { useRouter } from "vue-router"
+import { RouterLink, useRouter } from "vue-router"
 import newAppointment from "../../composables/api/newAppointment"
 import signIn from "../../composables/auth/signIn"
 import userIsAdmin from "../../composables/auth/userIsAdmin"
@@ -157,7 +157,13 @@ async function schedulePendingAppointment(patientUid) {
         />
       </div>
       <!-- Submit -->
-      <div class="flex justify-center">
+      <div class="flex justify-between items-center">
+        <RouterLink
+          :to="{ name: 'Password Reset Page' }"
+          class="hover:underline underline-offset-4"
+        >
+          Forgot Password?
+        </RouterLink>
         <button
           type="button"
           class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
