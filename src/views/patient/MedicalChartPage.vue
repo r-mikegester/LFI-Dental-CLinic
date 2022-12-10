@@ -6,6 +6,7 @@ import HeroSection from "../../components/patient/HeroSection.vue"
 import MedicalChart from "../../components/shared/MedicalChart.vue"
 import getMedicalChart from "../../composables/api/medical-chart/getMedicalChart"
 import updateMedicalChart from "../../composables/api/updateMedicalChart"
+import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart"
 
 const auth = getAuth()
 const patientUid = auth.currentUser.uid
@@ -48,6 +49,7 @@ const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
       medicalHistory,
       dentalHistory
     )
+    await setFilledInMedicalChart(patientUid)
     isSubmitDisabled.value = false
   }
 }
