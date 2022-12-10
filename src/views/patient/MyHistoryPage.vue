@@ -31,13 +31,14 @@ const userAppointments = getUserAppointments(patientUid)
           <div class="overflow-hidden text-ellipsis text-center">Actions</div>
         </div>
         <!-- Body -->
-        <div class="grid gap-4 sm:block">
+        <div class="grid gap-4 sm:block" v-if="userAppointments.length > 0">
           <MyHistoryPageAppointmentItem
             v-for="userAppointment in userAppointments"
             :key="userAppointment.uid"
             :appointment="userAppointment"
           />
         </div>
+        <div class="text-center mt-8 text-lg">No Appointments Scheduled</div>
       </div>
     </div>
   </BaseLayout>
