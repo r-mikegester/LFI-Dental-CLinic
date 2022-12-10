@@ -117,7 +117,8 @@ import BackToTop from "../shared/BackToTop.vue"
             class="flex items-center justify-center text-center text-gray-600 dark:text-gray-400"
           >
             <a
-              href="#"
+              target="_blank"
+              href="https://www.facebook.com/profile.php?id=100087848344472"
               class="p-1 border border-transparent text-sky-700 hover:border hover:border-sky-700 hover:rounded-full hover:text-sky-700 dark:hover:text-white"
             >
               <svg
@@ -134,8 +135,8 @@ import BackToTop from "../shared/BackToTop.vue"
               </svg>
               <span class="sr-only">Facebook page</span>
             </a>
-            <a
-              href="#"
+            <RouterLink
+              :to="{ name: 'Contact Page' }"
               class="p-1 text-sky-700 hover:border hover:border-sky-700 hover:rounded-full hover:text-sky-700 dark:hover:text-white"
             >
               <svg
@@ -149,9 +150,9 @@ import BackToTop from "../shared/BackToTop.vue"
                 ></path>
               </svg>
               <span class="sr-only">Book an Appointment Now!</span>
-            </a>
-            <a
-              href="#"
+            </RouterLink>
+            <RouterLink
+              :to="{ name: 'Contact Page' }"
               class="p-1 text-sky-700 hover:border hover:border-sky-700 hover:rounded-full hover:text-sky-700 dark:hover:text-white"
             >
               <svg
@@ -167,8 +168,8 @@ import BackToTop from "../shared/BackToTop.vue"
                   d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
                 ></path>
               </svg>
-              <span class="sr-only">Twitter page</span>
-            </a>
+              <span class="sr-only">Email</span>
+            </RouterLink>
           </ul>
         </div>
       </div>
