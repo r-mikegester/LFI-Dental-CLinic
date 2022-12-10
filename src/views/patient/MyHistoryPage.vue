@@ -38,7 +38,9 @@ const userAppointments = getUserAppointments(patientUid)
             :appointment="userAppointment"
           />
         </div>
-        <div class="text-center mt-8 text-lg">No Appointments Scheduled</div>
+        <div class="text-center mt-8 text-lg" v-else>
+          No Appointments Scheduled
+        </div>
       </div>
     </div>
   </BaseLayout>
