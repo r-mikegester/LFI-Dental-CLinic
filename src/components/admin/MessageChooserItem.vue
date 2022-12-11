@@ -14,7 +14,7 @@ function formattedDate(unixSecs) {
   const hours = date.getHours()
   const minutes = date.getMinutes()
   const month = date.getMonth() + 1
-  const day = date.getDay()
+  const day = date.getDate()
   const year = date.getFullYear()
 
   return `${hours}:${minutes} ${month}/${day}/${year}`
