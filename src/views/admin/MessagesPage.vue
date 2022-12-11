@@ -12,10 +12,10 @@ const { data, isLoading } = useQuery({
 })
 
 const selectedTab = ref("inbox")
-const selectedItemUid = ref(null)
+const selectedItemUid = ref("")
 
 const onSelectTab = (tab) => {
-  selectedItemUid.value = null
+  selectedItemUid.value = ""
   selectedTab.value = tab
 }
 
@@ -63,6 +63,11 @@ const messageItems = computed(() => {
 })
 
 const onItemClicked = (uid) => {
+  if (uid === selectedItemUid.value) {
+    selectedItemUid.value = ""
+    return
+  }
+
   selectedItemUid.value = uid
 }
 
@@ -111,7 +116,7 @@ const onItemArchived = (uid) => {
 
 <template>
   <BaseLayout>
-    <div class="px-6">
+    <div class="sm:px-6">
       <h1 class="flex justify-between">
         <div class="font-semibold text-2xl pb-3">Messages</div>
         <div class="flex items-end">
@@ -140,9 +145,12 @@ const onItemArchived = (uid) => {
       <div v-else>
         <div v-if="messageItems.length > 0">
           <!-- List of Messages -->
-          <div class="grid grid-cols-2 border-b border-t border-teal-500">
+          <div class="md:grid md:grid-cols-2 border-b border-t border-teal-500">
             <!-- Messages column -->
-            <div class="py-1 pr-1 border-r border-teal-500">
+            <div
+              class="py-1 pr-1 md:border-r border-teal-500"
+              :class="selectedItemUid !== '' ? 'hidden md:block' : ''"
+            >
               <MessageChooserItem
                 v-for="message in messageItems"
                 :key="message.uid"
@@ -156,8 +164,19 @@ const onItemArchived = (uid) => {
               <div
                 v-if="selectedItem.subject !== '' && selectedItem.body !== ''"
               >
+                <div>
+                  <button
+                    type="button"
+                    class="md:hidden hover:underline underline-offset-4 py-1"
+                    @click="selectedItemUid = ''"
+                  >
+                    &#xab; Back
+                  </button>
+                </div>
                 <div class="font-bold">Email</div>
-                <div class="pl-4 mb-3">{{ selectedItem.subject }}</div>
+                <div class="pl-4 mb-3 overflow-hidden text-ellipsis">
+                  {{ selectedItem.subject }}
+                </div>
                 <div class="font-bold">Message</div>
                 <div class="pl-4">{{ selectedItem.body }}</div>
               </div>
