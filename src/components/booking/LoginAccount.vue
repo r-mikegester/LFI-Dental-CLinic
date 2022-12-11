@@ -1,5 +1,5 @@
 <script setup>
-import { getAuth, sendEmailVerification } from "firebase/auth"
+import { getAuth } from "firebase/auth"
 import { computed, reactive, ref } from "vue"
 import { RouterLink, useRouter } from "vue-router"
 import newAppointment from "../../composables/api/newAppointment"
@@ -8,6 +8,7 @@ import userIsAdmin from "../../composables/auth/userIsAdmin"
 import isFilledInMedicalChart from "../../composables/firestore/isFilledInMedicalChart"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
 import BoxDialog from "../dialogs/BoxDialog.vue"
+import EmailNeedsVerificationDialog from "../dialogs/EmailNeedsVerificationDialog.vue"
 
 const isSuccessModalVisible = ref(false)
 
@@ -61,13 +62,15 @@ const onSignIn = async () => {
 
     const isEmailVerified = auth.currentUser.emailVerified
     if (!isEmailVerified) {
-      isEmailNeedsVerificationVisible.value = true
+      isEmailNeedsVerificationDialogVisible.value = true
       isSignInButtonClicked.value = false
       return
     }
 
     const patientUid = auth.currentUser.uid
     await schedulePendingAppointment(patientUid)
+
+    isSignInButtonClicked.value = false
   } catch (e) {
     switch (e.code) {
       case "auth/invalid-email":
@@ -82,35 +85,22 @@ const onSignIn = async () => {
         isErrorDialogVisible.value = true
         throw e
     }
-  } finally {
+
     isSignInButtonClicked.value = false
   }
 }
 
 const errorDialogBody = ref("")
 const isErrorDialogVisible = ref(false)
-const isEmailNeedsVerificationVisible = ref(false)
-const isEmailNotActuallyVerifiedDialogVisible = ref(false)
+const isEmailNeedsVerificationDialogVisible = ref(false)
 
-async function onSendEmailVerification() {
-  try {
-    await sendEmailVerification(auth.currentUser)
-  } catch (e) {
-    console.log("Error occured while sending email verification:", e)
-  }
-}
-
-async function onConfirmEmailVerified() {
-  await auth.currentUser.reload()
-
-  const isUserVerified = auth.currentUser.emailVerified
-  if (!isUserVerified) {
-    isEmailNotActuallyVerifiedDialogVisible.value = true
-    return
-  }
+async function onEmailVerified() {
+  isEmailNeedsVerificationDialogVisible.value = false
 
   // Email is now verified, schedule pending appointment
   // if there are any.
+  if (!appointmentDetailsStore.isInitialized) return
+
   const patientUid = auth.currentUser.uid
   await schedulePendingAppointment(patientUid)
 }
@@ -214,72 +204,10 @@ async function schedulePendingAppointment(patientUid) {
     </template>
   </BoxDialog>
 
-  <BoxDialog v-if="isEmailNeedsVerificationVisible">
-    <template #header>
-      <div class="font-semibold text-2xl mb-1">Email is not yet Verified</div>
-    </template>
-    <template #body>
-      <div class="max-w-[32rem] text-justify mb-3">
-        <p class="mb-3">
-          We have detected that your account is not yet verified. To continue,
-          we will need you to verify your account.
-        </p>
-        <p>
-          Click
-          <span class="font-semibold">Send Verification Email</span>
-          below to verify your email, and click the
-          <span class="font-semibold">Continue</span> button once your account
-          has been verified.
-        </p>
-      </div>
-    </template>
-    <template #actions>
-      <div class="flex justify-between gap-4">
-        <button
-          type="button"
-          class="border border-sky-600 bg-sky-600 hover:border-sky-500 hover:bg-sky-500 text-white transition duration-200 font-medium px-6 py-1"
-          @click="onSendEmailVerification"
-        >
-          Send Verification Email
-        </button>
-        <button
-          type="button"
-          class="border border-sky-600 hover:border-sky-500 hover:bg-sky-500 hover:text-white transition duration-200 font-medium px-6 py-1"
-          @click="onConfirmEmailVerified"
-        >
-          Continue
-        </button>
-      </div>
-    </template>
-  </BoxDialog>
-
-  <BoxDialog v-if="isEmailNotActuallyVerifiedDialogVisible">
-    <template #header>
-      <div class="font-semibold text-2xl mb-2">
-        Your account is not yet Verified
-      </div>
-    </template>
-    <template #body>
-      <div class="max-w-[30rem] text-justify mb-3">
-        We have detected that your account is not yet verified. Please check
-        your email's <span class="font-bold">Inbox</span> and/or
-        <span class="font-bold">Spam</span> folder, and click the link to
-        verify.
-      </div>
-    </template>
-    <template #actions>
-      <div class="flex justify-end">
-        <button
-          type="button"
-          class="border border-sky-600 px-6 py-1 font-medium hover:bg-sky-600 hover:text-white transition duration-200"
-          @click="isEmailNotActuallyVerifiedDialogVisible = false"
-        >
-          OK
-        </button>
-      </div>
-    </template>
-  </BoxDialog>
-
+  <EmailNeedsVerificationDialog
+    v-if="isEmailNeedsVerificationDialogVisible"
+    @email-verified="onEmailVerified"
+  />
   <BoxDialog v-if="isErrorDialogVisible">
     <template #header>
       <div class="font-semibold text-2xl mb-1">Login Failed</div>

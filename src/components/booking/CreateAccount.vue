@@ -1,6 +1,6 @@
 <script setup>
 import { getAuth, sendEmailVerification } from "@firebase/auth"
-import { computed, reactive, ref } from "vue"
+import { computed, onUnmounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import signIn from "../../composables/auth/signIn"
 import signUpWithEmailAndPassword from "../../composables/auth/signUpWithEmailAndPassword"
@@ -38,6 +38,7 @@ const onCreate = async () => {
   try {
     if (!isCreateButtonEnabled.value) return
 
+    console.log("Disabled button")
     isCreateButtonClicked.value = true
 
     await signUpWithEmailAndPassword(
@@ -47,7 +48,9 @@ const onCreate = async () => {
     )
 
     await signIn(accountInformation.email, accountInformation.password)
+
     isSuccessModalVisible.value = true
+    isCreateButtonClicked.value = false
   } catch (e) {
     const errorStr = e.message.split(": ")[e.message.split(": ").length - 1]
     switch (errorStr) {
@@ -55,7 +58,7 @@ const onCreate = async () => {
         isErrorDialogVisible.value = true
         break
     }
-  } finally {
+
     isCreateButtonClicked.value = false
   }
 }
@@ -64,8 +67,17 @@ const isErrorDialogVisible = ref(false)
 
 const auth = getAuth()
 
+const isSendEmailVerificationButtonClicked = ref(false)
 async function onSendEmailVerification() {
   try {
+    if (isSendEmailVerificationButtonClicked.value) return
+
+    isSendEmailVerificationButtonClicked.value = true
+
+    sendEmailVerificationIntervalHandle.value = setInterval(() => {
+      isSendEmailVerificationButtonClicked.value = false
+    }, 60 * 1000)
+
     await sendEmailVerification(auth.currentUser)
   } catch (e) {
     console.log("Error occured while sending email verification:", e)
@@ -90,6 +102,12 @@ async function onContinue() {
     console.log("Error occured while trying to continue:", e)
   }
 }
+
+const sendEmailVerificationIntervalHandle = ref(null)
+onUnmounted(() => {
+  if (null !== sendEmailVerificationIntervalHandle.value)
+    clearInterval(sendEmailVerificationIntervalHandle.value)
+})
 </script>
 
 <template>
@@ -144,7 +162,8 @@ async function onContinue() {
           "
           @click="onCreate()"
         >
-          Create Account
+          <span v-if="isCreateButtonEnabled">Create Account</span>
+          <span v-else>Creating ...</span>
         </button>
       </div>
     </div>
@@ -174,6 +193,11 @@ async function onContinue() {
         <button
           type="button"
           class="border border-sky-600 bg-sky-600 hover:border-sky-500 hover:bg-sky-500 text-white transition duration-200 font-medium px-6 py-1"
+          :class="
+            isSendEmailVerificationButtonClicked
+              ? 'pointer-events-none bg-sky-200 border-sky-200'
+              : ''
+          "
           @click="onSendEmailVerification"
         >
           Send Verification Email
