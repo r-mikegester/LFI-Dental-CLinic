@@ -5,6 +5,7 @@ import BaseLayout from "../../components/admin/BaseLayout.vue"
 import MessageChooserItem from "../../components/admin/MessageChooserItem.vue"
 import getAllMessages from "../../composables/api/getAllMessages"
 import { toggleMessageArchiveStatus } from "../../composables/api/Messages"
+import ExternalArrowIcon from "../../components/icons/ExternalArrowIcon.vue"
 
 const { data, isLoading } = useQuery({
   queryKey: ["messagesList"],
@@ -173,7 +174,14 @@ const onItemArchived = (uid) => {
                 </div>
                 <div class="font-bold">Email</div>
                 <div class="pl-4 mb-3 overflow-hidden text-ellipsis">
-                  {{ selectedItem.email }}
+                  <a
+                    :href="`mailto:${selectedItem.email}`"
+                    class="flex gap-1 hover:underline underline-offset-4"
+                    title="Open in E-mail client"
+                  >
+                    {{ selectedItem.email }}
+                    <ExternalArrowIcon />
+                  </a>
                 </div>
                 <div class="font-bold">Message</div>
                 <div class="pl-4">{{ selectedItem.body }}</div>
