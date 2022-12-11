@@ -4,31 +4,31 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 5050",
-    "test:unit": "vitest --environment jsdom",
+    "preview": "vite preview",
+    "test:unit": "vitest --environment jsdom --root src/",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^4.14.3",
-    "firebase": "^9.6.11",
-    "luxon": "^2.3.2",
-    "pinia": "^2.0.13",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "@tanstack/vue-query": "^4.19.1",
+    "firebase": "^9.15.0",
+    "luxon": "^3.1.1",
+    "pinia": "^2.0.28",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.1.0",
-    "@vitejs/plugin-vue": "^2.3.1",
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.0.0",
-    "@vue/test-utils": "^2.0.0-rc.18",
-    "autoprefixer": "^10.4.4",
-    "eslint": "^8.5.0",
-    "eslint-plugin-vue": "^8.2.0",
-    "jsdom": "^19.0.0",
-    "postcss": "^8.4.12",
-    "prettier": "^2.5.1",
-    "tailwindcss": "^3.0.24",
-    "vite": "^2.9.1",
-    "vitest": "^0.8.1"
+    "@vue/test-utils": "^2.2.6",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.22.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "jsdom": "^20.0.3",
+    "postcss": "^8.4.19",
+    "prettier": "^2.7.1",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.0",
+    "vitest": "^0.25.6"
   }
 }

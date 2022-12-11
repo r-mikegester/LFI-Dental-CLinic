@@ -29,6 +29,5 @@ coverage
 *.sw?
 
 # Others
-package-lock.json
 .firebase
 .firebaserc
