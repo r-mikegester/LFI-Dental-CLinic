@@ -7,7 +7,6 @@ import signUpWithEmailAndPassword from "../../composables/auth/signUpWithEmailAn
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const isSuccessModalVisible = ref(false)
-
 const accountInformation = reactive({
   fullName: "",
   email: "",
@@ -15,8 +14,11 @@ const accountInformation = reactive({
   retypePassword: "",
 })
 
-// validation for above information.
-const isAccountInformationValid = computed(() => {
+const isCreateButtonClicked = ref(false)
+const isCreateButtonEnabled = computed(() => {
+  if (isCreateButtonClicked.value) return false
+
+  // Account information should be valid.
   if (accountInformation.fullName === "") return false
   if (accountInformation.email === "") return false
   if (accountInformation.password === "") return false
@@ -34,16 +36,18 @@ const isAccountInformationValid = computed(() => {
 
 const onCreate = async () => {
   try {
-    if (isAccountInformationValid.value) {
-      await signUpWithEmailAndPassword(
-        accountInformation.email,
-        accountInformation.password,
-        accountInformation.fullName
-      )
+    if (!isCreateButtonEnabled.value) return
 
-      await signIn(accountInformation.email, accountInformation.password)
-      isSuccessModalVisible.value = true
-    }
+    isCreateButtonClicked.value = true
+
+    await signUpWithEmailAndPassword(
+      accountInformation.email,
+      accountInformation.password,
+      accountInformation.fullName
+    )
+
+    await signIn(accountInformation.email, accountInformation.password)
+    isSuccessModalVisible.value = true
   } catch (e) {
     const errorStr = e.message.split(": ")[e.message.split(": ").length - 1]
     switch (errorStr) {
@@ -51,6 +55,8 @@ const onCreate = async () => {
         isErrorDialogVisible.value = true
         break
     }
+  } finally {
+    isCreateButtonClicked.value = false
   }
 }
 
@@ -133,10 +139,9 @@ async function onContinue() {
         <button
           type="button"
           class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
-          :class="{
-            'bg-emerald-200': !isAccountInformationValid,
-            'pointer-events-none': !isAccountInformationValid,
-          }"
+          :class="
+            isCreateButtonEnabled ? '' : 'pointer-events-none bg-emerald-200'
+          "
           @click="onCreate()"
         >
           Create Account

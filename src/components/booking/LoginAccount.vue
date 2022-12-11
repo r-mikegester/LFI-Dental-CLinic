@@ -16,8 +16,11 @@ const accountCredentials = reactive({
   password: "",
 })
 
-// validation for above information.
-const isAccountCredentialsValid = computed(() => {
+const isSignInButtonClicked = ref(false)
+const isSignInButtonEnabled = computed(() => {
+  if (isSignInButtonClicked.value) return false
+
+  // Account credentials should be valid.
   if (accountCredentials.email === "") return false
   if (accountCredentials.password === "") return false
   if (accountCredentials.password && accountCredentials.password.length < 8) {
@@ -33,7 +36,9 @@ const auth = getAuth()
 
 const onSignIn = async () => {
   try {
-    if (!isAccountCredentialsValid.value) return
+    if (!isSignInButtonEnabled.value) return
+
+    isSignInButtonClicked.value = true
 
     await signIn(accountCredentials.email, accountCredentials.password)
 
@@ -57,6 +62,7 @@ const onSignIn = async () => {
     const isEmailVerified = auth.currentUser.emailVerified
     if (!isEmailVerified) {
       isEmailNeedsVerificationVisible.value = true
+      isSignInButtonClicked.value = false
       return
     }
 
@@ -76,6 +82,8 @@ const onSignIn = async () => {
         isErrorDialogVisible.value = true
         throw e
     }
+  } finally {
+    isSignInButtonClicked.value = false
   }
 }
 
@@ -167,10 +175,9 @@ async function schedulePendingAppointment(patientUid) {
         <button
           type="button"
           class="px-6 py-2 rounded-3xl bg-teal-500 hover:bg-teal-400 transition duration-200 text-white"
-          :class="{
-            'pointer-events-none': !isAccountCredentialsValid,
-            'bg-emerald-200': !isAccountCredentialsValid,
-          }"
+          :class="
+            isSignInButtonEnabled ? '' : 'pointer-events-none bg-emerald-200'
+          "
           @click="onSignIn()"
         >
           Login
