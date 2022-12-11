@@ -27,7 +27,7 @@ const selectedItem = computed(() => {
   if (!itemFound)
     return {
       body: "",
-      subject: "",
+      email: "",
     }
 
   return itemFound
@@ -37,11 +37,11 @@ const messageItems = computed(() => {
   if (!data.value) return []
 
   const messages = data.value.map(
-    ({ uid, senderName, subject, body, createdAt, isArchived }) => {
+    ({ uid, senderName, email, body, createdAt, isArchived }) => {
       return {
         uid,
         senderName,
-        subject,
+        email,
         body,
         createdAtUnixSecs: createdAt._seconds,
         isArchived,
@@ -161,9 +161,7 @@ const onItemArchived = (uid) => {
             </div>
             <!-- Message content column -->
             <div class="px-3 pt-1 pb-3">
-              <div
-                v-if="selectedItem.subject !== '' && selectedItem.body !== ''"
-              >
+              <div v-if="selectedItem.email !== '' && selectedItem.body !== ''">
                 <div>
                   <button
                     type="button"
@@ -175,7 +173,7 @@ const onItemArchived = (uid) => {
                 </div>
                 <div class="font-bold">Email</div>
                 <div class="pl-4 mb-3 overflow-hidden text-ellipsis">
-                  {{ selectedItem.subject }}
+                  {{ selectedItem.email }}
                 </div>
                 <div class="font-bold">Message</div>
                 <div class="pl-4">{{ selectedItem.body }}</div>

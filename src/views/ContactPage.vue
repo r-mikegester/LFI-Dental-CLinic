@@ -6,7 +6,7 @@ import HeroSection from "../components/patient/HeroSection.vue"
 
 const message = reactive({
   senderName: "",
-  subject: "",
+  email: "",
   body: "",
 })
 
@@ -14,7 +14,7 @@ const messageIsSending = ref(false)
 const isSendButtonDisabled = computed(() => {
   if (messageIsSending.value) return true
   if (message.senderName === "") return true
-  if (message.subject === "") return true
+  if (message.email === "") return true
   if (message.body === "") return true
   return false
 })
@@ -25,7 +25,7 @@ const onSendButton = async () => {
     await newMessage(message)
     messageIsSending.value = false
     message.senderName = ""
-    message.subject = ""
+    message.email = ""
     message.body = ""
   }
 }
@@ -92,7 +92,7 @@ const onSendButton = async () => {
               'bg-gray-300': messageIsSending,
               'pointer-events-none': messageIsSending,
             }"
-            v-model="message.subject"
+            v-model="message.email"
           />
         </div>
         <div class="mt-8">

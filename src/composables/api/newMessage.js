@@ -3,10 +3,10 @@ import ParameterError from "../helpers/ParameterError"
 import backendBaseURL from "./backendBaseURL"
 
 export default async (message) => {
-  const { senderName, subject, body } = message
+  const { senderName, email, body } = message
 
   if (!senderName) throw new ParameterError(senderName)
-  if (!subject) throw new ParameterError(subject)
+  if (!email) throw new ParameterError(email)
   if (!body) throw new ParameterError(body)
 
   const link = `${backendBaseURL}/messages`
