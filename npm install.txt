@@ -1,8 +1,0 @@
-Node Modules need to install 
--Backtotop
-
-install via npm 
-
-npm install vue-backtotop --save
-
-reference: https://vuejsexamples.com/a-back-to-top-component-for-vue-js-which-scroll-page-to-the-top-when-clicked/
