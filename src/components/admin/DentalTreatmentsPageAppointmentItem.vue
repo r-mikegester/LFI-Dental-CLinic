@@ -21,7 +21,12 @@ const appointmentPayment = reactive({
 })
 
 const balance = computed(() => {
-  return appointmentPayment.price - appointmentPayment.amountPaid
+  const result = appointmentPayment.price - appointmentPayment.amountPaid
+  if (!isFinite(result)) return "Invalid"
+  if (isNaN(result)) return "Invalid"
+  if (result < 0) return "Invalid"
+
+  return result
 })
 
 onMounted(async () => {
