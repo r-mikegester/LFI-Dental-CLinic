@@ -372,8 +372,6 @@ async function onEmailVerified() {
             >
               <option>2022</option>
               <option>2023</option>
-              <option>2024</option>
-              <option>2025</option>
             </select>
           </div>
           <div class="hidden sm:grid ml-auto sm:grid-cols-2 items-center pr-4">
