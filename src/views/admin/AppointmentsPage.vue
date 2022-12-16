@@ -164,7 +164,21 @@ const onAppointmentItemAttendedChanged = (attendedStatus, timeslot) => {
 <template>
   <BaseLayout>
     <div class="lg:px-6">
-      <h1 class="text-2xl font-semibold mb-3">Appointments</h1>
+      <h1 class="text-2xl font-semibold mb-1">Appointments</h1>
+      <div class="grid sm:flex sm:gap-4 mb-4 sm:mb-2">
+        <p class="max-w-prose">
+          Select a date to see which appointments have been set. Dates with at
+          least one scheduled appointment are marked blue.
+        </p>
+        <div v-if="isFinishLoading">
+          <div class="lg:mb-3">
+            <span class="text-gray-300">&#x2B24;</span> Closed
+          </div>
+          <div class="lg:mb-3">
+            <span class="text-sky-700">&#x2B24;</span> Reserved
+          </div>
+        </div>
+      </div>
       <div v-if="isFinishLoading">
         <div class="grid gap-4 lg:grid-cols-[8rem_auto] mx-auto">
           <div>

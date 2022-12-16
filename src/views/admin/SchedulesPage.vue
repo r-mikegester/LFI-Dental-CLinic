@@ -91,7 +91,12 @@ const onCalendarItemSelected = (selectedCalendarItem) => {
 <template>
   <BaseLayout>
     <div class="lg:px-6">
-      <h1 class="text-2xl font-semibold mb-3">Schedules</h1>
+      <div class="mb-4">
+        <h1 class="text-2xl font-semibold mb-1">Schedules</h1>
+        <p>
+          Select a date and click on one of the timeslots to close or open them.
+        </p>
+      </div>
       <div
         class="grid justify-center xl:grid-cols-[auto_1fr] gap-4 mx-auto"
         v-if="isFinishLoading"
