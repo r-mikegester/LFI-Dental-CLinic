@@ -38,14 +38,15 @@ const attendedAppointments = computed(() => {
       </h1>
     </div>
     <div
-      class="bg-teal-500/40 p-4 mt-4 gap-4 grid grid-cols-[repeat(2,_minmax(0,_2fr))_repeat(5,_minmax(0,_1fr))] font-semibold"
+      class="bg-teal-500/40 p-4 mt-4 gap-4 grid grid-cols-[repeat(2,_minmax(0,_10rem))_repeat(6,_minmax(0,_1fr))] font-semibold"
     >
       <div class="overflow-hidden text-ellipsis">DATE</div>
       <div class="overflow-hidden text-ellipsis">SERVICE</div>
       <div class="overflow-hidden text-ellipsis">PROCEDURE</div>
       <div class="overflow-hidden text-ellipsis">PRICE</div>
+      <div class="overflow-hidden text-ellipsis">AMOUNT PAID</div>
       <div class="overflow-hidden text-ellipsis">BALANCE</div>
-      <div class="overflow-hidden text-ellipsis">PAID</div>
+      <div class="overflow-hidden text-ellipsis">HAS PAID</div>
       <div class="overflow-hidden text-ellipsis">ACTIONS</div>
     </div>
     <DentalTreatmentsPageAppointmentItem

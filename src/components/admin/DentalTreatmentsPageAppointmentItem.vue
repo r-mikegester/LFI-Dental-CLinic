@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue"
+import { onMounted, reactive, ref, computed } from "vue"
 import { useRoute } from "vue-router"
 import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
 import setAppointmentPayment from "../../composables/firestore/setAppointmentPayment"
@@ -16,13 +16,17 @@ const isEditing = ref(false)
 
 const appointmentPayment = reactive({
   price: 0,
-  balance: 0,
+  amountPaid: 0,
   status: null,
+})
+
+const balance = computed(() => {
+  return appointmentPayment.price - appointmentPayment.amountPaid
 })
 
 onMounted(async () => {
   appointmentPayment.price = props.appointment.price
-  appointmentPayment.balance = props.appointment.balance
+  appointmentPayment.amountPaid = props.appointment.amountPaid
   appointmentPayment.status = props.appointment.status
 })
 
@@ -35,7 +39,7 @@ const onSave = async () => {
     patientUid,
     props.appointment.uid,
     appointmentPayment.price,
-    appointmentPayment.balance,
+    appointmentPayment.amountPaid,
     appointmentPayment.status
   )
   isEditing.value = false
@@ -44,7 +48,7 @@ const onSave = async () => {
 
 <template>
   <div
-    class="border-b border-teal-500 p-4 gap-4 grid grid-cols-[repeat(2,_minmax(0,_2fr))_repeat(5,_minmax(0,_1fr))]"
+    class="border-b border-teal-500 p-4 gap-4 grid grid-cols-[repeat(2,_minmax(0,_10rem))_repeat(6,_minmax(0,_1fr))]"
   >
     <div class="overflow-hidden text-ellipsis">
       {{ getMonthDayYearOfTimeslot(appointment.uid) }}
@@ -68,6 +72,7 @@ const onSave = async () => {
         <input
           type="number"
           min="0"
+          step="0.01"
           class="w-full border border-grey-300"
           v-model="appointmentPayment.price"
         />
@@ -76,33 +81,39 @@ const onSave = async () => {
         {{ appointmentPayment.price }}
       </div>
     </div>
-    <!-- Balance -->
+    <!-- Amount Paid -->
     <div class="overflow-hidden text-ellipsis">
       <div v-if="isEditing">
         <input
           type="number"
           min="0"
+          step="0.01"
           class="w-full border border-grey-300"
-          v-model="appointmentPayment.balance"
+          v-model="appointmentPayment.amountPaid"
         />
       </div>
       <div v-else>
-        {{ appointmentPayment.balance }}
+        {{ appointmentPayment.amountPaid }}
       </div>
+    </div>
+    <!-- Balance -->
+    <div>
+      {{ balance }}
     </div>
     <!-- Status -->
     <div class="overflow-hidden text-ellipsis">
       <div v-if="isEditing">
         <select v-model="appointmentPayment.status">
           <option :value="null">Choose ...</option>
-          <option>Paid</option>
-          <option>Unpaid</option>
+          <option value="Paid">Yes</option>
+          <option value="Unpaid">No</option>
         </select>
       </div>
       <div v-else>
         <div v-if="null === appointmentPayment.status">Pending</div>
         <div v-else>
-          {{ appointmentPayment.status }}
+          <span v-if="appointmentPayment.status === 'Paid'">Yes</span>
+          <span v-else-if="appointmentPayment.status === 'Unpaid'">No</span>
         </div>
       </div>
     </div>
