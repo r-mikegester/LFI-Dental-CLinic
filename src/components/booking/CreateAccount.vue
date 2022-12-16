@@ -179,12 +179,17 @@ onUnmounted(() => {
           Your account has been created. To continue, we will need you to verify
           your account and fill in some information.
         </p>
+        <p class="mb-3">
+          Click the
+          <span class="font-semibold">Send Verification Email</span> button
+          below, and we will send you a link to verify your account. Once
+          verified, click the
+          <span class="font-semibold">Continue</span> button.
+        </p>
         <p>
-          Click
-          <span class="font-semibold">Send Verification Email</span>
-          below to verify your email, and click the
-          <span class="font-semibold">Continue</span> button once your account
-          has been verified.
+          <span class="font-bold">NOTE:</span> Please check your email's,
+          <span class="font-bold">Inbox</span> and/or
+          <span class="font-bold">Spam</span> folder for the verification email.
         </p>
       </div>
     </template>
