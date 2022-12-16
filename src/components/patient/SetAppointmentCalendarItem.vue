@@ -4,6 +4,7 @@ import { DateTime } from "luxon"
 import getMonthIndex from "../../composables/calendar/getMonthIndex"
 import getTimeslots from "../../composables/calendar/getTimeslots"
 import getDateTomorrow from "../../composables/calendar/getDateTomorrow"
+import getDateSixMonthsFromNow from "../../composables/calendar/getDateSixMonthsFromNow"
 
 const props = defineProps({
   date: Number,
@@ -51,6 +52,12 @@ watchEffect(() => {
   }
 
   if (props.closedSlotCount === getTimeslots().length) {
+    isEntireDayClosed.value = true
+    return
+  }
+
+  const dateSixMonthsFromNow = getDateSixMonthsFromNow()
+  if (dateCurrent.getTime() > dateSixMonthsFromNow.getTime()) {
     isEntireDayClosed.value = true
     return
   }
