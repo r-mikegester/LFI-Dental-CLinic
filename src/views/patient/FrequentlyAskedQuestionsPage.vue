@@ -55,25 +55,6 @@ import BaseLayout from "../../components/patient/BaseLayout.vue"
             <div class="flex items-center">
               <div class="ml-4 text-sm">
                 <p class="font-medium">
-                  What are early signs of dental trouble?
-                </p>
-              </div>
-            </div>
-            <p class="relative mt-4 text-gray-500">
-              <span class="text-xl">&ldquo;</span>
-              The possible early signs of dental trouble are: Toothache;
-              Sensitive Teeth; Bleeding or Sore Gums; Bad Breath; Cavities; Jaw
-              Pain; Mouth Sores; Dry Mouth; Broken, Cracked, Chipped, Lost.
-              <span class="text-xl">&rdquo;</span>
-            </p>
-          </blockquote>
-
-          <blockquote
-            class="p-8 mt-2 transition-colors duration-200 bg-white rounded shadow-lg hover:bg-gray-200"
-          >
-            <div class="flex items-center">
-              <div class="ml-4 text-sm">
-                <p class="font-medium">
                   What is the best way to whiten my teeth?
                 </p>
               </div>

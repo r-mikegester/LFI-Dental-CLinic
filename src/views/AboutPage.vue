@@ -121,12 +121,6 @@ import heroImage from "../assets/img/about/bg-about.png"
               dental health treatment appropriate for their needs in comfort,
               trust and understanding at an affordable price.
             </p>
-            <p>
-              To be committed to excellence in all of our services to our
-              patient so that we may help them achieve the highest level of
-              dental health treatment appropriate for their needs in comfort,
-              trust and understanding at an affordable price.
-            </p>
           </div>
         </article>
         <!-- Vision -->
