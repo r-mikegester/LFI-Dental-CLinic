@@ -45,7 +45,7 @@ const attendedAppointments = computed(() => {
       <div class="overflow-hidden text-ellipsis">PROCEDURE</div>
       <div class="overflow-hidden text-ellipsis">PRICE</div>
       <div class="overflow-hidden text-ellipsis">BALANCE</div>
-      <div class="overflow-hidden text-ellipsis">STATUS</div>
+      <div class="overflow-hidden text-ellipsis">PAID</div>
       <div class="overflow-hidden text-ellipsis">ACTIONS</div>
     </div>
     <DentalTreatmentsPageAppointmentItem
