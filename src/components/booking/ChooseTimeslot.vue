@@ -376,7 +376,7 @@ async function onEmailVerified() {
           </div>
           <div class="hidden sm:grid ml-auto sm:grid-cols-2 items-center pr-4">
             <div class="sm:mb-3">
-              <span class="text-gray-300">&#x2B24;</span> Close
+              <span class="text-gray-300">&#x2B24;</span> Closed
             </div>
             <div class="sm:mb-3">
               <span class="text-sky-700">&#x2B24;</span> Reserved
