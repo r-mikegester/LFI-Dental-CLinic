@@ -6,7 +6,7 @@ import HeroSection from "../../components/patient/HeroSection.vue"
 import MedicalChart from "../../components/shared/MedicalChart.vue"
 import getMedicalChart from "../../composables/api/medical-chart/getMedicalChart"
 import updateMedicalChart from "../../composables/api/updateMedicalChart"
-import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart"
+import setFilledInMedicalChart from "../../composables/api/medical-chart/setFilledInMedicalChart"
 
 const auth = getAuth()
 const patientUid = auth.currentUser.uid

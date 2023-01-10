@@ -1,19 +1,23 @@
-import { getFirestore, doc, setDoc } from "firebase/firestore"
+import getUserToken from "../../auth/getUserToken"
+import backendBaseURL from "../backendBaseURL"
+import HttpError from "../../helpers/HttpError"
+import ParameterError from "../../helpers/ParameterError"
 
-const db = getFirestore()
 export default async (patientUid, slotSeconds) => {
-  const docRef = await doc(
-    db,
-    `users/${patientUid}/appointments/${slotSeconds}`
-  )
+  const idToken = await getUserToken()
 
-  await setDoc(
-    docRef,
-    {
-      procedureVisible: false,
+  if (!patientUid) throw new ParameterError("patientUid")
+  if (!slotSeconds) throw new ParameterError("slotSeconds")
+
+  const link = `${backendBaseURL}/users/${patientUid}/appointments/${slotSeconds}/procedure/request-access`
+  const response = await fetch(link, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
     },
-    {
-      merge: true,
-    }
-  )
+  })
+  const data = await response.json()
+
+  if (!response.ok) throw new HttpError(response.status, data.message)
+  return data.payload
 }

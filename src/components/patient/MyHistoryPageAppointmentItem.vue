@@ -19,10 +19,12 @@ const patientUid = auth.currentUser.uid
 
 const onRequestAccess = async () => {
   await requestProcedureAccess(patientUid, props.appointment.uid)
+  emit("updated")
 }
 
 const onCancelRequestAccess = async () => {
   await cancelRequestProcedureAccess(patientUid, props.appointment.uid)
+  emit("updated")
 }
 
 const isCancelDialogVisible = ref(false)
@@ -31,8 +33,11 @@ const onShowCancelDialog = () => {
     isCancelDialogVisible.value = true
 }
 
+const emit = defineEmits(["updated"])
+
 const onCancelAppointment = async () => {
   await cancelAppointment(patientUid, props.appointment.uid)
+  emit("updated")
 }
 
 const cancelDeadline = ref(null)

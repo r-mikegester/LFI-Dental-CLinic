@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth"
 import newAppointment from "../../composables/api/newAppointment"
 import MedicalChart from "../shared/MedicalChart.vue"
 import updateMedicalChart from "../../composables/api/updateMedicalChart"
-import setFilledInMedicalChart from "../../composables/firestore/setFilledInMedicalChart"
+import setFilledInMedicalChart from "../../composables/api/medical-chart/setFilledInMedicalChart"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const appointmentDetailsStore = useAppointmentDetailsStore()

@@ -1,17 +1,15 @@
 import getUserToken from "../../auth/getUserToken"
-import backendBaseURL from "../backendBaseURL"
+import backendBaseURL from "../../api/backendBaseURL"
 import HttpError from "../../helpers/HttpError"
 import ParameterError from "../../helpers/ParameterError"
 
-export default async (patientUid, slotSeconds) => {
+export default async (patientUid) => {
   const idToken = await getUserToken()
 
   if (!patientUid) throw new ParameterError("patientUid")
-  if (!slotSeconds) throw new ParameterError("slotSeconds")
 
-  const link = `${backendBaseURL}/users/${patientUid}/appointments/${slotSeconds}/procedure/request-access`
+  const link = `${backendBaseURL}/users/${patientUid}/appointments`
   const response = await fetch(link, {
-    method: "PUT",
     headers: {
       Authorization: `Bearer ${idToken}`,
     },

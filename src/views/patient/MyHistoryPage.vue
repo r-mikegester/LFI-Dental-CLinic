@@ -2,12 +2,21 @@
 import { getAuth } from "firebase/auth"
 import BaseLayout from "../../components/patient/BaseLayout.vue"
 import HeroSection from "../../components/patient/HeroSection.vue"
-import getUserAppointments from "../../composables/firestore/listeners/listenToUserAppointments"
+import getUserAppointments from "../../composables/api/user-appointments/getUserAppointments"
 import MyHistoryPageAppointmentItem from "../../components/patient/MyHistoryPageAppointmentItem.vue"
+import { onMounted, ref } from "vue"
 
 const auth = getAuth()
 const patientUid = auth.currentUser.uid
-const userAppointments = getUserAppointments(patientUid)
+const userAppointments = ref([])
+
+async function loadUserAppointments() {
+  userAppointments.value = await getUserAppointments(patientUid)
+}
+
+onMounted(async () => {
+  await loadUserAppointments()
+})
 </script>
 <template>
   <BaseLayout>
@@ -36,6 +45,7 @@ const userAppointments = getUserAppointments(patientUid)
             v-for="userAppointment in userAppointments"
             :key="userAppointment.uid"
             :appointment="userAppointment"
+            @updated="loadUserAppointments"
           />
         </div>
         <div class="text-center mt-8 text-lg" v-else>
