@@ -8,9 +8,13 @@ import DentalTreatmentsPageAppointmentItem from "../../../components/admin/Denta
 const route = useRoute()
 const patientUid = route.params.uid
 
+async function loadUserAppointments(patientUid) {
+  appointments.value = await getUserAppointments(patientUid)
+}
+
 const appointments = ref([])
 onMounted(async () => {
-  appointments.value = await getUserAppointments(patientUid)
+  await loadUserAppointments(patientUid)
 })
 
 const attendedAppointments = computed(() => {
@@ -53,6 +57,7 @@ const attendedAppointments = computed(() => {
       v-for="appointment in attendedAppointments"
       :key="appointment.uid"
       :appointment="appointment"
+      @reload="loadUserAppointments(patientUid)"
     />
   </BaseLayout>
 </template>

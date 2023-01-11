@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref, computed } from "vue"
 import { useRoute } from "vue-router"
 import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
-import setAppointmentPayment from "../../composables/firestore/setAppointmentPayment"
+import setAppointmentPayment from "../../composables/api/user-appointments/setAppointmentPayment"
 import CheckIcon from "../icons/CheckIcon.vue"
 import PencilIcon from "../icons/PencilIcon.vue"
 
@@ -11,6 +11,7 @@ const patientUid = route.params.uid
 const props = defineProps({
   appointment: Object,
 })
+const emit = defineEmits(["reload"])
 
 const isEditing = ref(false)
 
@@ -47,6 +48,7 @@ const onSave = async () => {
     appointmentPayment.amountPaid,
     appointmentPayment.status
   )
+  emit("reload")
   isEditing.value = false
 }
 </script>
