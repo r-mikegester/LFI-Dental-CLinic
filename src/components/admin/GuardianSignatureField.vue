@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue"
-import getGuardianSignature from "../../composables/firestore/signature-fields/getGuardianSignature"
-import setGuardianSignature from "../../composables/firestore/signature-fields/setGuardianSignature"
+import getGuardianSignature from "../../composables/api/signature-fields/getGuardianSignature"
+import setGuardianSignature from "../../composables/api/signature-fields/setGuardianSignature"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,
