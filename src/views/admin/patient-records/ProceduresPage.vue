@@ -4,8 +4,8 @@ import { RouterLink, useRoute } from "vue-router"
 import { nextTick, onMounted, reactive, ref } from "vue"
 import getUserAppointmentProcedure from "../../../composables/api/procedures/getUserAppointmentProcedure"
 import setUserAppointmentProcedure from "../../../composables/api/procedures/setUserAppointmentProcedure"
-import setProcedureAccessAllowed from "../../../composables/firestore/setProcedureAccessAllowed"
-import setProcedureAccessDisallowed from "../../../composables/firestore/setProcedureAccessDisallowed"
+import setProcedureAccessAllowed from "../../../composables/api/access-procedure/setProcedureAccessAllowed"
+import setProcedureAccessDisallowed from "../../../composables/api/access-procedure/setProcedureAccessDisallowed"
 
 const route = useRoute()
 const patientUid = route.params.uid

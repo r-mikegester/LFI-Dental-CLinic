@@ -1,1 +1,1 @@
-export default "https://lfidentalclinicapi.vercel.app"
+export default "http://localhost:5000"
