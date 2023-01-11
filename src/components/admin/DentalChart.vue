@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue"
 import dentalChart from "../../assets/img/dental-chart.jpg"
-import getDentalChart from "../../composables/firestore/chart-canvas/getDentalChart"
-import saveDentalChart from "../../composables/firestore/chart-canvas/saveDentalChart"
+import getDentalChart from "../../composables/api/dental-chart/getDentalChart"
+import saveDentalChart from "../../composables/api/dental-chart/saveDentalChart"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,
