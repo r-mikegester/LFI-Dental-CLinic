@@ -1,9 +1,18 @@
 <script setup>
 import BaseLayout from "../../components/admin/BaseLayout.vue"
-import listenToAllUserAppointments from "../../composables/firestore/listeners/listenToAllUserAppointments"
+import getAppointmentsRequestingProcedureAccess from "../../composables/api/user-appointments/getAppointmentsRequestingProcedureAccess"
 import NotificationsPageNotificationItem from "../../components/admin/NotificationsPageNotificationItem.vue"
+import { ref, onMounted } from "vue"
 
-const userAppointments = listenToAllUserAppointments()
+const userAppointments = ref([])
+
+async function loadAppointmentsRequestingProcedureAccess() {
+  userAppointments.value = await getAppointmentsRequestingProcedureAccess()
+}
+
+onMounted(async () => {
+  await loadAppointmentsRequestingProcedureAccess()
+})
 </script>
 <template>
   <BaseLayout>
@@ -38,6 +47,7 @@ const userAppointments = listenToAllUserAppointments()
             v-for="userAppointment in userAppointments"
             :key="userAppointment.uid"
             :appointment="userAppointment"
+            @reload="loadAppointmentsRequestingProcedureAccess"
           />
         </div>
       </div>

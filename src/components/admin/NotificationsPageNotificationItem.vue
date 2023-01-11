@@ -10,6 +10,8 @@ const props = defineProps({
   appointment: Object,
 })
 
+const emit = defineEmits(["reload"])
+
 const patientName = ref(null)
 
 onMounted(async () => {
@@ -21,6 +23,7 @@ const onAllowAccess = async () => {
     props.appointment.patientUid,
     props.appointment.uid
   )
+  emit("reload")
 }
 
 const onDisallowAccess = async () => {
@@ -28,6 +31,7 @@ const onDisallowAccess = async () => {
     props.appointment.patientUid,
     props.appointment.uid
   )
+  emit("reload")
 }
 </script>
 
