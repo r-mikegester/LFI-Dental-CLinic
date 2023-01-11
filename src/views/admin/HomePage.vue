@@ -2,8 +2,8 @@
 import BaseLayout from "../../components/admin/BaseLayout.vue"
 import { RouterLink } from "vue-router"
 import { onMounted, reactive, ref } from "vue"
-import getReminders from "../../composables/firestore/reminders/getReminders"
-import setReminders from "../../composables/firestore/reminders/setReminders"
+import getReminders from "../../composables/api/reminders/getReminders"
+import setReminders from "../../composables/api/reminders/setReminders"
 import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue"
 
 const isEditing = ref(false)
