@@ -4,10 +4,10 @@ import { RouterLink, useRoute } from "vue-router"
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import DentalChart from "../../../components/admin/DentalChart.vue"
 import DeciduousChart from "../../../components/admin/DeciduousChart.vue"
-import getAssessmentForm from "../../../composables/firestore/assessment-form/getAssessmentForm"
-import setAssessmentForm from "../../../composables/firestore/assessment-form/setAssessmentForm"
-import getConsentForm from "../../../composables/firestore/consent-form/getConsentForm"
-import setConsentForm from "../../../composables/firestore/consent-form/setConsentForm"
+import getAssessmentForm from "../../../composables/api/assessment-form/getAssessmentForm"
+import setAssessmentForm from "../../../composables/api/assessment-form/setAssessmentForm"
+import getConsentForm from "../../../composables/api/consent-form/getConsentForm"
+import setConsentForm from "../../../composables/api/consent-form/setConsentForm"
 import getMonthName from "../../../composables/calendar/getMonthName"
 import PatientSignatureField from "../../../components/admin/PatientSignatureField.vue"
 import GuardianSignatureField from "../../../components/admin/GuardianSignatureField.vue"
@@ -61,7 +61,10 @@ const assessmentForm = reactive({
 
 onMounted(async () => {
   const retrievedAssessmentForm = await getAssessmentForm(patientUid)
-  if (retrievedAssessmentForm) {
+  if (
+    retrievedAssessmentForm &&
+    Object.keys(retrievedAssessmentForm).length !== 0
+  ) {
     const { patientsComplaint, diagnosis, treatmentPlan } =
       retrievedAssessmentForm
 
@@ -91,7 +94,7 @@ const consentForm = reactive({
 
 onMounted(async () => {
   const retrievedConsentForm = await getConsentForm(patientUid)
-  if (retrievedConsentForm) {
+  if (retrievedConsentForm && Object.keys(retrievedConsentForm).length !== 0) {
     const { patientName, checked, dentistName, dateSigned } =
       retrievedConsentForm
 
