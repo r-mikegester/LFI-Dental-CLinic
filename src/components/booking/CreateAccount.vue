@@ -2,8 +2,10 @@
 import { getAuth, sendEmailVerification } from "@firebase/auth"
 import { computed, onUnmounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
-import signIn from "../../composables/auth/signIn"
-import signUpWithEmailAndPassword from "../../composables/auth/signUpWithEmailAndPassword"
+import {
+  signIn,
+  signUpWithEmailAndPassword,
+} from "../../composables/auth/session"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const isSuccessModalVisible = ref(false)

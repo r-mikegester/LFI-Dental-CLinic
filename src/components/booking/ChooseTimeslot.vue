@@ -15,7 +15,7 @@ import {
 import { getTimeslots } from "../../composables/api/Timeslots"
 import BoxDialog from "../../components/dialogs/BoxDialog.vue"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
-import isSignedIn from "../../composables/auth/isSignedIn"
+import { isSignedIn } from "../../composables/auth/session"
 import { userIsPatient } from "../../composables/auth/user-role"
 import { newAppointment } from "../../composables/api/user-appointments/Appointments"
 import { useRoute, useRouter, RouterLink } from "vue-router"

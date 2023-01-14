@@ -1,14 +1,15 @@
 <script setup>
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
-import isSignedIn from "../../composables/auth/isSignedIn"
-import signOut from "../../composables/auth/signOut"
+import { signOut, isSignedIn } from "../../composables/auth/session"
 import { userIsPatient } from "../../composables/auth/user-role"
 import { useProfilePictureStore } from "../../stores/profilePicture"
+
 const showMenu = ref(false)
 const showSettings = ref(false)
 const show = ref(false)
 const skrr = ref(false)
+
 const toggleNav = () => {
   showMenu.value = !showMenu.value
   showSettings.value = !showSettings.value
