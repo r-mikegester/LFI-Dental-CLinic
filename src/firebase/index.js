@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "@firebase/auth"
-import { initializeApp } from "firebase/app"
+import { initializeApp, getApps } from "firebase/app"
 
 const firebaseConfig = {
   apiKey: "AIzaSyD79pJh6eYIiLORjlrK3YYVD_Ty-ZcdcOk",
@@ -12,7 +12,7 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-initializeApp(firebaseConfig)
+if (getApps().length === 0) initializeApp(firebaseConfig)
 
 export const authStateInitialized = new Promise((resolve) => {
   const auth = getAuth()
