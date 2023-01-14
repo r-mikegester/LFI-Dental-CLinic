@@ -1,10 +1,10 @@
-import getUserToken from "../auth/getUserToken"
-import backendBaseURL from "./backendBaseURL"
-import HttpError from "../helpers/HttpError"
+import getUserToken from "../../auth/getUserToken"
+import backendBaseURL from "../backendBaseURL"
+import HttpError from "../../helpers/HttpError"
 
-export default async (nameFilter) => {
+export default async () => {
   const idToken = await getUserToken()
-  const link = `${backendBaseURL}/users/search/by-name/${nameFilter}`
+  const link = `${backendBaseURL}/users`
   const response = await fetch(link, {
     headers: {
       Authorization: `Bearer ${idToken}`,

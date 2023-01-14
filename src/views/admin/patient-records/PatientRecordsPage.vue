@@ -1,8 +1,8 @@
 <script setup>
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import { computed, nextTick, onMounted, ref } from "vue"
-import listUserProfiles from "../../../composables/api/listUserProfiles"
-import searchUserProfiles from "../../../composables/api/searchUserProfiles"
+import listUserProfiles from "../../../composables/api/user-profile/listUserProfiles"
+import searchUserProfiles from "../../../composables/api/user-profile/searchUserProfiles"
 import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue"
 
 const searchFilter = ref("")

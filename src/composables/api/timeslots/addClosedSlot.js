@@ -1,6 +1,6 @@
-import HttpError from "../helpers/HttpError"
-import ParameterError from "../helpers/ParameterError"
-import backendBaseURL from "./backendBaseURL"
+import HttpError from "../../helpers/HttpError"
+import ParameterError from "../../helpers/ParameterError"
+import backendBaseURL from "../backendBaseURL"
 
 export default async (slotSeconds) => {
   if (!slotSeconds) throw new ParameterError(slotSeconds)

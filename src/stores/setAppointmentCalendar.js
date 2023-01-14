@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import getUnavailableSlots from "../composables/api/getUnavailableSlots"
+import getUnavailableSlots from "../composables/api/timeslots/getUnavailableSlots"
 import getMonthIndex from "../composables/calendar/getMonthIndex"
 import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth"
 import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth"

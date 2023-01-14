@@ -2,9 +2,9 @@
 import { ref } from "vue"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
 import { getAuth } from "firebase/auth"
-import newAppointment from "../../composables/api/newAppointment"
+import newAppointment from "../../composables/api/user-appointments/newAppointment"
 import MedicalChart from "../shared/MedicalChart.vue"
-import updateMedicalChart from "../../composables/api/updateMedicalChart"
+import updateMedicalChart from "../../composables/api/medical-chart/updateMedicalChart"
 import setFilledInMedicalChart from "../../composables/api/medical-chart/setFilledInMedicalChart"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 

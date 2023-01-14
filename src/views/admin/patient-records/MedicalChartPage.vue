@@ -4,7 +4,7 @@ import { useRoute } from "vue-router"
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import MedicalChart from "../../../components/shared/MedicalChart.vue"
 import getMedicalChart from "../../../composables/api/medical-chart/getMedicalChart"
-import updateMedicalChart from "../../../composables/api/updateMedicalChart"
+import updateMedicalChart from "../../../composables/api/medical-chart/updateMedicalChart"
 
 const route = useRoute()
 const patientUid = route.params.uid

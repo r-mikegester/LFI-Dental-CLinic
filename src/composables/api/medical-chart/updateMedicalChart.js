@@ -1,7 +1,7 @@
-import getUserToken from "../auth/getUserToken"
-import backendBaseURL from "../api/backendBaseURL"
-import HttpError from "../helpers/HttpError"
-import ParameterError from "../helpers/ParameterError"
+import getUserToken from "../../auth/getUserToken"
+import backendBaseURL from "../backendBaseURL"
+import HttpError from "../../helpers/HttpError"
+import ParameterError from "../../helpers/ParameterError"
 
 export default async (
   patientUid,

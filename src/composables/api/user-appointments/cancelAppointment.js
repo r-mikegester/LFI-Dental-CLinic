@@ -1,6 +1,6 @@
-import getUserToken from "../auth/getUserToken"
-import backendBaseURL from "./backendBaseURL"
-import HttpError from "../helpers/HttpError"
+import getUserToken from "../../auth/getUserToken"
+import backendBaseURL from "../backendBaseURL"
+import HttpError from "../../helpers/HttpError"
 
 export default async (patientUid, slotSeconds) => {
   const idToken = await getUserToken()

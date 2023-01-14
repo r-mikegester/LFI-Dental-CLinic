@@ -1,4 +1,4 @@
-import backendBaseURL from "./backendBaseURL"
+import backendBaseURL from "../backendBaseURL"
 
 export default async () => {
   const link = `${backendBaseURL}/messages`

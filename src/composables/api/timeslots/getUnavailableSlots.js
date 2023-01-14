@@ -1,4 +1,4 @@
-import backendBaseURL from "./backendBaseURL"
+import backendBaseURL from "../backendBaseURL"
 
 export default async (year, month) => {
   const link = `${backendBaseURL}/timeslots/unavailable/${year}/${month}`

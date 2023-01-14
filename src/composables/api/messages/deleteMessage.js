@@ -1,5 +1,5 @@
-import HttpError from "../helpers/HttpError"
-import backendBaseURL from "./backendBaseURL"
+import HttpError from "../../helpers/HttpError"
+import backendBaseURL from "../backendBaseURL"
 
 export default async (messageUid) => {
   const link = `${backendBaseURL}/messages/${messageUid}/delete`
