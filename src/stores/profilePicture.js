@@ -1,4 +1,4 @@
-import "../firebase"
+import "../utils/firebase"
 import { getAuth } from "@firebase/auth"
 import { defineStore } from "pinia"
 import { getDownloadURL } from "../utils/download-url"

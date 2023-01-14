@@ -1,4 +1,4 @@
-import "../../firebase"
+import "../firebase"
 import { getAuth } from "firebase/auth"
 
 export async function userIsAdmin() {

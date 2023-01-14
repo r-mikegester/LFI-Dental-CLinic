@@ -4,7 +4,7 @@ import { VueQueryPlugin } from "@tanstack/vue-query"
 
 import App from "./App.vue"
 import router from "./router"
-import { authStateInitialized } from "./firebase"
+import { authStateInitialized } from "./utils/firebase"
 import "./assets/base.css"
 
 // Make sure Firebase Auth is fully loaded
