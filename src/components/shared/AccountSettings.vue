@@ -3,9 +3,10 @@ import { onMounted, reactive, ref } from "vue"
 import { getAuth } from "firebase/auth"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 import PasswordDialog from "./PasswordDialog.vue"
-import updateEmail from "../../composables/account/updateEmail"
-import updateFullName from "../../composables/account/updateFullName"
-
+import {
+  updateEmail,
+  updateFullName,
+} from "../../composables/auth/account-details"
 import getDownloadURL from "../../composables/account/getDownloadURL"
 import { useUserFullnameStore } from "../../stores/userFullname"
 import ProfilePictureDialog from "./ProfilePictureDialog.vue"

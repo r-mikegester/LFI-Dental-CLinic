@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from "vue"
 import BoxDialog from "../../components/dialogs/BoxDialog.vue"
-import uploadProfilePicture from "../../composables/account/uploadProfilePicture"
-import updateProfilePicture from "../../composables/account/updateProfilePicture"
-import deleteProfilePicture from "../../composables/account/deleteProfilePicture"
+import {
+  uploadProfilePicture,
+  updateProfilePicture,
+  deleteProfilePicture,
+} from "../../composables/auth/account-details"
 import { useProfilePictureStore } from "../../stores/profilePicture"
 import getDownloadURL from "../../composables/account/getDownloadURL"
 
