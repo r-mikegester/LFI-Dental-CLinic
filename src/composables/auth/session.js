@@ -5,7 +5,7 @@ import {
   signOut as doSignOut,
 } from "firebase/auth"
 import { useProfilePictureStore } from "../../stores/profilePicture"
-import { HttpError, ParameterError } from "../helpers/errors"
+import { HttpError, ParameterError } from "../errors"
 import backendBaseURL from "../api/backendBaseURL"
 
 export function isSignedIn() {

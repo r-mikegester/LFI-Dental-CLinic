@@ -11,7 +11,7 @@ import {
   getMonthIndex,
   getDateTomorrow,
   getDate,
-} from "../../composables/helpers/date-conversions"
+} from "../../composables/date-conversions"
 import { getTimeslots } from "../../composables/api/Timeslots"
 import BoxDialog from "../../components/dialogs/BoxDialog.vue"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"

@@ -1,6 +1,6 @@
 import { getUserToken } from "../../auth/user-token"
 import backendBaseURL from "../../api/backendBaseURL"
-import { HttpError, ParameterError } from "../../helpers/errors"
+import { HttpError, ParameterError } from "../../errors"
 
 export async function getMedicalChart(patientUid) {
   const idToken = await getUserToken()

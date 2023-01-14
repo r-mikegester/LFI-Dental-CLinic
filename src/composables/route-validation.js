@@ -1,7 +1,7 @@
-import "../../firebase"
+import "../firebase"
 import { getAuth } from "firebase/auth"
-import { userIsAdmin, userIsPatient } from "../auth/user-role"
-import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
+import { userIsAdmin, userIsPatient } from "./auth/user-role"
+import { useAppointmentDetailsStore } from "../stores/appointmentDetails"
 
 export async function redirectToAdminHomePageIfAdminUser() {
   if (await userIsAdmin()) {

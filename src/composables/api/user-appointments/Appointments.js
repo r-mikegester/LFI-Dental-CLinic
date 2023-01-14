@@ -1,5 +1,5 @@
 import { getUserToken } from "../../auth/user-token"
-import { HttpError, ParameterError } from "../../helpers/errors"
+import { HttpError, ParameterError } from "../../errors"
 import backendBaseURL from "../backendBaseURL"
 
 export async function cancelAppointment(patientUid, slotSeconds) {

@@ -4,7 +4,7 @@ import {
   getMonthIndex,
   getNumOfDaysInMonth,
   getOffsetFromFirstDayOfMonth,
-} from "../composables/helpers/date-conversions"
+} from "../composables/date-conversions"
 
 export const useSetAppointmentCalendarStore = defineStore({
   id: "setAppointmentCalendar",

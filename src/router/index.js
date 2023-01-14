@@ -8,7 +8,7 @@ import {
   redirectToPatientLoginIfNotPatientUser,
   redirectToPatientLoginIfNotLoggedInUser,
   redirectToPatientAppointmentHistoryPageIfPatientUser,
-} from "../composables/helpers/route-validation"
+} from "../composables/route-validation"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

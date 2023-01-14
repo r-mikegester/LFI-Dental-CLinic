@@ -5,7 +5,7 @@ import {
   getDate,
   getMonthIndex,
   getDateToday,
-} from "../../composables/helpers/date-conversions"
+} from "../../composables/date-conversions"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
 const scheduleCalendar = useScheduleCalendarStore()
 

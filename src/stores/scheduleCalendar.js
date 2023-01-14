@@ -8,7 +8,7 @@ import {
   getMonthIndex,
   getNumOfDaysInMonth,
   getOffsetFromFirstDayOfMonth,
-} from "../composables/helpers/date-conversions"
+} from "../composables/date-conversions"
 
 export const useScheduleCalendarStore = defineStore({
   id: "scheduleCalendar",

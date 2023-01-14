@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue"
-import { getDateOfTimeslot } from "../../composables/helpers/date-conversions"
+import { getDateOfTimeslot } from "../../composables/date-conversions"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
 const scheduleCalendar = useScheduleCalendarStore()
 

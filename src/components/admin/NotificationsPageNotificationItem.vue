@@ -2,7 +2,7 @@
 import {
   getMonthDayYearOfTimeslot,
   getHoursMinutesOfTimeslot,
-} from "../../composables/helpers/date-conversions"
+} from "../../composables/date-conversions"
 import { onMounted, ref } from "vue"
 import { getUserProfile } from "../../composables/api/UserProfiles"
 import {

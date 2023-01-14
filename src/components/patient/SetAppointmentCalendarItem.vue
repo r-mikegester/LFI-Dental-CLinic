@@ -5,7 +5,7 @@ import {
   getMonthIndex,
   getDateTomorrow,
   getDateSixMonthsFromNow,
-} from "../../composables/helpers/date-conversions"
+} from "../../composables/date-conversions"
 import { getTimeslots } from "../../composables/api/Timeslots"
 
 const props = defineProps({

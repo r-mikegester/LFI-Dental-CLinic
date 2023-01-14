@@ -6,10 +6,7 @@ import AppointmentsPageCalendarItem from "../../components/admin/AppointmentsPag
 import AppointmentsPageAppointmentItem from "../../components/admin/AppointmentsPageAppointmentItem.vue"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
 import { getAllAppointments } from "../../composables/api/user-appointments/Appointments"
-import {
-  getMonthIndex,
-  getDate,
-} from "../../composables/helpers/date-conversions"
+import { getMonthIndex, getDate } from "../../composables/date-conversions"
 import { DateTime } from "luxon"
 
 const selected = reactive({

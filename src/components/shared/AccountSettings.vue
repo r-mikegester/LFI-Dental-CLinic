@@ -7,7 +7,7 @@ import {
   updateEmail,
   updateFullName,
 } from "../../composables/auth/account-details"
-import { getDownloadURL } from "../../composables/helpers/download-url"
+import { getDownloadURL } from "../../composables/download-url"
 import { useUserFullnameStore } from "../../stores/userFullname"
 import ProfilePictureDialog from "./ProfilePictureDialog.vue"
 

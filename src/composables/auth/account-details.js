@@ -7,7 +7,7 @@ import {
 } from "@firebase/auth"
 import { getStorage, ref, deleteObject, uploadBytes } from "firebase/storage"
 import { getUserToken } from "./user-token"
-import { HttpError, ParameterError } from "../helpers/errors"
+import { HttpError, ParameterError } from "../errors"
 import backendBaseURL from "../api/backendBaseURL"
 
 export async function deleteProfilePicture() {

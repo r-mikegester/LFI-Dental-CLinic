@@ -12,7 +12,7 @@ import {
   getDateTwoDaysBeforeTimeslot,
   getMonthDayYearOfTimeslot,
   getHoursMinutesOfTimeslot,
-} from "../../composables/helpers/date-conversions"
+} from "../../composables/date-conversions"
 
 const props = defineProps({
   appointment: Object,
