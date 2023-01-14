@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router"
 import HomePage from "../views/HomePage.vue"
-import redirectToAdminLoginIfNotLoggedInUser from "../composables/route-validation/redirectToAdminLoginIfNotLoggedInUser"
-import redirectToAdminLoginIfNotAdminUser from "../composables/route-validation/redirectToAdminLoginIfNotAdminUser"
-import redirectToAdminHomePageIfAdminUser from "../composables/route-validation/redirectToAdminHomePageIfAdminUser"
-import redirectToAppointmentsPageIfAppointmentDetailsIsNull from "../composables/route-validation/redirectToAppointmentsPageIfAppointmentDetailsIsNull"
-import redirectToPatientLoginIfNotPatientUser from "../composables/route-validation/redirectToPatientLoginIfNotPatientUser"
-import redirectToPatientLoginIfNotLoggedInUser from "../composables/route-validation/redirectToPatientLoginIfNotLoggedInUser"
-import redirectToPatientAppointmentHistoryPageIfPatientUser from "../composables/route-validation/redirectToPatientAppointmentHistoryPageIfPatientUser"
+import {
+  redirectToAdminLoginIfNotLoggedInUser,
+  redirectToAdminLoginIfNotAdminUser,
+  redirectToAdminHomePageIfAdminUser,
+  redirectToAppointmentsPageIfAppointmentDetailsIsNull,
+  redirectToPatientLoginIfNotPatientUser,
+  redirectToPatientLoginIfNotLoggedInUser,
+  redirectToPatientAppointmentHistoryPageIfPatientUser,
+} from "../composables/helpers/route-validation"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
