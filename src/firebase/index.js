@@ -14,8 +14,8 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig)
 
-const auth = getAuth()
 export const authStateInitialized = new Promise((resolve) => {
+  const auth = getAuth()
   const unsubscribe = onAuthStateChanged(auth, () => {
     unsubscribe()
     resolve()

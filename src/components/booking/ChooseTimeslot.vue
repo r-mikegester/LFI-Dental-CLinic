@@ -250,7 +250,6 @@ const isAccountExistsDialogVisible = ref(false)
 
 const route = useRoute()
 const router = useRouter()
-const auth = getAuth()
 
 const selectedService = ref("")
 const errorDialogBody = ref("")
@@ -274,7 +273,9 @@ const onGoNext = async () => {
     return
   }
 
+  const auth = getAuth()
   const isEmailVerified = auth.currentUser.emailVerified
+
   if (!isEmailVerified) {
     isEmailNeedsVerificationDialogVisible.value = true
     return

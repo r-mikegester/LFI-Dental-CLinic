@@ -33,7 +33,6 @@ const isSignInButtonEnabled = computed(() => {
 
 const appointmentDetailsStore = useAppointmentDetailsStore()
 const router = useRouter()
-const auth = getAuth()
 
 const onSignIn = async () => {
   try {
@@ -60,7 +59,9 @@ const onSignIn = async () => {
       return
     }
 
+    const auth = getAuth()
     const isEmailVerified = auth.currentUser.emailVerified
+
     if (!isEmailVerified) {
       isEmailNeedsVerificationDialogVisible.value = true
       isSignInButtonClicked.value = false
@@ -101,7 +102,9 @@ async function onEmailVerified() {
   // if there are any.
   if (!appointmentDetailsStore.isInitialized) return
 
+  const auth = getAuth()
   const patientUid = auth.currentUser.uid
+
   await schedulePendingAppointment(patientUid)
 }
 

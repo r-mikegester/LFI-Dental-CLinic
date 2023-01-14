@@ -3,8 +3,6 @@ import { getAuth } from "@firebase/auth"
 import { defineStore } from "pinia"
 import { getDownloadURL } from "../composables/helpers/download-url"
 
-const auth = getAuth()
-
 export const useProfilePictureStore = defineStore({
   id: "profilePicture",
   state: () => ({
@@ -19,6 +17,7 @@ export const useProfilePictureStore = defineStore({
   },
   actions: {
     async initialize() {
+      const auth = getAuth()
       const profilePictureURL = auth.currentUser.photoURL
       if (profilePictureURL)
         this.profilePictureDownloadURL = await getDownloadURL(profilePictureURL)

@@ -1,9 +1,8 @@
 import "../../firebase"
 import { getAuth } from "firebase/auth"
 
-const auth = getAuth()
-
 export async function userIsAdmin() {
+  const auth = getAuth()
   const user = auth.currentUser
   if (!user) return false
 
@@ -15,6 +14,7 @@ export async function userIsAdmin() {
 }
 
 export async function userIsPatient() {
+  const auth = getAuth()
   const user = auth.currentUser
   if (!user) return false
 

@@ -6,11 +6,11 @@ import { getUserAppointments } from "../../composables/api/user-appointments/App
 import MyHistoryPageAppointmentItem from "../../components/patient/MyHistoryPageAppointmentItem.vue"
 import { onMounted, ref } from "vue"
 
-const auth = getAuth()
-const patientUid = auth.currentUser.uid
 const userAppointments = ref([])
 
 async function loadUserAppointments() {
+  const auth = getAuth()
+  const patientUid = auth.currentUser.uid
   userAppointments.value = await getUserAppointments(patientUid)
 }
 

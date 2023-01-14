@@ -11,8 +11,6 @@ import {
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const appointmentDetailsStore = useAppointmentDetailsStore()
-const auth = getAuth()
-const patientUid = auth.currentUser.uid
 
 const isRequiredFieldsValid = (personalInformation) => {
   if (personalInformation.fullName === "") return false
@@ -27,6 +25,10 @@ const isSubmitDisabled = ref(false)
 const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
   if (isRequiredFieldsValid(personalInformation)) {
     isSubmitDisabled.value = true
+
+    const auth = getAuth()
+    const patientUid = auth.currentUser.uid
+
     await updateMedicalChart(
       patientUid,
       personalInformation,

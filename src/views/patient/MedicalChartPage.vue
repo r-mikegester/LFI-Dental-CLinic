@@ -10,9 +10,6 @@ import {
   setFilledInMedicalChart,
 } from "../../composables/api/charts/MedicalChart"
 
-const auth = getAuth()
-const patientUid = auth.currentUser.uid
-
 const medicalChartIsLoading = ref(false)
 const medicalChart = reactive({
   personalInformation: null,
@@ -21,6 +18,8 @@ const medicalChart = reactive({
 })
 
 onMounted(async () => {
+  const auth = getAuth()
+  const patientUid = auth.currentUser.uid
   const { personalInformation, medicalHistory, dentalHistory } =
     await getMedicalChart(patientUid)
 
@@ -43,6 +42,8 @@ const isRequiredFieldsValid = (personalInformation) => {
 const isSubmitDisabled = ref(false)
 
 const onSubmit = async (personalInformation, medicalHistory, dentalHistory) => {
+  const auth = getAuth()
+  const patientUid = auth.currentUser.uid
   if (isRequiredFieldsValid(personalInformation)) {
     isSubmitDisabled.value = true
     await updateMedicalChart(

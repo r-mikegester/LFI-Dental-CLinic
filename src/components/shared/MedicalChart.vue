@@ -13,8 +13,6 @@ const props = defineProps({
   dentalHistory: Object,
 })
 
-const auth = getAuth()
-
 onMounted(async () => {
   if (props.personalInformation) {
     Object.keys(personalInformation).forEach((property) => {
@@ -48,6 +46,7 @@ onMounted(async () => {
       pastDentalCareIsEnabled.value = true
   }
 
+  const auth = getAuth()
   const idTokenResult = await auth.currentUser.getIdTokenResult()
   // For patient users, try to detect if we have at least our name
   // filled in already. This is useful for newly created patient

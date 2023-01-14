@@ -18,8 +18,8 @@ const userInfo = reactive({
   profilePictureDownloadURL: "",
 })
 
-const auth = getAuth()
 onMounted(async () => {
+  const auth = getAuth()
   userInfo.fullName = auth.currentUser.displayName
   userInfo.email = auth.currentUser.email
   userInfo.profilePictureURL = auth.currentUser.photoURL

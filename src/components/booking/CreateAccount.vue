@@ -67,8 +67,6 @@ const onCreate = async () => {
 
 const isErrorDialogVisible = ref(false)
 
-const auth = getAuth()
-
 const isSendEmailVerificationButtonClicked = ref(false)
 async function onSendEmailVerification() {
   try {
@@ -80,6 +78,7 @@ async function onSendEmailVerification() {
       isSendEmailVerificationButtonClicked.value = false
     }, 60 * 1000)
 
+    const auth = getAuth()
     await sendEmailVerification(auth.currentUser)
   } catch (e) {
     console.log("Error occured while sending email verification:", e)
@@ -91,6 +90,7 @@ const isEmailNotValidDialogVisible = ref(false)
 
 async function onContinue() {
   try {
+    const auth = getAuth()
     await auth.currentUser.reload()
     const isUserVerified = auth.currentUser.emailVerified
     if (isUserVerified) {

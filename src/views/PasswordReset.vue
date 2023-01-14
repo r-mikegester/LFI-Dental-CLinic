@@ -23,7 +23,6 @@ const isResetLinkButtonEnabled = computed(() => {
   return true
 })
 
-const auth = getAuth()
 const isResetLinkSentDialogVisible = ref(false)
 const isResetLinkButtonClicked = ref(false)
 
@@ -32,6 +31,7 @@ async function onSentPasswordResetLink() {
 
   try {
     isResetLinkButtonClicked.value = true
+    const auth = getAuth()
     await sendPasswordResetEmail(auth, enteredEmail.value)
   } catch (e) {
     if (e instanceof FirebaseError) {

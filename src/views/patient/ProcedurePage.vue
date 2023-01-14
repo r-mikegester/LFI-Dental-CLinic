@@ -8,8 +8,6 @@ import { getUserAppointmentProcedure } from "../../composables/api/user-appointm
 
 const route = useRoute()
 const timeslot = route.params.timeslot
-const auth = getAuth()
-const patientUid = auth.currentUser.uid
 
 const isFinishedLoading = ref(false)
 const procedure = reactive({
@@ -18,6 +16,8 @@ const procedure = reactive({
 })
 
 onMounted(async () => {
+  const auth = getAuth()
+  const patientUid = auth.currentUser.uid
   const appointmentProcedure = await getUserAppointmentProcedure(
     patientUid,
     timeslot

@@ -8,9 +8,9 @@ import { useProfilePictureStore } from "../../stores/profilePicture"
 import { HttpError, ParameterError } from "../helpers/errors"
 import backendBaseURL from "../api/backendBaseURL"
 
-const auth = getAuth()
-
 export function isSignedIn() {
+  const auth = getAuth()
+
   if (auth.currentUser) return true
   return false
 }
@@ -19,6 +19,7 @@ export async function signIn(email, password) {
   if (!email) throw new ParameterError(email)
   if (!password) throw new ParameterError(password)
 
+  const auth = getAuth()
   const userCredential = await signInWithEmailAndPassword(auth, email, password)
   const profilePictureStore = useProfilePictureStore()
   profilePictureStore.$reset()
@@ -30,6 +31,8 @@ export async function signIn(email, password) {
 
 export async function signOut() {
   const user = auth.currentUser
+  const auth = getAuth()
+
   await doSignOut(auth)
   console.log(`Logged out: ${user.displayName} (${user.email})`)
 }

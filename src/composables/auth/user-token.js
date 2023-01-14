@@ -1,7 +1,6 @@
 import { getAuth } from "@firebase/auth"
 
-const auth = getAuth()
-
 export async function getUserToken() {
+  const auth = getAuth()
   return await auth.currentUser.getIdToken(true /* force refresh */)
 }

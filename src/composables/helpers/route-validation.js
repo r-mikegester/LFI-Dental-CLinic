@@ -3,8 +3,6 @@ import { getAuth } from "firebase/auth"
 import { userIsAdmin, userIsPatient } from "../auth/user-role"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
 
-const auth = getAuth()
-
 export async function redirectToAdminHomePageIfAdminUser() {
   if (await userIsAdmin()) {
     return {
@@ -23,6 +21,7 @@ export async function redirectToAdminLoginIfNotAdminUser() {
 }
 
 export async function redirectToAdminLoginIfNotLoggedInUser() {
+  const auth = getAuth()
   const currentUser = auth.currentUser
   if (!currentUser) {
     return {
@@ -49,6 +48,7 @@ export async function redirectToPatientAppointmentHistoryPageIfPatientUser() {
 }
 
 export async function redirectToPatientLoginIfNotLoggedInUser() {
+  const auth = getAuth()
   const currentUser = auth.currentUser
   if (!currentUser) {
     return {

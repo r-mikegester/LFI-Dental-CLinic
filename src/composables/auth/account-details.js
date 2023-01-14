@@ -10,17 +10,20 @@ import { getUserToken } from "./user-token"
 import { HttpError, ParameterError } from "../helpers/errors"
 import backendBaseURL from "../api/backendBaseURL"
 
-const storage = getStorage()
-const auth = getAuth()
-
 export async function deleteProfilePicture() {
+  const auth = getAuth()
+  const storage = getStorage()
+
   const uid = auth.currentUser.uid
   const profilePictureRef = ref(storage, `profilePictures/${uid}`)
+
   await deleteObject(profilePictureRef)
 }
 
 export async function updateEmail(password, newEmail) {
+  const auth = getAuth()
   const oldEmail = auth.currentUser.email
+
   await signInWithEmailAndPassword(auth, oldEmail, password)
   await doUpdateEmail(auth.currentUser, newEmail)
   await auth.currentUser.reload()
@@ -29,8 +32,10 @@ export async function updateEmail(password, newEmail) {
 export async function updateFullName(fullName) {
   if (!fullName) throw new ParameterError("ParameterError")
 
+  const auth = getAuth()
   const idToken = await getUserToken()
   const link = `${backendBaseURL}/auth/user/name`
+
   const response = await fetch(link, {
     method: "POST",
     body: JSON.stringify({
@@ -51,13 +56,17 @@ export async function updateFullName(fullName) {
 }
 
 export async function updatePassword(newPassword, oldPassword) {
+  const auth = getAuth()
   const email = auth.currentUser.email
+
   await signInWithEmailAndPassword(auth, email, oldPassword)
   await doUpdatePassword(auth.currentUser, newPassword)
   await auth.currentUser.reload()
 }
 
 export async function updateProfilePicture(imagePath) {
+  const auth = getAuth()
+
   await doUpdateProfile(auth.currentUser, {
     photoURL: imagePath,
   })
@@ -65,8 +74,12 @@ export async function updateProfilePicture(imagePath) {
 }
 
 export async function uploadProfilePicture(profilePictureFile) {
+  const auth = getAuth()
+  const storage = getStorage()
+
   const uid = auth.currentUser.uid
   const profilePictureRef = ref(storage, `profilePictures/${uid}`)
+
   await uploadBytes(profilePictureRef, profilePictureFile)
   return profilePictureRef.fullPath
 }

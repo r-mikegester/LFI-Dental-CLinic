@@ -1,7 +1,6 @@
 import "../firebase"
 import { getAuth } from "@firebase/auth"
 import { defineStore } from "pinia"
-const auth = getAuth()
 
 export const useUserFullnameStore = defineStore({
   id: "userFullname",
@@ -15,6 +14,7 @@ export const useUserFullnameStore = defineStore({
   },
   actions: {
     async initialize() {
+      const auth = getAuth()
       this.fullName = auth.currentUser.displayName
       this.initialized = true
     },

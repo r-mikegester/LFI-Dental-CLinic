@@ -3,7 +3,6 @@ import { getAuth, sendEmailVerification } from "@firebase/auth"
 import { ref, onUnmounted } from "vue"
 import BoxDialog from "./BoxDialog.vue"
 
-const auth = getAuth()
 const isEmailNotActuallyVerifiedDialogVisible = ref(false)
 const isSendEmailVerificationButtonClicked = ref(false)
 const sendEmailVerificationIntervalHandle = ref(null)
@@ -20,6 +19,7 @@ async function onSendEmailVerification() {
       isSendEmailVerificationButtonClicked.value = false
     }, 60 * 1000)
 
+    const auth = getAuth()
     await sendEmailVerification(auth.currentUser)
   } catch (e) {
     console.log("Error occured while sending email verification:", e)
@@ -27,6 +27,7 @@ async function onSendEmailVerification() {
 }
 
 async function onConfirmEmailVerified() {
+  const auth = getAuth()
   await auth.currentUser.reload()
 
   const isUserVerified = auth.currentUser.emailVerified
