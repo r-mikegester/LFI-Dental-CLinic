@@ -7,7 +7,7 @@ import {
   deleteProfilePicture,
 } from "../../composables/auth/account-details"
 import { useProfilePictureStore } from "../../stores/profilePicture"
-import getDownloadURL from "../../composables/account/getDownloadURL"
+import { getDownloadURL } from "../../composables/helpers/download-url"
 
 const props = defineProps({
   userInfo: Object,
@@ -15,7 +15,6 @@ const props = defineProps({
 const emit = defineEmits(["closeDialog", "updateProfilePicture"])
 
 const inputFile = ref()
-
 const isUpdateProfilePictureVisible = ref(false)
 
 const onChangeInputFile = (e) => {

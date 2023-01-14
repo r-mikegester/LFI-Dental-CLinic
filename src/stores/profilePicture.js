@@ -1,7 +1,8 @@
 import "../firebase"
 import { getAuth } from "@firebase/auth"
 import { defineStore } from "pinia"
-import getDownloadURL from "../composables/account/getDownloadURL"
+import { getDownloadURL } from "../composables/helpers/download-url"
+
 const auth = getAuth()
 
 export const useProfilePictureStore = defineStore({
