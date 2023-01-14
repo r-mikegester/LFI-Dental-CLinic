@@ -1,6 +1,8 @@
 <script setup>
-import setPatientArchived from "../../composables/api/archiving/setPatientArchived"
-import setPatientNotArchived from "../../composables/api/archiving/setPatientNotArchived"
+import {
+  setPatientArchived,
+  setPatientNotArchived,
+} from "../../composables/api/ArchivedProfiles"
 
 const props = defineProps({
   uid: String,

@@ -1,8 +1,10 @@
 <script setup>
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import { computed, nextTick, onMounted, ref } from "vue"
-import listUserProfiles from "../../../composables/api/archiving/listArchivedUserProfiles"
-import searchUserProfiles from "../../../composables/api/archiving/searchArchivedUserProfiles"
+import {
+  listArchivedUserProfiles,
+  searchArchivedUserProfiles,
+} from "../../../composables/api/ArchivedProfiles"
 import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue"
 
 const searchFilter = ref("")
@@ -16,7 +18,7 @@ const maxPageNumber = computed(() => {
 })
 
 onMounted(async () => {
-  const { users } = await listUserProfiles()
+  const { users } = await listArchivedUserProfiles()
   patientsList.value = users
   patientsListIsLoaded.value = true
 })
@@ -32,7 +34,7 @@ async function onClearSearch() {
   patientsListIsLoaded.value = false
   await nextTick()
 
-  const { users } = await listUserProfiles(searchFilter.value)
+  const { users } = await listArchivedUserProfiles(searchFilter.value)
   patientsList.value = users
 
   searchFilter.value = ""
@@ -47,7 +49,7 @@ async function onSearch() {
   patientsListIsLoaded.value = false
   await nextTick()
 
-  const { users } = await searchUserProfiles(searchFilter.value)
+  const { users } = await searchArchivedUserProfiles(searchFilter.value)
   patientsList.value = users
 
   isShowingSearchResults.value = true
@@ -61,7 +63,7 @@ function onPageSizeChanged() {
 async function reloadUsers() {
   patientsListIsLoaded.value = false
 
-  const { users } = await listUserProfiles()
+  const { users } = await listArchivedUserProfiles()
   patientsList.value = users
 
   searchFilter.value = ""
