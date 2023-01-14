@@ -1,7 +1,9 @@
 import { defineStore } from "pinia"
-import addClosedSlot from "../composables/api/timeslots/addClosedSlot"
-import deleteClosedSlot from "../composables/api/timeslots/deleteClosedSlot"
-import getUnavailableSlots from "../composables/api/timeslots/getUnavailableSlots"
+import {
+  addClosedSlot,
+  deleteClosedSlot,
+  getUnavailableSlots,
+} from "../composables/api/Timeslots"
 import getMonthIndex from "../composables/calendar/getMonthIndex"
 import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth"
 import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth"
