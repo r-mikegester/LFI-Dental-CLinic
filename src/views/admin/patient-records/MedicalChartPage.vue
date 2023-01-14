@@ -3,8 +3,10 @@ import { onMounted, reactive, ref } from "vue"
 import { useRoute } from "vue-router"
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import MedicalChart from "../../../components/shared/MedicalChart.vue"
-import getMedicalChart from "../../../composables/api/medical-chart/getMedicalChart"
-import updateMedicalChart from "../../../composables/api/medical-chart/updateMedicalChart"
+import {
+  getMedicalChart,
+  updateMedicalChart,
+} from "../../../composables/api/charts/MedicalChart"
 
 const route = useRoute()
 const patientUid = route.params.uid

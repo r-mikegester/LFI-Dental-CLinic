@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue"
 import deciduousChart from "../../assets/img/deciduous-chart.jpg"
-import getDeciduousChart from "../../composables/api/deciduous-chart/getDeciduousChart"
-import saveDeciduousChart from "../../composables/api/deciduous-chart/saveDeciduousChart"
+import {
+  getDeciduousChart,
+  saveDeciduousChart,
+} from "../../composables/api/charts/DeciduousChart"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,

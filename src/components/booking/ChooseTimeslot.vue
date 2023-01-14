@@ -17,7 +17,7 @@ import isSignedIn from "../../composables/auth/isSignedIn"
 import userIsPatient from "../../composables/auth/userIsPatient"
 import newAppointment from "../../composables/api/user-appointments/newAppointment"
 import { useRoute, useRouter, RouterLink } from "vue-router"
-import isFilledInMedicalChart from "../../composables/api/medical-chart/isFilledInMedicalChart"
+import { isFilledInMedicalChart } from "../../composables/api/charts/MedicalChart"
 import EmailNeedsVerificationDialog from "../../components/dialogs/EmailNeedsVerificationDialog.vue"
 import { getAuth } from "firebase/auth"
 

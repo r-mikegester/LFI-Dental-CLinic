@@ -4,8 +4,10 @@ import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
 import { getAuth } from "firebase/auth"
 import newAppointment from "../../composables/api/user-appointments/newAppointment"
 import MedicalChart from "../shared/MedicalChart.vue"
-import updateMedicalChart from "../../composables/api/medical-chart/updateMedicalChart"
-import setFilledInMedicalChart from "../../composables/api/medical-chart/setFilledInMedicalChart"
+import {
+  updateMedicalChart,
+  setFilledInMedicalChart,
+} from "../../composables/api/charts/MedicalChart"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const appointmentDetailsStore = useAppointmentDetailsStore()
