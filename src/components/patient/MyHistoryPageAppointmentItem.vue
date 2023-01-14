@@ -2,8 +2,10 @@
 import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
 import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
 import { RouterLink } from "vue-router"
-import requestProcedureAccess from "../../composables/api/access-procedure/requestProcedureAccess"
-import cancelRequestProcedureAccess from "../../composables/api/access-procedure/cancelRequestProcedureAccess"
+import {
+  requestProcedureAccess,
+  cancelRequestProcedureAccess,
+} from "../../composables/api/user-appointments/AppointmentProcedureAccess"
 import { getAuth } from "firebase/auth"
 import cancelAppointment from "../../composables/api/user-appointments/cancelAppointment"
 import SimpleModalDialog from "../admin/SimpleModalDialog.vue"

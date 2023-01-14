@@ -7,7 +7,7 @@ import {
   setUserAppointmentAttended,
   setUserAppointmentNotAttended,
   setUserAppointmentPending,
-} from "../../composables/api/user-appointments/attended"
+} from "../../composables/api/user-appointments/AppointmentProceduresAttended"
 
 const props = defineProps({
   timeslot: String,

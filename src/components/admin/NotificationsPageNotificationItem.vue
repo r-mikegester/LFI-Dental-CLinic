@@ -3,8 +3,10 @@ import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYea
 import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
 import { onMounted, ref } from "vue"
 import { getUserProfile } from "../../composables/api/UserProfiles"
-import setProcedureAccessAllowed from "../../composables/api/access-procedure/setProcedureAccessAllowed"
-import setProcedureAccessDisallowed from "../../composables/api/access-procedure/setProcedureAccessDisallowed"
+import {
+  setProcedureAccessAllowed,
+  setProcedureAccessDisallowed,
+} from "../../composables/api/user-appointments/AppointmentProcedureAccess"
 
 const props = defineProps({
   appointment: Object,

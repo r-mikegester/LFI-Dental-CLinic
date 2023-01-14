@@ -4,7 +4,7 @@ import HeroSection from "../../components/patient/HeroSection.vue"
 import { useRoute } from "vue-router"
 import { getAuth } from "firebase/auth"
 import { nextTick, onMounted, reactive, ref } from "vue"
-import getUserAppointmentProcedure from "../../composables/api/procedures/getUserAppointmentProcedure"
+import { getUserAppointmentProcedure } from "../../composables/api/user-appointments/AppointmentProcedures"
 
 const route = useRoute()
 const timeslot = route.params.timeslot

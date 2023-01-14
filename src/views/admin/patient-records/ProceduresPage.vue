@@ -2,10 +2,14 @@
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import { RouterLink, useRoute } from "vue-router"
 import { nextTick, onMounted, reactive, ref } from "vue"
-import getUserAppointmentProcedure from "../../../composables/api/procedures/getUserAppointmentProcedure"
-import setUserAppointmentProcedure from "../../../composables/api/procedures/setUserAppointmentProcedure"
-import setProcedureAccessAllowed from "../../../composables/api/access-procedure/setProcedureAccessAllowed"
-import setProcedureAccessDisallowed from "../../../composables/api/access-procedure/setProcedureAccessDisallowed"
+import {
+  getUserAppointmentProcedure,
+  setUserAppointmentProcedure,
+} from "../../../composables/api/user-appointments/AppointmentProcedures"
+import {
+  setProcedureAccessAllowed,
+  setProcedureAccessDisallowed,
+} from "../../../composables/api/user-appointments/AppointmentProcedureAccess"
 
 const route = useRoute()
 const patientUid = route.params.uid
