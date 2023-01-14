@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue"
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
+import {
+  getMonthDayYearOfTimeslot,
+  getHoursMinutesOfTimeslot,
+} from "../../composables/helpers/date-conversions"
 import { getUserProfile } from "../../composables/api/UserProfiles"
-import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
 import {
   setUserAppointmentAttended,
   setUserAppointmentNotAttended,

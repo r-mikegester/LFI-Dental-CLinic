@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from "vue"
-import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot"
-import getDate from "../../composables/calendar/getDate"
+import {
+  getDateOfTimeslot,
+  getDate,
+  getMonthIndex,
+  getDateToday,
+} from "../../composables/helpers/date-conversions"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
-import getMonthIndex from "../../composables/calendar/getMonthIndex"
-import getDateToday from "../../composables/calendar/getDateToday"
 const scheduleCalendar = useScheduleCalendarStore()
 
 const props = defineProps({

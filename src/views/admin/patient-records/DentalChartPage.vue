@@ -12,7 +12,7 @@ import {
   getConsentForm,
   setConsentForm,
 } from "../../../composables/api/forms/ConsentForm"
-import getMonthName from "../../../composables/calendar/getMonthName"
+import { getMonthName } from "../../../composables/helpers/date-conversions"
 import PatientSignatureField from "../../../components/admin/PatientSignatureField.vue"
 import GuardianSignatureField from "../../../components/admin/GuardianSignatureField.vue"
 

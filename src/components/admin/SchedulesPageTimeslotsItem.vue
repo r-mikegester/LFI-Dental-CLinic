@@ -1,7 +1,9 @@
 <script setup>
 import { ref, watchEffect } from "vue"
-import getMonthIndex from "../../composables/calendar/getMonthIndex"
-import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject"
+import {
+  getMonthIndex,
+  getUnixSecondsFromObject,
+} from "../../composables/helpers/date-conversions"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
 
 const props = defineProps({

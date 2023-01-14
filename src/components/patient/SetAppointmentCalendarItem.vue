@@ -1,10 +1,12 @@
 <script setup>
 import { computed, ref, watchEffect } from "vue"
 import { DateTime } from "luxon"
-import getMonthIndex from "../../composables/calendar/getMonthIndex"
-import getTimeslots from "../../composables/calendar/getTimeslots"
-import getDateTomorrow from "../../composables/calendar/getDateTomorrow"
-import getDateSixMonthsFromNow from "../../composables/calendar/getDateSixMonthsFromNow"
+import {
+  getMonthIndex,
+  getDateTomorrow,
+  getDateSixMonthsFromNow,
+} from "../../composables/helpers/date-conversions"
+import { getTimeslots } from "../../composables/api/Timeslots"
 
 const props = defineProps({
   date: Number,

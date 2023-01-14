@@ -1,6 +1,8 @@
 <script setup>
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
-import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
+import {
+  getMonthDayYearOfTimeslot,
+  getHoursMinutesOfTimeslot,
+} from "../../composables/helpers/date-conversions"
 import { onMounted, ref } from "vue"
 import { getUserProfile } from "../../composables/api/UserProfiles"
 import {

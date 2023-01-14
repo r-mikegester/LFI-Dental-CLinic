@@ -5,14 +5,16 @@ import SetAppointmentCalendarItem from "../../components/patient/SetAppointmentC
 import { useSetAppointmentCalendarStore } from "../../stores/setAppointmentCalendar"
 import TimeslotsWidget from "../admin/TimeslotsWidget.vue"
 import SetAppointmentTimeslotsItem from "../patient/SetAppointmentTimeslotsItem.vue"
-import getDateOfTimeslot from "../../composables/calendar/getDateOfTimeslot"
-import getTimeslots from "../../composables/calendar/getTimeslots"
-import getUnixSecondsFromObject from "../../composables/calendar/getUnixSecondsFromObject"
-import getMonthIndex from "../../composables/calendar/getMonthIndex"
+import {
+  getDateOfTimeslot,
+  getUnixSecondsFromObject,
+  getMonthIndex,
+  getDateTomorrow,
+  getDate,
+} from "../../composables/helpers/date-conversions"
+import { getTimeslots } from "../../composables/api/Timeslots"
 import BoxDialog from "../../components/dialogs/BoxDialog.vue"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
-import getDateTomorrow from "../../composables/calendar/getDateTomorrow"
-import getDate from "../../composables/calendar/getDate"
 import isSignedIn from "../../composables/auth/isSignedIn"
 import userIsPatient from "../../composables/auth/userIsPatient"
 import { newAppointment } from "../../composables/api/user-appointments/Appointments"

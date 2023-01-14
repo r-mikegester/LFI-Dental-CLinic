@@ -1,8 +1,10 @@
 import { defineStore } from "pinia"
 import { getUnavailableSlots } from "../composables/api/Timeslots"
-import getMonthIndex from "../composables/calendar/getMonthIndex"
-import getNumOfDaysInMonth from "../composables/calendar/getNumOfDaysInMonth"
-import getOffsetFromFirstDayOfMonth from "../composables/calendar/getOffsetFromFirstDayOfMonth"
+import {
+  getMonthIndex,
+  getNumOfDaysInMonth,
+  getOffsetFromFirstDayOfMonth,
+} from "../composables/helpers/date-conversions"
 
 export const useSetAppointmentCalendarStore = defineStore({
   id: "setAppointmentCalendar",

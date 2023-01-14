@@ -1,6 +1,4 @@
 <script setup>
-import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
-import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
 import { RouterLink } from "vue-router"
 import {
   requestProcedureAccess,
@@ -10,7 +8,11 @@ import { getAuth } from "firebase/auth"
 import { cancelAppointment } from "../../composables/api/user-appointments/Appointments"
 import SimpleModalDialog from "../admin/SimpleModalDialog.vue"
 import { onMounted, ref } from "vue"
-import getDateTwoDaysBeforeTimeslot from "../../composables/calendar/getDateTwoDaysBeforeTimeslot"
+import {
+  getDateTwoDaysBeforeTimeslot,
+  getMonthDayYearOfTimeslot,
+  getHoursMinutesOfTimeslot,
+} from "../../composables/helpers/date-conversions"
 
 const props = defineProps({
   appointment: Object,
