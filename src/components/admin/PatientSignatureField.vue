@@ -1,7 +1,9 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue"
-import getPatientSignature from "../../composables/api/signature-fields/getPatientSignature"
-import setPatientSignature from "../../composables/api/signature-fields/setPatientSignature"
+import {
+  getPatientSignature,
+  setPatientSignature,
+} from "../../composables/api/signatures/PatientSignature"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,
