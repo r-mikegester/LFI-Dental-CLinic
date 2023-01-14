@@ -7,7 +7,7 @@ import {
   cancelRequestProcedureAccess,
 } from "../../composables/api/user-appointments/AppointmentProcedureAccess"
 import { getAuth } from "firebase/auth"
-import cancelAppointment from "../../composables/api/user-appointments/cancelAppointment"
+import { cancelAppointment } from "../../composables/api/user-appointments/Appointments"
 import SimpleModalDialog from "../admin/SimpleModalDialog.vue"
 import { onMounted, ref } from "vue"
 import getDateTwoDaysBeforeTimeslot from "../../composables/calendar/getDateTwoDaysBeforeTimeslot"

@@ -2,7 +2,7 @@
 import { getAuth } from "firebase/auth"
 import { computed, reactive, ref } from "vue"
 import { RouterLink, useRouter } from "vue-router"
-import newAppointment from "../../composables/api/user-appointments/newAppointment"
+import { newAppointment } from "../../composables/api/user-appointments/Appointments"
 import signIn from "../../composables/auth/signIn"
 import userIsAdmin from "../../composables/auth/userIsAdmin"
 import { isFilledInMedicalChart } from "../../composables/api/charts/MedicalChart"

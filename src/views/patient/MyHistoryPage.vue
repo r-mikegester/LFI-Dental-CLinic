@@ -2,7 +2,7 @@
 import { getAuth } from "firebase/auth"
 import BaseLayout from "../../components/patient/BaseLayout.vue"
 import HeroSection from "../../components/patient/HeroSection.vue"
-import getUserAppointments from "../../composables/api/user-appointments/getUserAppointments"
+import { getUserAppointments } from "../../composables/api/user-appointments/Appointments"
 import MyHistoryPageAppointmentItem from "../../components/patient/MyHistoryPageAppointmentItem.vue"
 import { onMounted, ref } from "vue"
 
