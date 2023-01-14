@@ -2,8 +2,7 @@
 import BaseLayout from "../../components/admin/BaseLayout.vue"
 import { RouterLink } from "vue-router"
 import { onMounted, reactive, ref } from "vue"
-import getReminders from "../../composables/api/reminders/getReminders"
-import setReminders from "../../composables/api/reminders/setReminders"
+import { getReminders, setReminders } from "../../composables/api/Reminders"
 import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue"
 
 const isEditing = ref(false)
