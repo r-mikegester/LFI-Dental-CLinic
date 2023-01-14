@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import isSignedIn from "../../composables/auth/isSignedIn"
 import signOut from "../../composables/auth/signOut"
-import userIsPatient from "../../composables/auth/userIsPatient"
+import { userIsPatient } from "../../composables/auth/user-role"
 import { useProfilePictureStore } from "../../stores/profilePicture"
 const showMenu = ref(false)
 const showSettings = ref(false)

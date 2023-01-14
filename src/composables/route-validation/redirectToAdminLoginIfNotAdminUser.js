@@ -1,4 +1,4 @@
-import userIsAdmin from "../auth/userIsAdmin"
+import { userIsAdmin } from "../auth/user-role"
 
 export default async () => {
   if (!(await userIsAdmin())) {
