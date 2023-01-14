@@ -3,7 +3,24 @@ import backendBaseURL from "../../api/backendBaseURL"
 import HttpError from "../../helpers/HttpError"
 import ParameterError from "../../helpers/ParameterError"
 
-export default async (patientUid, consentForm) => {
+export async function getConsentForm(patientUid) {
+  const idToken = await getUserToken()
+
+  if (!patientUid) throw new ParameterError("patientUid")
+
+  const link = `${backendBaseURL}/users/${patientUid}/forms/consent`
+  const response = await fetch(link, {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  })
+  const data = await response.json()
+
+  if (!response.ok) throw new HttpError(response.status, data.message)
+  return data.payload
+}
+
+export async function setConsentForm(patientUid, consentForm) {
   const idToken = await getUserToken()
 
   if (!patientUid) throw new ParameterError("patientUid")

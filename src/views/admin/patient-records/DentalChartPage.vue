@@ -4,10 +4,14 @@ import { RouterLink, useRoute } from "vue-router"
 import BaseLayout from "../../../components/admin/BaseLayout.vue"
 import DentalChart from "../../../components/admin/DentalChart.vue"
 import DeciduousChart from "../../../components/admin/DeciduousChart.vue"
-import getAssessmentForm from "../../../composables/api/assessment-form/getAssessmentForm"
-import setAssessmentForm from "../../../composables/api/assessment-form/setAssessmentForm"
-import getConsentForm from "../../../composables/api/consent-form/getConsentForm"
-import setConsentForm from "../../../composables/api/consent-form/setConsentForm"
+import {
+  getAssessmentForm,
+  setAssessmentForm,
+} from "../../../composables/api/forms/AssessmentForm"
+import {
+  getConsentForm,
+  setConsentForm,
+} from "../../../composables/api/forms/ConsentForm"
 import getMonthName from "../../../composables/calendar/getMonthName"
 import PatientSignatureField from "../../../components/admin/PatientSignatureField.vue"
 import GuardianSignatureField from "../../../components/admin/GuardianSignatureField.vue"
