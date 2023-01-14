@@ -2,7 +2,7 @@
 import getMonthDayYearOfTimeslot from "../../composables/calendar/getMonthDayYearOfTimeslot"
 import getHoursMinutesOfTimeslot from "../../composables/calendar/getHoursMinutesOfTimeslot"
 import { onMounted, ref } from "vue"
-import getUserProfile from "../../composables/api/user-profile/getUserProfile"
+import { getUserProfile } from "../../composables/api/UserProfiles"
 import setProcedureAccessAllowed from "../../composables/api/access-procedure/setProcedureAccessAllowed"
 import setProcedureAccessDisallowed from "../../composables/api/access-procedure/setProcedureAccessDisallowed"
 
