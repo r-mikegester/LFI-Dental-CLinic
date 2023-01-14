@@ -7,7 +7,7 @@ import {
 } from "@firebase/auth"
 import { getStorage, ref, deleteObject, uploadBytes } from "firebase/storage"
 import backendBaseURL from "../api/backendBaseURL"
-import getUserToken from "../auth/getUserToken"
+import { getUserToken } from "./user-token"
 import HttpError from "../helpers/HttpError"
 import ParameterError from "../helpers/ParameterError"
 

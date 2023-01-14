@@ -1,4 +1,4 @@
-import getUserToken from "../../auth/getUserToken"
+import { getUserToken } from "../../auth/user-token"
 import backendBaseURL from "../../api/backendBaseURL"
 import HttpError from "../../helpers/HttpError"
 import ParameterError from "../../helpers/ParameterError"
