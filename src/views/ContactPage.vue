@@ -1,6 +1,6 @@
 <script setup>
 import { computed, reactive, ref } from "vue"
-import newMessage from "../composables/api/messages/newMessage"
+import { createMessage } from "../composables/api/Messages"
 import BaseLayout from "../components/patient/BaseLayout.vue"
 import HeroSection from "../components/patient/HeroSection.vue"
 
@@ -22,7 +22,7 @@ const isSendButtonDisabled = computed(() => {
 const onSendButton = async () => {
   if (!isSendButtonDisabled.value) {
     messageIsSending.value = true
-    await newMessage(message)
+    await createMessage(message)
     messageIsSending.value = false
     message.senderName = ""
     message.email = ""

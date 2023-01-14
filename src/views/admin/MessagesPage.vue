@@ -3,8 +3,10 @@ import { useQueryClient, useMutation, useQuery } from "@tanstack/vue-query"
 import { ref, computed } from "vue"
 import BaseLayout from "../../components/admin/BaseLayout.vue"
 import MessageChooserItem from "../../components/admin/MessageChooserItem.vue"
-import getAllMessages from "../../composables/api/messages/getAllMessages"
-import { toggleMessageArchiveStatus } from "../../composables/api/messages/Messages"
+import {
+  toggleMessageArchiveStatus,
+  getAllMessages,
+} from "../../composables/api/Messages"
 import ExternalArrowIcon from "../../components/icons/ExternalArrowIcon.vue"
 
 const { data, isLoading } = useQuery({
