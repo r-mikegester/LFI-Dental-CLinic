@@ -30,8 +30,8 @@ export async function signIn(email, password) {
 }
 
 export async function signOut() {
-  const user = auth.currentUser
   const auth = getAuth()
+  const user = auth.currentUser
 
   await doSignOut(auth)
   console.log(`Logged out: ${user.displayName} (${user.email})`)
