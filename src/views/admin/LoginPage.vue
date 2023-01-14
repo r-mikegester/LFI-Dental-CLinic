@@ -2,7 +2,7 @@
 import { computed, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import Footer from "../../components/admin/PageFooter.vue"
-import { signIn } from "../../composables/auth/session"
+import { signIn } from "../../utils/auth/session"
 import SimpleModalDialog from "../../components/admin/SimpleModalDialog.vue"
 
 const userCredentials = reactive({

@@ -3,16 +3,16 @@ import { RouterLink } from "vue-router"
 import {
   requestProcedureAccess,
   cancelRequestProcedureAccess,
-} from "../../composables/api/user-appointments/AppointmentProcedureAccess"
+} from "../../utils/api/user-appointments/AppointmentProcedureAccess"
 import { getAuth } from "firebase/auth"
-import { cancelAppointment } from "../../composables/api/user-appointments/Appointments"
+import { cancelAppointment } from "../../utils/api/user-appointments/Appointments"
 import SimpleModalDialog from "../admin/SimpleModalDialog.vue"
 import { onMounted, ref } from "vue"
 import {
   getDateTwoDaysBeforeTimeslot,
   getMonthDayYearOfTimeslot,
   getHoursMinutesOfTimeslot,
-} from "../../composables/date-conversions"
+} from "../../utils/date-conversions"
 
 const props = defineProps({
   appointment: Object,

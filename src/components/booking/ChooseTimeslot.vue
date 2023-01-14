@@ -11,15 +11,15 @@ import {
   getMonthIndex,
   getDateTomorrow,
   getDate,
-} from "../../composables/date-conversions"
-import { getTimeslots } from "../../composables/api/Timeslots"
+} from "../../utils/date-conversions"
+import { getTimeslots } from "../../utils/api/Timeslots"
 import BoxDialog from "../../components/dialogs/BoxDialog.vue"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
-import { isSignedIn } from "../../composables/auth/session"
-import { userIsPatient } from "../../composables/auth/user-role"
-import { newAppointment } from "../../composables/api/user-appointments/Appointments"
+import { isSignedIn } from "../../utils/auth/session"
+import { userIsPatient } from "../../utils/auth/user-role"
+import { newAppointment } from "../../utils/api/user-appointments/Appointments"
 import { useRoute, useRouter, RouterLink } from "vue-router"
-import { isFilledInMedicalChart } from "../../composables/api/charts/MedicalChart"
+import { isFilledInMedicalChart } from "../../utils/api/charts/MedicalChart"
 import EmailNeedsVerificationDialog from "../../components/dialogs/EmailNeedsVerificationDialog.vue"
 import { getAuth } from "firebase/auth"
 

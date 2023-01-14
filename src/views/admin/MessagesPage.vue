@@ -6,7 +6,7 @@ import MessageChooserItem from "../../components/admin/MessageChooserItem.vue"
 import {
   toggleMessageArchiveStatus,
   getAllMessages,
-} from "../../composables/api/Messages"
+} from "../../utils/api/Messages"
 import ExternalArrowIcon from "../../components/icons/ExternalArrowIcon.vue"
 
 const { data, isLoading } = useQuery({

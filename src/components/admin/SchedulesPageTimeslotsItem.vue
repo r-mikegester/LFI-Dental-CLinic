@@ -3,7 +3,7 @@ import { ref, watchEffect } from "vue"
 import {
   getMonthIndex,
   getUnixSecondsFromObject,
-} from "../../composables/date-conversions"
+} from "../../utils/date-conversions"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
 
 const props = defineProps({

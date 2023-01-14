@@ -2,13 +2,13 @@
 import {
   getMonthDayYearOfTimeslot,
   getHoursMinutesOfTimeslot,
-} from "../../composables/date-conversions"
+} from "../../utils/date-conversions"
 import { onMounted, ref } from "vue"
-import { getUserProfile } from "../../composables/api/UserProfiles"
+import { getUserProfile } from "../../utils/api/UserProfiles"
 import {
   setProcedureAccessAllowed,
   setProcedureAccessDisallowed,
-} from "../../composables/api/user-appointments/AppointmentProcedureAccess"
+} from "../../utils/api/user-appointments/AppointmentProcedureAccess"
 
 const props = defineProps({
   appointment: Object,

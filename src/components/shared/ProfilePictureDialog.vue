@@ -5,9 +5,9 @@ import {
   uploadProfilePicture,
   updateProfilePicture,
   deleteProfilePicture,
-} from "../../composables/auth/account-details"
+} from "../../utils/auth/account-details"
 import { useProfilePictureStore } from "../../stores/profilePicture"
-import { getDownloadURL } from "../../composables/download-url"
+import { getDownloadURL } from "../../utils/download-url"
 
 const props = defineProps({
   userInfo: Object,

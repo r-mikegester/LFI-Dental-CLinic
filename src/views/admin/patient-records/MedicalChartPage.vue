@@ -6,7 +6,7 @@ import MedicalChart from "../../../components/shared/MedicalChart.vue"
 import {
   getMedicalChart,
   updateMedicalChart,
-} from "../../../composables/api/charts/MedicalChart"
+} from "../../../utils/api/charts/MedicalChart"
 
 const route = useRoute()
 const patientUid = route.params.uid

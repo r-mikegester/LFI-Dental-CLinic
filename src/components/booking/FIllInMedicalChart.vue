@@ -2,12 +2,12 @@
 import { ref } from "vue"
 import { useAppointmentDetailsStore } from "../../stores/appointmentDetails"
 import { getAuth } from "firebase/auth"
-import { newAppointment } from "../../composables/api/user-appointments/Appointments"
+import { newAppointment } from "../../utils/api/user-appointments/Appointments"
 import MedicalChart from "../shared/MedicalChart.vue"
 import {
   updateMedicalChart,
   setFilledInMedicalChart,
-} from "../../composables/api/charts/MedicalChart"
+} from "../../utils/api/charts/MedicalChart"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const appointmentDetailsStore = useAppointmentDetailsStore()

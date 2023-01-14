@@ -1,6 +1,6 @@
 <script setup>
 import { computed, reactive, ref } from "vue"
-import { createMessage } from "../composables/api/Messages"
+import { createMessage } from "../utils/api/Messages"
 import BaseLayout from "../components/patient/BaseLayout.vue"
 import HeroSection from "../components/patient/HeroSection.vue"
 

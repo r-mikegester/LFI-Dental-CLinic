@@ -5,8 +5,8 @@ import CalendarWidget from "../../components/admin/CalendarWidget.vue"
 import AppointmentsPageCalendarItem from "../../components/admin/AppointmentsPageCalendarItem.vue"
 import AppointmentsPageAppointmentItem from "../../components/admin/AppointmentsPageAppointmentItem.vue"
 import { useScheduleCalendarStore } from "../../stores/scheduleCalendar"
-import { getAllAppointments } from "../../composables/api/user-appointments/Appointments"
-import { getMonthIndex, getDate } from "../../composables/date-conversions"
+import { getAllAppointments } from "../../utils/api/user-appointments/Appointments"
+import { getMonthIndex, getDate } from "../../utils/date-conversions"
 import { DateTime } from "luxon"
 
 const selected = reactive({

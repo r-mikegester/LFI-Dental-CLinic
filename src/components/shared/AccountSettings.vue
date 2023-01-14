@@ -6,8 +6,8 @@ import PasswordDialog from "./PasswordDialog.vue"
 import {
   updateEmail,
   updateFullName,
-} from "../../composables/auth/account-details"
-import { getDownloadURL } from "../../composables/download-url"
+} from "../../utils/auth/account-details"
+import { getDownloadURL } from "../../utils/download-url"
 import { useUserFullnameStore } from "../../stores/userFullname"
 import ProfilePictureDialog from "./ProfilePictureDialog.vue"
 

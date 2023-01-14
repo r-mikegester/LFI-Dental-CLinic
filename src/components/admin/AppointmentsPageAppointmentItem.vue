@@ -3,13 +3,13 @@ import { onMounted, ref } from "vue"
 import {
   getMonthDayYearOfTimeslot,
   getHoursMinutesOfTimeslot,
-} from "../../composables/date-conversions"
-import { getUserProfile } from "../../composables/api/UserProfiles"
+} from "../../utils/date-conversions"
+import { getUserProfile } from "../../utils/api/UserProfiles"
 import {
   setUserAppointmentAttended,
   setUserAppointmentNotAttended,
   setUserAppointmentPending,
-} from "../../composables/api/user-appointments/AppointmentProceduresAttended"
+} from "../../utils/api/user-appointments/AppointmentProceduresAttended"
 
 const props = defineProps({
   timeslot: String,

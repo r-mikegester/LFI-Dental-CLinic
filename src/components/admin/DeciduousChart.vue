@@ -4,7 +4,7 @@ import deciduousChart from "../../assets/img/deciduous-chart.jpg"
 import {
   getDeciduousChart,
   saveDeciduousChart,
-} from "../../composables/api/charts/DeciduousChart"
+} from "../../utils/api/charts/DeciduousChart"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,

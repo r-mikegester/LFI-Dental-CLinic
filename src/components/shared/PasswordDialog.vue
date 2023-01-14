@@ -1,7 +1,7 @@
 <script setup>
 import { computed, reactive, ref } from "vue"
 import BoxDialog from "../dialogs/BoxDialog.vue"
-import { updatePassword } from "../../composables/auth/account-details"
+import { updatePassword } from "../../utils/auth/account-details"
 
 const emit = defineEmits(["closeDialog"])
 

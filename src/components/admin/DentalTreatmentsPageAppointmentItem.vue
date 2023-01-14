@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, reactive, ref, computed } from "vue"
 import { useRoute } from "vue-router"
-import { getMonthDayYearOfTimeslot } from "../../composables/date-conversions"
-import { setAppointmentPayment } from "../../composables/api/user-appointments/Appointments"
+import { getMonthDayYearOfTimeslot } from "../../utils/date-conversions"
+import { setAppointmentPayment } from "../../utils/api/user-appointments/Appointments"
 import CheckIcon from "../icons/CheckIcon.vue"
 import PencilIcon from "../icons/PencilIcon.vue"
 

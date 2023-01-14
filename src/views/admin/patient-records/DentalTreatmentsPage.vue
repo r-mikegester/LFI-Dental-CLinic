@@ -2,7 +2,7 @@
 import BaseLayout from "../../../components/admin//BaseLayout.vue"
 import { RouterLink, useRoute } from "vue-router"
 import { computed, onMounted, ref } from "vue"
-import { getUserAppointments } from "../../../composables/api/user-appointments/Appointments"
+import { getUserAppointments } from "../../../utils/api/user-appointments/Appointments"
 import DentalTreatmentsPageAppointmentItem from "../../../components/admin/DentalTreatmentsPageAppointmentItem.vue"
 
 const route = useRoute()

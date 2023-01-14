@@ -3,12 +3,12 @@ import {
   addClosedSlot,
   deleteClosedSlot,
   getUnavailableSlots,
-} from "../composables/api/Timeslots"
+} from "../utils/api/Timeslots"
 import {
   getMonthIndex,
   getNumOfDaysInMonth,
   getOffsetFromFirstDayOfMonth,
-} from "../composables/date-conversions"
+} from "../utils/date-conversions"
 
 export const useScheduleCalendarStore = defineStore({
   id: "scheduleCalendar",

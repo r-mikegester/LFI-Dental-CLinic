@@ -4,7 +4,7 @@ import dentalChart from "../../assets/img/dental-chart.jpg"
 import {
   getDentalChart,
   saveDentalChart,
-} from "../../composables/api/charts/DentalChart"
+} from "../../utils/api/charts/DentalChart"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,

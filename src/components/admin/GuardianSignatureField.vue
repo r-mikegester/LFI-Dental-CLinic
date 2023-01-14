@@ -3,7 +3,7 @@ import { onMounted, reactive, ref } from "vue"
 import {
   getGuardianSignature,
   setGuardianSignature,
-} from "../../composables/api/signatures/GuardianSignature"
+} from "../../utils/api/signatures/GuardianSignature"
 const props = defineProps({
   strokeColor: String,
   patientUid: String,

@@ -5,11 +5,11 @@ import { nextTick, onMounted, reactive, ref } from "vue"
 import {
   getUserAppointmentProcedure,
   setUserAppointmentProcedure,
-} from "../../../composables/api/user-appointments/AppointmentProcedures"
+} from "../../../utils/api/user-appointments/AppointmentProcedures"
 import {
   setProcedureAccessAllowed,
   setProcedureAccessDisallowed,
-} from "../../../composables/api/user-appointments/AppointmentProcedureAccess"
+} from "../../../utils/api/user-appointments/AppointmentProcedureAccess"
 
 const route = useRoute()
 const patientUid = route.params.uid

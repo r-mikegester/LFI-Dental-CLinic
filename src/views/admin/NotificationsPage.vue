@@ -1,6 +1,6 @@
 <script setup>
 import BaseLayout from "../../components/admin/BaseLayout.vue"
-import { getAppointmentsRequestingProcedureAccess } from "../../composables/api/user-appointments/Appointments"
+import { getAppointmentsRequestingProcedureAccess } from "../../utils/api/user-appointments/Appointments"
 import NotificationsPageNotificationItem from "../../components/admin/NotificationsPageNotificationItem.vue"
 import { ref, onMounted } from "vue"
 

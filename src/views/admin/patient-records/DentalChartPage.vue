@@ -7,12 +7,12 @@ import DeciduousChart from "../../../components/admin/DeciduousChart.vue"
 import {
   getAssessmentForm,
   setAssessmentForm,
-} from "../../../composables/api/forms/AssessmentForm"
+} from "../../../utils/api/forms/AssessmentForm"
 import {
   getConsentForm,
   setConsentForm,
-} from "../../../composables/api/forms/ConsentForm"
-import { getMonthName } from "../../../composables/date-conversions"
+} from "../../../utils/api/forms/ConsentForm"
+import { getMonthName } from "../../../utils/date-conversions"
 import PatientSignatureField from "../../../components/admin/PatientSignatureField.vue"
 import GuardianSignatureField from "../../../components/admin/GuardianSignatureField.vue"
 

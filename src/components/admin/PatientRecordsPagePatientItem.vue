@@ -2,7 +2,7 @@
 import {
   setPatientArchived,
   setPatientNotArchived,
-} from "../../composables/api/ArchivedProfiles"
+} from "../../utils/api/ArchivedProfiles"
 
 const props = defineProps({
   uid: String,

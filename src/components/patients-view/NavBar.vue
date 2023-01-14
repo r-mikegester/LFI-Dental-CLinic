@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
-import { signOut, isSignedIn } from "../../composables/auth/session"
-import { userIsPatient } from "../../composables/auth/user-role"
+import { signOut, isSignedIn } from "../../utils/auth/session"
+import { userIsPatient } from "../../utils/auth/user-role"
 import { useProfilePictureStore } from "../../stores/profilePicture"
 
 const showMenu = ref(false)

@@ -5,7 +5,7 @@ import { useRouter } from "vue-router"
 import {
   signIn,
   signUpWithEmailAndPassword,
-} from "../../composables/auth/session"
+} from "../../utils/auth/session"
 import BoxDialog from "../dialogs/BoxDialog.vue"
 
 const isSuccessModalVisible = ref(false)

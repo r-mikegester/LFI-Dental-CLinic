@@ -8,7 +8,7 @@ import {
   getMedicalChart,
   updateMedicalChart,
   setFilledInMedicalChart,
-} from "../../composables/api/charts/MedicalChart"
+} from "../../utils/api/charts/MedicalChart"
 
 const medicalChartIsLoading = ref(false)
 const medicalChart = reactive({

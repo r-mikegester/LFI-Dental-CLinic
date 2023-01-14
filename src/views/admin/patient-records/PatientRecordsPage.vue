@@ -4,7 +4,7 @@ import { computed, nextTick, onMounted, ref } from "vue"
 import {
   listUserProfiles,
   searchUserProfiles,
-} from "../../../composables/api/UserProfiles"
+} from "../../../utils/api/UserProfiles"
 import PatientRecordsPagePatientItem from "../../../components/admin/PatientRecordsPagePatientItem.vue"
 
 const searchFilter = ref("")

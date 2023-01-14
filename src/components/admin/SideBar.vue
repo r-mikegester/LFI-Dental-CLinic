@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from "vue"
 import { RouterLink, useRouter } from "vue-router"
-import { signOut } from "../../composables/auth/session"
+import { signOut } from "../../utils/auth/session"
 import { useProfilePictureStore } from "../../stores/profilePicture"
 import { useUserFullnameStore } from "../../stores/userFullname"
 
