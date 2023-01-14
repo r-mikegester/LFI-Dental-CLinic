@@ -1,7 +1,6 @@
 import { getUserToken } from "../../auth/user-token"
 import backendBaseURL from "../backendBaseURL"
-import HttpError from "../../helpers/HttpError"
-import ParameterError from "../../helpers/ParameterError"
+import { HttpError, ParameterError } from "../../helpers/errors"
 
 export async function cancelRequestProcedureAccess(patientUid, slotSeconds) {
   const idToken = await getUserToken()

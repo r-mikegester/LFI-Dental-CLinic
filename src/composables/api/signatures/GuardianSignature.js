@@ -1,7 +1,6 @@
 import { getUserToken } from "../../auth/user-token"
+import { HttpError, ParameterError } from "../../helpers/errors"
 import backendBaseURL from "../backendBaseURL"
-import HttpError from "../../helpers/HttpError"
-import ParameterError from "../../helpers/ParameterError"
 
 export async function getGuardianSignature(patientUid) {
   const idToken = await getUserToken()

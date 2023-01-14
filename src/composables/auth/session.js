@@ -5,9 +5,8 @@ import {
   signOut as doSignOut,
 } from "firebase/auth"
 import { useProfilePictureStore } from "../../stores/profilePicture"
+import { HttpError, ParameterError } from "../helpers/errors"
 import backendBaseURL from "../api/backendBaseURL"
-import HttpError from "../helpers/HttpError"
-import ParameterError from "../helpers/ParameterError"
 
 const auth = getAuth()
 

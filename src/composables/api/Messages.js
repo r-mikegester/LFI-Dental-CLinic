@@ -1,5 +1,4 @@
-import HttpError from "../helpers/HttpError"
-import ParameterError from "../helpers/ParameterError"
+import { HttpError, ParameterError } from "../helpers/errors"
 import backendBaseURL from "./backendBaseURL"
 
 export async function deleteMessage(messageUid) {

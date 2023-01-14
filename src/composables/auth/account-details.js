@@ -6,10 +6,9 @@ import {
   updateProfile as doUpdateProfile,
 } from "@firebase/auth"
 import { getStorage, ref, deleteObject, uploadBytes } from "firebase/storage"
-import backendBaseURL from "../api/backendBaseURL"
 import { getUserToken } from "./user-token"
-import HttpError from "../helpers/HttpError"
-import ParameterError from "../helpers/ParameterError"
+import { HttpError, ParameterError } from "../helpers/errors"
+import backendBaseURL from "../api/backendBaseURL"
 
 const storage = getStorage()
 const auth = getAuth()
