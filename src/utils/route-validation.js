@@ -31,9 +31,8 @@ export async function redirectToAdminLoginIfNotLoggedInUser() {
   }
 }
 
-const appointmentDetails = useAppointmentDetailsStore()
-
 export async function redirectToAppointmentsPageIfAppointmentDetailsIsNull() {
+  const appointmentDetails = useAppointmentDetailsStore()
   if (!appointmentDetails.isInitialized)
     return {
       name: "Appointments Page Choose Timeslot",
